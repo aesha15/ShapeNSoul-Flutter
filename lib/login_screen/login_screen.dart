@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
       String pnumber =
           "+91 " + _contactEditingController.text.toString().trim();
 
-      final responseMessage = await Navigator.pushNamed(context, '/otpScreen',
+      final responseMessage = await Navigator.pushNamed(context, '/otp',
           // arguments:'$_dialCode${_contactEditingController.text.toString().trim()}');
           arguments: pnumber);
       if (responseMessage != null) {

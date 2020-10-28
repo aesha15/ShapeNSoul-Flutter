@@ -199,7 +199,8 @@ class _OtpScreenState extends State<OtpScreen> {
       final UserCredential user = await _auth.signInWithCredential(credential);
       final User currentUser = _auth.currentUser;
       assert(user.user.uid == currentUser.uid);
-      Navigator.pushReplacementNamed(context, '/homeScreen');
+      Navigator.of(context).pop();
+      Navigator.popAndPushNamed(context, '/home');
     } catch (e) {
       handleError(e);
     }

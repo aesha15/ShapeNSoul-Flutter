@@ -3,8 +3,8 @@ import 'package:fluttersns/home_screen/appointment.dart';
 import 'package:fluttersns/home_screen/chat.dart';
 import 'package:fluttersns/home_screen/diet.dart';
 import 'package:fluttersns/home_screen/profile.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -29,6 +29,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    print(auth.currentUser.phoneNumber);
     return Scaffold(
       appBar: AppBar(
           title: Text('Shape N Soul'),
@@ -42,8 +43,7 @@ class _HomeState extends State<Home> {
             IconButton(
               icon: new Icon(Icons.exit_to_app),
               onPressed: () {
-                signOut();
-                Navigator.pushReplacementNamed(context, "/logout");
+                showAlertDialog(context, 'Are you sure?');
               },
             ),
           ]),
@@ -78,6 +78,49 @@ class _HomeState extends State<Home> {
         },
         backgroundColor: const Color(0xff3fc380),
       ),
+    );
+  }
+
+  void showAlertDialog(BuildContext context, String message) {
+    // set up the AlertDialog
+    Widget cancelButton = FlatButton(
+      child: Text(
+        "No",
+        style: TextStyle(fontSize: 20),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+        child: Text(
+          "Yes",
+          style: TextStyle(fontSize: 18),
+        ),
+        onPressed: () {
+          signOut();
+          Navigator.pushReplacementNamed(context, "/login");
+        });
+
+    AlertDialog alert = AlertDialog(
+        title: const Text(
+          "LOGOUT",
+          style: TextStyle(fontSize: 21),
+        ),
+        content: Text(
+          '\n$message',
+          style: TextStyle(fontSize: 18),
+        ),
+        actions: [
+          cancelButton,
+          continueButton,
+        ]);
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttersns/splash_screen.dart';
 import 'login_screen/login_screen.dart';
 import 'otp_screen/otp_screen.dart';
 import 'home_screen/home_screen.dart';
+import 'splash_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
@@ -21,11 +23,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: const Color(0xff3fc380),
       ),
-      home: Home(),
+      initialRoute: '/',
       routes: <String, WidgetBuilder>{
-        '/otpScreen': (BuildContext ctx) => OtpScreen(),
-        '/homeScreen': (BuildContext ctx) => Home(),
-        '/logout': (BuildContext ctx) => LoginScreen(),
+        '/': (BuildContext ctx) => SplashScreen(),
+        '/otp': (BuildContext ctx) => OtpScreen(),
+        '/home': (BuildContext ctx) => Home(),
+        '/login': (BuildContext ctx) => LoginScreen(),
       },
     );
   }
