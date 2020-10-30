@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
         items: [
           new BottomNavigationBarItem(
             icon: new Icon(Icons.calendar_today),
-            title: new Text('Appointments'),
+            label: 'Appointments',
           ),
           // new BottomNavigationBarItem(
           //   icon: new Icon(Icons.chat_bubble_outline),
@@ -62,10 +62,10 @@ class _HomeState extends State<Home> {
           // ),
           new BottomNavigationBarItem(
             icon: new Icon(Icons.assignment),
-            title: new Text('Diet'),
+            label: 'Diet',
           ),
           new BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline), title: Text('Profile'))
+              icon: Icon(Icons.person_outline), label: 'Profile')
         ],
       ),
       floatingActionButton: new FloatingActionButton(

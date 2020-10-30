@@ -4,6 +4,7 @@ import 'login_screen/login_screen.dart';
 import 'otp_screen/otp_screen.dart';
 import 'home_screen/home_screen.dart';
 import 'splash_screen.dart';
+import './home_screen/diet.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/otp': (BuildContext ctx) => OtpScreen(),
         '/home': (BuildContext ctx) => Home(),
         '/login': (BuildContext ctx) => LoginScreen(),
+        '/diet': (BuildContext ctx) => Diet()
       },
     );
   }
