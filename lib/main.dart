@@ -4,7 +4,7 @@ import 'login_screen/login_screen.dart';
 import 'otp_screen/otp_screen.dart';
 import 'home_screen/home_screen.dart';
 import 'splash_screen.dart';
-import './home_screen/diet.dart';
+import 'home_screen/diet.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 

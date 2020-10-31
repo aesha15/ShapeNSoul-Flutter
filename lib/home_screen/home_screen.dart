@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttersns/home_screen/appointment.dart';
 import 'package:fluttersns/home_screen/chat.dart';
-import 'package:fluttersns/home_screen/diet.dart';
+import 'package:fluttersns/home_screen/dietAdmin.dart';
 import 'package:fluttersns/home_screen/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
