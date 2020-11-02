@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttersns/home_screen/appointment.dart';
-import 'package:fluttersns/home_screen/chat.dart';
+import 'package:fluttersns/home_screen/appointment/disp_appt.dart';
+// import 'package:fluttersns/home_screen/appointment/appointment.dart';
+// import 'package:fluttersns/home_screen/chat.dart';
 import 'package:fluttersns/home_screen/diet.dart';
 import 'package:fluttersns/home_screen/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +17,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final List<Widget> _children = [
-    Appointment(),
+    DispAppt(),
     Diet(),
     Profile(),
   ];
@@ -33,13 +34,13 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
           title: Text('Shape N Soul'),
-          // centerTitle: true,
           automaticallyImplyLeading: false,
           actions: <Widget>[
-            // Text("Logout",
-            //     style: TextStyle(
-            //       fontSize: 18,
-            //     )),
+            IconButton(
+                icon: new Icon(Icons.forum),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/chat');
+                }),
             IconButton(
               icon: new Icon(Icons.exit_to_app),
               onPressed: () {
@@ -61,7 +62,7 @@ class _HomeState extends State<Home> {
           //   title: new Text('Chat'),
           // ),
           new BottomNavigationBarItem(
-            icon: new Icon(Icons.assignment),
+            icon: new Icon(Icons.description),
             title: new Text('Diet'),
           ),
           new BottomNavigationBarItem(
@@ -69,12 +70,9 @@ class _HomeState extends State<Home> {
         ],
       ),
       floatingActionButton: new FloatingActionButton(
-        child: new Icon(Icons.chat),
+        child: new Icon(Icons.add),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Chat()),
-          );
+          Navigator.pushNamed(context, '/appointment');
         },
         backgroundColor: const Color(0xff3fc380),
       ),

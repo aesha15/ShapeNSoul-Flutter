@@ -33,6 +33,8 @@ dependencies:
   firebase_core: ^0.5.0
   cloud_firestore: ^0.14.0+2
   pin_entry_text_field: ^0.1.3
+  date_format: ^1.0.9
+  # timeline_tile: ^1.0.0
 
 dev_dependencies:
   flutter_test:
