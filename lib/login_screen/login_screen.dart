@@ -16,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //Login click with contact number validation
   Future<void> clickOnLogin(BuildContext context) async {
     if (_contactEditingController.text.isEmpty) {
-      showErrorDialog(context, 'Contact number can\'t be empty.');
+      showErrorDialog(context, "Contact number can't be empty.");
     } else {
       String pnumber =
           "+91 " + _contactEditingController.text.toString().trim();
