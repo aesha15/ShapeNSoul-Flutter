@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
         .doc(DateTime.now().millisecondsSinceEpoch.toString());
 
     await FirebaseFirestore.instance.runTransaction((transaction) async {
-      await transaction.set(
+      transaction.set(
         documentReference,
         message.toJson(),
       );
@@ -224,7 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                         FirebaseFirestore.instance
                             .runTransaction((transaction) async {
-                          await transaction.set(
+                          transaction.set(
                             documentReference,
                             message.toJson(),
                           );
