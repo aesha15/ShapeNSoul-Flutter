@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttersns/home_screen/appointment/disp_appt.dart';
-// import 'package:fluttersns/home_screen/appointment/appointment.dart';
+import 'package:fluttersns/home_screen/appointment/adminAppoint.dart';
 // import 'package:fluttersns/home_screen/chat.dart';
 import 'package:fluttersns/home_screen/diet/disp_diet.dart';
 import 'package:fluttersns/home_screen/profile.dart';
@@ -16,13 +16,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
+  FirebaseAuth auth = FirebaseAuth.instance;
   final List<Widget> _children = [
-    DispAppt(),
+    (FirebaseAuth.instance.currentUser.phoneNumber == '+918169287917')
+        ? AdminAppoint()
+        : DispAppt(),
     Diet(),
     Profile(),
   ];
-
-  FirebaseAuth auth = FirebaseAuth.instance;
 
   signOut() async {
     await auth.signOut();
@@ -55,7 +56,7 @@ class _HomeState extends State<Home> {
         items: [
           new BottomNavigationBarItem(
             icon: new Icon(Icons.calendar_today),
-            title: new Text('Appointments'),
+            title: Text('Appointments'),
           ),
           // new BottomNavigationBarItem(
           //   icon: new Icon(Icons.chat_bubble_outline),
@@ -63,7 +64,7 @@ class _HomeState extends State<Home> {
           // ),
           new BottomNavigationBarItem(
             icon: new Icon(Icons.description),
-            title: new Text('Diet'),
+            title: Text('Diet'),
           ),
           new BottomNavigationBarItem(
               icon: Icon(Icons.person_outline), title: Text('Profile'))
