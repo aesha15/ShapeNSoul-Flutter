@@ -37,100 +37,92 @@ class Diet extends StatelessWidget {
                     for (var key in data['diet'].keys.toList()..sort())
                       if (key.contains('AM'))
                         Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.all(3.0),
-                            child: Card(
-                                color: const Color(0xfff6fef6),
-                                child: InkWell(
-                                    splashColor: Colors.green.withAlpha(30),
-                                    onTap: () {
-                                      print('Card tapped.');
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Container(
-                                        // width: 400,
-                                        height: 50,
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              key,
+                          Card(
+                              color: const Color(0xfff6fef6),
+                              child: InkWell(
+                                  splashColor: Colors.green.withAlpha(30),
+                                  onTap: () {
+                                    print('Card tapped.');
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(11.0),
+                                    child: Container(
+                                      height: 50,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            key,
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                // color: Colors.green[900]),
+                                                color: Colors.blueGrey[800]),
+                                          ),
+                                          VerticalDivider(
+                                            width: 35,
+                                            thickness: 1.1,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              data['diet'][key],
                                               style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  // color: Colors.green[900]),
-                                                  color: Colors.blueGrey[800]),
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600,
+                                                  // color: Colors.blueGrey[800]),
+                                                  color: Colors.green[900]),
                                             ),
-                                            VerticalDivider(
-                                              width: 35,
-                                              thickness: 1.1,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                data['diet'][key],
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w600,
-                                                    // color: Colors.blueGrey[800]),
-                                                    color: Colors.green[900]),
-                                              ),
-                                            ),
-                                            Icon(Icons.navigate_next,
-                                                color: Colors.green[900])
-                                          ],
-                                        ),
+                                          ),
+                                          Icon(Icons.navigate_next,
+                                              color: Colors.green[900])
+                                        ],
                                       ),
-                                    ))),
-                          )
+                                    ),
+                                  )))
                         ]),
                     for (var key in data['diet'].keys.toList()..sort())
                       if (key.contains('PM'))
                         Column(children: [
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Card(
-                                color: const Color(0xfff6fef6),
-                                child: InkWell(
-                                    splashColor: Colors.green.withAlpha(30),
-                                    onTap: () {
-                                      print('Card tapped.');
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Container(
-                                        // width: 400,
-                                        height: 50,
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              key,
+                          Card(
+                              color: const Color(0xfff6fef6),
+                              child: InkWell(
+                                  splashColor: Colors.green.withAlpha(30),
+                                  onTap: () {
+                                    print('Card tapped.');
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(11.0),
+                                    child: Container(
+                                      height: 50,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            key,
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                // color: Colors.green[900]),
+                                                color: Colors.blueGrey[800]),
+                                          ),
+                                          VerticalDivider(
+                                            width: 35,
+                                            thickness: 1.1,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              data['diet'][key],
                                               style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.w800,
-                                                  // color: Colors.green[900]),
-                                                  color: Colors.blueGrey[800]),
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600,
+                                                  // color: Colors.blueGrey[800]),
+                                                  color: Colors.green[900]),
                                             ),
-                                            VerticalDivider(
-                                              width: 35,
-                                              thickness: 1.1,
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                data['diet'][key],
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.w600,
-                                                    // color: Colors.blueGrey[800]),
-                                                    color: Colors.green[900]),
-                                              ),
-                                            ),
-                                            Icon(Icons.navigate_next,
-                                                color: Colors.green[900])
-                                          ],
-                                        ),
+                                          ),
+                                          Icon(Icons.navigate_next,
+                                              color: Colors.green[900])
+                                        ],
                                       ),
-                                    ))),
-                          )
+                                    ),
+                                  )))
                         ]),
                   ],
                 ),
