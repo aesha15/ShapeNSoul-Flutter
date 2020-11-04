@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_core/firebase_core.dart';
-
+import '../recipe.dart';
 // import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:timeline_tile/timeline_tile.dart';
@@ -27,7 +26,6 @@ class Diet extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data = snapshot.data.data();
-          print(data['diet']);
 
           return Padding(
               padding: const EdgeInsets.all(13.0),
@@ -44,7 +42,9 @@ class Diet extends StatelessWidget {
                                 child: InkWell(
                                     splashColor: Colors.green.withAlpha(30),
                                     onTap: () {
-                                      print('Card tapped.');
+                                      return AlertDialog(
+                                        title: Recipe(data['diet'][key]),
+                                      );
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(10.0),
@@ -93,7 +93,7 @@ class Diet extends StatelessWidget {
                                 child: InkWell(
                                     splashColor: Colors.green.withAlpha(30),
                                     onTap: () {
-                                      print('Card tapped.');
+                                      Recipe(data['diet'][key]);
                                     },
                                     child: Padding(
                                       padding: const EdgeInsets.all(10.0),
