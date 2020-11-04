@@ -9,45 +9,47 @@ import 'package:firebase_auth/firebase_auth.dart';
 FirebaseAuth auth = FirebaseAuth.instance;
 String current = auth.currentUser.phoneNumber;
 
-class DispAppt extends StatefulWidget {
-  @override
-  _FirstPageState createState() => new _FirstPageState();
-}
-
-class _FirstPageState extends State<DispAppt> {
-  List<String> key = [];
-  List<String> value = [];
-  List<String> keyDone = [];
-  List<String> valueDone = [];
-
-  @override
-  void initState() {
-    getUser();
-    super.initState();
-  }
+class DispAppt extends StatelessWidget {
+  DispAppt();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: new ListView.builder(
-            itemCount: key.length,
-            itemBuilder: (BuildContext ctxt, int Index) {
-              return Row(
-                  children: [Text(key[Index]), Text(":" + value[Index])]);
-            }));
-  }
+    CollectionReference appointment =
+        FirebaseFirestore.instance.collection('Appointments');
 
-  Future<void> getUser() async {
-    await Firebase.initializeApp();
-    await FirebaseFirestore.instance
-        .collection('Appointments')
-        .doc('+918976305456')
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      documentSnapshot.data().forEach((k, v) {
-        key.add(k);
-        value.add(v);
-      });
-    });
+    return FutureBuilder<DocumentSnapshot>(
+      future: appointment.doc('+918976305456').get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text("Something went wrong");
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data = snapshot.data.data();
+          return Column(
+            children: [
+              for (var value in data.values)
+                if (value['status'])
+                  Row(children: [
+                    Text(value['therapy name'] + " "),
+                    Text(value['time']),
+                    Text(value['date'])
+                  ])
+                else
+                  Row(
+                    children: [
+                      Text('-----------' + value['therapy name']),
+                      Text(value['time']),
+                      Text(value['date'])
+                    ],
+                  )
+            ],
+          );
+        }
+
+        return Text("loading");
+      },
+    );
   }
 }

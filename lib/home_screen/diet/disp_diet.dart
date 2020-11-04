@@ -9,43 +9,37 @@ import 'package:firebase_auth/firebase_auth.dart';
 FirebaseAuth auth = FirebaseAuth.instance;
 String current = auth.currentUser.phoneNumber;
 
-class Diet extends StatefulWidget {
-  @override
-  _FirstPageState createState() => new _FirstPageState();
-}
-
-class _FirstPageState extends State<Diet> {
-  List<String> time = [];
-  List<String> recipe = [];
-
-  @override
-  void initState() {
-    getDiet();
-    super.initState();
-  }
+class Diet extends StatelessWidget {
+  Diet();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: new ListView.builder(
-            itemCount: time.length,
-            itemBuilder: (BuildContext ctxt, int Index) {
-              return Row(
-                  children: [Text(time[Index]), Text(":" + recipe[Index])]);
-            }));
-  }
+    CollectionReference appointment =
+        FirebaseFirestore.instance.collection('Users');
 
-  void getDiet() async {
-    await Firebase.initializeApp();
-    await FirebaseFirestore.instance
-        .collection('Users')
-        .doc(auth.currentUser.phoneNumber)
-        .get()
-        .then((DocumentSnapshot documentSnapshot) {
-      documentSnapshot.data()['diet'].forEach((t, r) {
-        time.add(t);
-        recipe.add(r);
-      });
-    });
+    return FutureBuilder<DocumentSnapshot>(
+      future: appointment.doc('+918976305456').get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text("Something went wrong");
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data = snapshot.data.data();
+          print(data['diet']);
+          return Column(
+            children: [
+              for (var value in data['diet'].values)
+                Row(children: [
+                  Text(value),
+                ])
+            ],
+          );
+        }
+
+        return Text("loading");
+      },
+    );
   }
 }
