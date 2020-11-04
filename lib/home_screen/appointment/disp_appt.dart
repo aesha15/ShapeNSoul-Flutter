@@ -29,6 +29,7 @@ class DispAppt extends StatelessWidget {
           Map<String, dynamic> data = snapshot.data.data();
           return Column(
             children: [
+              Text('Upcoming appointment'),
               for (var value in data.values)
                 if (value['status'])
                   Row(children: [
