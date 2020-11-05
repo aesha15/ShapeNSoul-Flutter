@@ -76,7 +76,6 @@ class _FirstPageState extends State<Diet> {
                     "</ul><br><br><p><b>Method:</b></p><ol>" +
                     method +
                     "</ol></div>";
-                print(method);
               })
               .then((value) => share(body))
               .catchError((error) {

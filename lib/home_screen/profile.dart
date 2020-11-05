@@ -23,7 +23,6 @@ class Profile extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data = snapshot.data.data();
-          print(data['name']);
           return Column(
             children: [Text(data['name'])],
           );

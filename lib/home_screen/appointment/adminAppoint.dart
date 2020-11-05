@@ -71,7 +71,6 @@ class _AdminAppointState extends State<AdminAppoint> {
               querySnapshot.docs.forEach((doc) {
                 suggestions.add(doc.data()["name"]);
               }),
-              print(suggestions)
             });
   }
 

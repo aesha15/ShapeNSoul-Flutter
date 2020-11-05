@@ -31,7 +31,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    print(auth.currentUser.phoneNumber);
     return Scaffold(
       appBar: AppBar(
           title: Text('Shape N Soul'),

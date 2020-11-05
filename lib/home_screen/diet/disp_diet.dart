@@ -40,7 +40,12 @@ class Diet extends StatelessWidget {
                               child: InkWell(
                                   splashColor: Colors.green.withAlpha(30),
                                   onTap: () {
-                                    print('Card tapped.');
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              Recipe(name: data['diet'][key]),
+                                        ));
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(11.0),
