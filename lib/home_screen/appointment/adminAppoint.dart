@@ -28,14 +28,110 @@ class AdminAppointfb extends StatelessWidget {
           snapshot.data.docs.forEach((doc) {
             data.addAll(doc.data());
           });
-          return Column(
-            children: [
-              for (var value in data.values)
-                if (value['status'])
-                  Row(children: [
-                    Text(value['date']),
-                  ])
-            ],
+
+          return Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(children: [
+              SizedBox(
+                  height: MediaQuery.of(context).size.height / 1.4,
+                  child: ListView(children: [
+                    Column(children: [
+                      for (var value in data.values)
+                        if (value['status'])
+                          Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Padding(
+                                    padding: const EdgeInsets.all(6.0),
+                                    child: Card(
+                                      color: const Color(0xfff6fef6),
+                                      child: Padding(
+                                          padding: const EdgeInsets.all(18.0),
+                                          child: Column(children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.access_time,
+                                                size: 23,
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          15, 1, 1, 5),
+                                                      child: Text(
+                                                        value['client name'],
+                                                        style: TextStyle(
+                                                          color:
+                                                              Colors.green[900],
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          15, 1, 1, 5),
+                                                      child: Text(
+                                                        value['therapy name'],
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          1, 1, 25, 5),
+                                                      child: Text(
+                                                        value['date'],
+                                                        style: TextStyle(
+                                                          color:
+                                                              Colors.green[900],
+                                                          fontSize: 17,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          1, 1, 25, 5),
+                                                      child: Text(
+                                                        value['time'],
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ]),
+                                          ])),
+                                    ))
+                              ])
+                    ])
+                  ]))
+            ]),
           );
         }
 
@@ -78,7 +174,7 @@ class _AdminAppointState extends State<AdminAppoint> {
   _AdminAppointState() {
     textField = SimpleAutoCompleteTextField(
       key: key,
-      decoration: new InputDecoration(labelText: "Client Name"),
+      decoration: new InputDecoration(labelText: "Search Client"),
       controller: TextEditingController(text: ""),
       suggestions: suggestions,
       textChanged: (text) => currentText = text,
@@ -93,7 +189,11 @@ class _AdminAppointState extends State<AdminAppoint> {
 
   @override
   Widget build(BuildContext context) {
-    return (new Column(
-        children: [new ListTile(title: textField), AdminAppointfb()]));
+    return (Scaffold(
+        body: SingleChildScrollView(
+            child: new Column(children: [
+      new ListTile(title: textField),
+      AdminAppointfb()
+    ]))));
   }
 }

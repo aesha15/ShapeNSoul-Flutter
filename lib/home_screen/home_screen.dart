@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   FirebaseAuth auth = FirebaseAuth.instance;
   final List<Widget> _children = [
-    (FirebaseAuth.instance.currentUser.phoneNumber == '+918169287917')
+    (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
         ? AdminAppoint()
         : DispAppt(),
     Diet(),
