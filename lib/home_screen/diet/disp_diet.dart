@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import '../recipe.dart';
+import '../recipe.dart';
 // import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:timeline_tile/timeline_tile.dart';
@@ -27,109 +27,116 @@ class Diet extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data = snapshot.data.data();
 
-          return Padding(
-              padding: const EdgeInsets.all(13.0),
-              child: Container(
-                child: ListView(
-                  children: [
-                    for (var key in data['diet'].keys.toList()..sort())
-                      if (key.contains('AM'))
-                        Column(children: [
-                          Card(
-                              color: const Color(0xfff6fef6),
-                              child: InkWell(
-                                  splashColor: Colors.green.withAlpha(30),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              Recipe(name: data['diet'][key]),
-                                        ));
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(11.0),
-                                    child: Container(
-                                      height: 50,
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            key,
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                // color: Colors.green[900]),
-                                                color: Colors.blueGrey[800]),
-                                          ),
-                                          VerticalDivider(
-                                            width: 35,
-                                            thickness: 1.1,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              data['diet'][key],
+          return Scaffold(
+            body: Padding(
+                padding: const EdgeInsets.all(13.0),
+                child: Container(
+                  child: ListView(
+                    children: [
+                      for (var key in data['diet'].keys.toList()..sort())
+                        if (key.contains('AM'))
+                          Column(children: [
+                            Card(
+                                color: const Color(0xfff6fef6),
+                                child: InkWell(
+                                    splashColor: Colors.green.withAlpha(30),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Recipe(name: data['diet'][key]),
+                                          ));
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(11.0),
+                                      child: Container(
+                                        height: 50,
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              key,
                                               style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                  // color: Colors.blueGrey[800]),
-                                                  color: Colors.green[900]),
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  // color: Colors.green[900]),
+                                                  color: Colors.blueGrey[800]),
                                             ),
-                                          ),
-                                          Icon(Icons.navigate_next,
-                                              color: Colors.green[900])
-                                        ],
+                                            VerticalDivider(
+                                              width: 35,
+                                              thickness: 1.1,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                data['diet'][key],
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w600,
+                                                    // color: Colors.blueGrey[800]),
+                                                    color: Colors.green[900]),
+                                              ),
+                                            ),
+                                            Icon(Icons.navigate_next,
+                                                color: Colors.green[900])
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )))
-                        ]),
-                    for (var key in data['diet'].keys.toList()..sort())
-                      if (key.contains('PM'))
-                        Column(children: [
-                          Card(
-                              color: const Color(0xfff6fef6),
-                              child: InkWell(
-                                  splashColor: Colors.green.withAlpha(30),
-                                  onTap: () {
-                                    print('Card tapped.');
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(11.0),
-                                    child: Container(
-                                      height: 50,
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            key,
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                // color: Colors.green[900]),
-                                                color: Colors.blueGrey[800]),
-                                          ),
-                                          VerticalDivider(
-                                            width: 35,
-                                            thickness: 1.1,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              data['diet'][key],
+                                    )))
+                          ]),
+                      for (var key in data['diet'].keys.toList()..sort())
+                        if (key.contains('PM'))
+                          Column(children: [
+                            Card(
+                                color: const Color(0xfff6fef6),
+                                child: InkWell(
+                                    splashColor: Colors.green.withAlpha(30),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Recipe(name: data['diet'][key]),
+                                          ));
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(11.0),
+                                      child: Container(
+                                        height: 50,
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              key,
                                               style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                  // color: Colors.blueGrey[800]),
-                                                  color: Colors.green[900]),
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  // color: Colors.green[900]),
+                                                  color: Colors.blueGrey[800]),
                                             ),
-                                          ),
-                                          Icon(Icons.navigate_next,
-                                              color: Colors.green[900])
-                                        ],
+                                            VerticalDivider(
+                                              width: 35,
+                                              thickness: 1.1,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                data['diet'][key],
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w600,
+                                                    // color: Colors.blueGrey[800]),
+                                                    color: Colors.green[900]),
+                                              ),
+                                            ),
+                                            Icon(Icons.navigate_next,
+                                                color: Colors.green[900])
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )))
-                        ]),
-                  ],
-                ),
-              ));
+                                    )))
+                          ]),
+                    ],
+                  ),
+                )),
+          );
         }
 
         return Text("loading");

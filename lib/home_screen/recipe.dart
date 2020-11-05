@@ -24,23 +24,11 @@ class Recipe extends StatelessWidget {
             Map<String, dynamic> data = snapshot.data.data();
             return Scaffold(
               appBar: AppBar(
-                  title: Text('Shape N Soul'),
-                  automaticallyImplyLeading: false,
-                  actions: <Widget>[
-                    IconButton(
-                        icon: new Icon(Icons.forum),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/chat');
-                        }),
-                    IconButton(
-                      icon: new Icon(Icons.exit_to_app),
-                      onPressed: () {
-                        print('Are you sure?');
-                      },
-                    ),
-                  ]),
+                centerTitle: true,
+                title: Text(data['Name']),
+              ),
               body: Column(children: [
-                Text(data['Name']),
+                // Text(data['Name']),
                 for (var ing in data['Ingredients'].keys)
                   Row(children: [
                     Text(ing + ":"),
