@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:fluttersns/appts/test1.dart';
 import 'package:fluttersns/home_screen/appointment/new_appoint.dart';
 import 'package:fluttersns/home_screen/chat.dart';
+import 'package:fluttersns/home_screen/diet/add_recipe.dart';
 import 'package:fluttersns/splash_screen.dart';
 import 'login_screen/login_screen.dart';
 import 'otp_screen/otp_screen.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/chat': (BuildContext ctx) => Chat(),
         // '/client_appt': (BuildContext ctx) => ClientAppoint(),
         '/appointment': (BuildContext ctx) => Appointment(),
+        '/add_recipe': (BuildContext ctx) => AddRecipe(),
       },
     );
   }

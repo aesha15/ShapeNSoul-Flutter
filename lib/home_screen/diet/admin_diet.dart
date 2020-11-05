@@ -85,18 +85,22 @@ class _AdminDiet extends State<AdminDiet> {
   }
 
   _AdminDiet() {
-    textField = SimpleAutoCompleteTextField(
-      key: key,
-      decoration: new InputDecoration(labelText: "Recipe"),
-      controller: TextEditingController(text: ""),
-      suggestions: suggestions,
-      textChanged: (text) => currentText = text,
-      clearOnSubmit: true,
-      textSubmitted: (text) => setState(() {
-        if (text != "") {
-          added.add(text);
-        }
-      }),
+    Row(
+      children: [
+        textField = SimpleAutoCompleteTextField(
+          key: key,
+          decoration: new InputDecoration(labelText: "Recipe"),
+          controller: TextEditingController(text: ""),
+          suggestions: suggestions,
+          textChanged: (text) => currentText = text,
+          clearOnSubmit: true,
+          textSubmitted: (text) => setState(() {
+            if (text != "") {
+              added.add(text);
+            }
+          }),
+        ),
+      ],
     );
   }
 
@@ -139,13 +143,30 @@ class _AdminDiet extends State<AdminDiet> {
 
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
-      body: body,
-      floatingActionButton: RaisedButton(
-        onPressed: create,
-        child: Text("Create Pdf"),
-        color: Colors.green[400],
+      body: Container(
+          child: Column(children: [
+        body,
+        Expanded(
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.all(58.0),
+              child: RaisedButton(
+                  onPressed: create,
+                  color: const Color(0xff3fc380),
+                  textColor: Colors.white,
+                  child: new Text("Create PDF")),
+            ),
+          ),
+        ),
+      ])),
+      floatingActionButton: new FloatingActionButton(
+        child: new Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, '/add_recipe');
+        },
+        backgroundColor: const Color(0xff3fc380),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
