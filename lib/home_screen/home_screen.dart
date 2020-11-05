@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:fluttersns/home_screen/appointment/disp_appt.dart';
-import 'package:fluttersns/home_screen/appointment/adminAppoint.dart';
+import 'package:fluttersns/home_screen/appointment/client_appoint.dart';
+import 'package:fluttersns/home_screen/appointment/admin_appoint.dart';
 // import 'package:fluttersns/home_screen/chat.dart';
-import 'package:fluttersns/home_screen/diet/disp_diet.dart';
+import 'package:fluttersns/home_screen/diet/client_diet.dart';
+import 'package:fluttersns/home_screen/diet/admin_diet.dart';
+
 import 'package:fluttersns/home_screen/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,8 +22,10 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
         ? AdminAppoint()
-        : DispAppt(),
-    Diet(),
+        : ClientAppoint(),
+    (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
+        ? AdminDiet()
+        : Diet(),
     Profile(),
   ];
 
@@ -57,10 +61,6 @@ class _HomeState extends State<Home> {
             icon: new Icon(Icons.calendar_today),
             title: Text('Appointments'),
           ),
-          // new BottomNavigationBarItem(
-          //   icon: new Icon(Icons.chat_bubble_outline),
-          //   title: new Text('Chat'),
-          // ),
           new BottomNavigationBarItem(
             icon: new Icon(Icons.description),
             title: Text('Diet'),
@@ -68,13 +68,6 @@ class _HomeState extends State<Home> {
           new BottomNavigationBarItem(
               icon: Icon(Icons.person_outline), title: Text('Profile'))
         ],
-      ),
-      floatingActionButton: new FloatingActionButton(
-        child: new Icon(Icons.add),
-        onPressed: () {
-          Navigator.pushNamed(context, '/appointment');
-        },
-        backgroundColor: const Color(0xff3fc380),
       ),
     );
   }

@@ -18,10 +18,6 @@ class SplashScreenState extends State<SplashScreen> {
         Navigator.pushReplacementNamed(context, '/home');
       } else {
         Navigator.pushReplacementNamed(context, '/login');
-        // context,
-        // MaterialPageRoute(
-        //   builder: (context) => LoginScreen(),
-        // ));
       }
     });
   }

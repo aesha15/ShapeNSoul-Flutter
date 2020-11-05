@@ -28,7 +28,6 @@ class Recipe extends StatelessWidget {
                 title: Text(data['Name']),
               ),
               body: Column(children: [
-                // Text(data['Name']),
                 for (var ing in data['Ingredients'].keys)
                   Row(children: [
                     Text(ing + ":"),

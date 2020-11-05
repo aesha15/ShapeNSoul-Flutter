@@ -1,9 +1,7 @@
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:timeline_tile/timeline_tile.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 String current = auth.currentUser.phoneNumber;
@@ -189,10 +187,16 @@ class _AdminAppointState extends State<AdminAppoint> {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
-        body: SingleChildScrollView(
-            child: new Column(children: [
-      new ListTile(title: textField),
-      AdminAppointfb()
-    ]))));
+      body: SingleChildScrollView(
+          child: new Column(
+              children: [new ListTile(title: textField), AdminAppointfb()])),
+      floatingActionButton: new FloatingActionButton(
+        child: new Icon(Icons.add),
+        onPressed: () {
+          Navigator.pushNamed(context, '/appointment');
+        },
+        backgroundColor: const Color(0xff3fc380),
+      ),
+    ));
   }
 }

@@ -9,12 +9,12 @@ import 'package:flutter_html_to_pdf/flutter_html_to_pdf.dart';
 import 'package:share/share.dart';
 import 'package:path_provider/path_provider.dart';
 
-class Diet extends StatefulWidget {
+class AdminDiet extends StatefulWidget {
   @override
-  _FirstPageState createState() => new _FirstPageState();
+  _AdminDiet createState() => new _AdminDiet();
 }
 
-class _FirstPageState extends State<Diet> {
+class _AdminDiet extends State<AdminDiet> {
   List<String> added = [];
   List<String> suggestions = [];
   var html = "";
@@ -84,7 +84,7 @@ class _FirstPageState extends State<Diet> {
         });
   }
 
-  _FirstPageState() {
+  _AdminDiet() {
     textField = SimpleAutoCompleteTextField(
       key: key,
       decoration: new InputDecoration(labelText: "Recipe"),
@@ -128,7 +128,7 @@ class _FirstPageState extends State<Diet> {
           child: ListTile(
               title: Text(item),
               contentPadding:
-                  EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0)),
+                  EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0)),
           onDismissed: (direction) => {
                 setState(() {
                   added.remove(item);
@@ -139,30 +139,6 @@ class _FirstPageState extends State<Diet> {
 
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: new AppBar(title: new Text('Diet'), actions: [
-        new IconButton(
-            icon: new Icon(Icons.add),
-            onPressed: () => showDialog(
-                builder: (_) {
-                  String text = "";
-                  return new AlertDialog(
-                      title: new Text("Add Recipes"),
-                      content:
-                          new TextField(onChanged: (newText) => text = newText),
-                      actions: [
-                        new FlatButton(
-                            onPressed: () {
-                              if (text != "") {
-                                suggestions.add(text);
-                                textField.updateSuggestions(suggestions);
-                              }
-                              Navigator.pop(context);
-                            },
-                            child: new Text("Add")),
-                      ]);
-                },
-                context: context))
-      ]),
       body: body,
       floatingActionButton: RaisedButton(
         onPressed: create,

@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_core/firebase_core.dart';
-
-// import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:timeline_tile/timeline_tile.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 String current = auth.currentUser.phoneNumber;
 
-class DispAppt extends StatelessWidget {
-  DispAppt();
+class ClientAppoint extends StatelessWidget {
+  ClientAppoint();
 
   @override
   Widget build(BuildContext context) {
@@ -82,14 +78,6 @@ class DispAppt extends StatelessWidget {
                                         ),
                                         Row(
                                           children: [
-                                            // Padding(
-                                            //   padding: const EdgeInsets.fromLTRB(
-                                            //       6, 3, 14, 3),
-                                            // child: Icon(
-                                            //   Icons.access_time,
-                                            //   size: 15,
-                                            // ),
-                                            // ),
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 40),
@@ -106,14 +94,6 @@ class DispAppt extends StatelessWidget {
                                         ),
                                         Row(
                                           children: [
-                                            // Padding(
-                                            //   padding: const EdgeInsets.fromLTRB(
-                                            //       6, 3, 14, 3),
-                                            // child: Icon(
-                                            //   Icons.brightness_1,
-                                            //   size: 13,
-                                            // ),
-                                            // ),
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 40),
@@ -184,14 +164,6 @@ class DispAppt extends StatelessWidget {
                                             ),
                                             Row(
                                               children: [
-                                                // Padding(
-                                                //   padding: const EdgeInsets.fromLTRB(
-                                                //       6, 3, 14, 3),
-                                                // child: Icon(
-                                                //   Icons.access_time,
-                                                //   size: 15,
-                                                // ),
-                                                // ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -204,21 +176,12 @@ class DispAppt extends StatelessWidget {
                                                             FontWeight.w600,
                                                         color: Colors
                                                             .blueGrey[800]),
-                                                    // color: Colors.green[900]),
                                                   ),
                                                 ),
                                               ],
                                             ),
                                             Row(
                                               children: [
-                                                // Padding(
-                                                //   padding: const EdgeInsets.fromLTRB(
-                                                //       6, 3, 14, 3),
-                                                // child: Icon(
-                                                //   Icons.brightness_1,
-                                                //   size: 13,
-                                                // ),
-                                                // ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.only(
@@ -241,24 +204,6 @@ class DispAppt extends StatelessWidget {
                                       ),
                                     ))),
                           ]),
-
-                      //       Padding(
-                      //         padding: const EdgeInsets.all(15.0),
-                      //         child: Text(
-                      //           'Previous appointments',
-                      //           style: TextStyle(
-                      //               fontSize: 20,
-                      //               fontWeight: FontWeight.w600,
-                      //               fontStyle: FontStyle.italic),
-                      //         ),
-                      //       ),
-                      //       for (var value in data.values)
-                      //         if (!value['status'])
-                      //           Row(children: [
-                      //             Text('-----------' + value['therapy name'] + " "),
-                      //             Text(value['time']),
-                      //             Text(value['date'])
-                      //           ])
                     ],
                   )
                 ])
