@@ -23,7 +23,7 @@ class _HomeState extends State<Home> {
     (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
         ? AdminAppoint()
         : ClientAppoint(),
-    (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
+    (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
         ? AdminDiet()
         : Diet(),
     Profile(),
