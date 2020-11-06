@@ -14,7 +14,7 @@ class ClientAppoint extends StatelessWidget {
         FirebaseFirestore.instance.collection('Appointments');
 
     return FutureBuilder<DocumentSnapshot>(
-      future: appointment.doc('+918976305456').get(),
+      future: appointment.doc('+918169287917').get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -39,8 +39,8 @@ class ClientAppoint extends StatelessWidget {
                           color: Colors.teal[900]),
                     ),
                   ),
-                  for (var value in data.values)
-                    if (value['status'])
+                  for (var value in data.keys.toList()..sort())
+                    if (data[value]['status'])
                       Column(children: [
                         Padding(
                             padding: const EdgeInsets.only(bottom: 20),
@@ -65,7 +65,7 @@ class ClientAppoint extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              value['date'],
+                                              data[value]['date'],
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
@@ -82,7 +82,7 @@ class ClientAppoint extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   left: 40),
                                               child: Text(
-                                                value['time'],
+                                                data[value]['time'],
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.w600,
@@ -98,7 +98,7 @@ class ClientAppoint extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   left: 40),
                                               child: Text(
-                                                value['therapy name'],
+                                                data[value]['therapy name'],
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.w600,
