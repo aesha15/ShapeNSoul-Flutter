@@ -17,7 +17,7 @@ class AdminAppointfb extends StatelessWidget {
     CollectionReference appointment =
         FirebaseFirestore.instance.collection('Appointments');
     Widget test = Container(
-      child: Text('data'),
+      child: Text('Loading'),
     );
     if (name == '') {
       test = FutureBuilder<QuerySnapshot>(
