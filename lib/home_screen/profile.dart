@@ -81,7 +81,11 @@ class _Profile extends State<Profile> {
 
 class ProfileStateless extends StatelessWidget {
   final String name;
-  ProfileStateless({Key key, @required this.name}) : super(key: key);
+
+  ProfileStateless({
+    Key key,
+    @required this.name,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     CollectionReference appointment =
@@ -99,51 +103,113 @@ class ProfileStateless extends StatelessWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.done) {
-              return Column(
-                children: [
-                  for (var name in snapshot.data.docs)
-                    Card(
-                      color: Colors.red,
-                      child: InkWell(
-                        child: Text(name['name']),
-                        onTap: () {
-                          var phone;
-                          name2phone(name['name']).then((value) => {
-                                phone = value,
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          ProfileDetails(name: phone),
-                                    ))
-                              });
-                        },
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    for (var name in snapshot.data.docs)
+                      Card(
+                        color: const Color(0xfff7fdf7),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              radius: 20,
+                              child: Text(name['name'][0],
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w500)),
+                              backgroundColor: Colors.green[200],
+                            ),
+                            trailing: Icon(Icons.navigate_next),
+                            title: Text(
+                              name['name'],
+                              style: TextStyle(
+                                  color: Colors.green[900],
+                                  fontSize: 21,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            // subtitle: Text(
+                            //   name['phone'],
+                            //   style: TextStyle(
+                            //       // color: Colors.green[900],
+                            //       fontSize: 14,
+                            //       fontWeight: FontWeight.w500),
+                            // ),
+                            onTap: () {
+                              var phone;
+                              name2phone(name['name']).then((value) => {
+                                    phone = value,
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProfileDetails(name: phone),
+                                        ))
+                                  });
+                            },
+                          ),
+                        ),
                       ),
-                    )
-                ],
+                  ],
+                ),
               );
             }
             return Text("loading");
           });
     } else {
-      list = Card(
-        color: Colors.red,
-        child: InkWell(
-          child: Text(name),
-          onTap: () {
-            var phone;
-            name2phone(name).then((value) => {
-                  phone = value,
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ProfileDetails(name: phone),
-                      ))
-                });
-          },
+      list = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            Card(
+              color: const Color(0xfff7fdf7),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListTile(
+                  leading: CircleAvatar(
+                    radius: 20,
+                    child: Text(name[0],
+                        style: TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.w500)),
+                    backgroundColor: Colors.green[200],
+                    // backgroundImage: CachedNetworkImageProvider(core.url + "profiles/" + friendlist[index]["avatar_id"]),
+                  ),
+                  trailing: Icon(Icons.navigate_next),
+                  title: Text(
+                    name,
+                    style: TextStyle(
+                        color: Colors.green[900],
+                        fontSize: 21,
+                        fontWeight: FontWeight.w500),
+                  ),
+                  // subtitle: Text(
+                  //   name['phone'],
+                  //   style: TextStyle(
+                  //       // color: Colors.green[900],
+                  //       fontSize: 14,
+                  //       fontWeight: FontWeight.w500),
+                  // ),
+                  onTap: () {
+                    var phone;
+                    name2phone(name).then((value) => {
+                          phone = value,
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    ProfileDetails(name: phone),
+                              ))
+                        });
+                  },
+                ),
+              ),
+            ),
+          ],
         ),
       );
     }
+
     return list;
   }
 }

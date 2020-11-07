@@ -76,7 +76,7 @@ class Diet extends StatelessWidget {
                                                     color: Colors.green[900]),
                                               ),
                                             ),
-                                            Icon(Icons.navigate_next,
+                                            Icon(Icons.arrow_right,
                                                 color: Colors.green[900])
                                           ],
                                         ),
@@ -126,7 +126,7 @@ class Diet extends StatelessWidget {
                                                     color: Colors.green[900]),
                                               ),
                                             ),
-                                            Icon(Icons.navigate_next,
+                                            Icon(Icons.arrow_right,
                                                 color: Colors.green[900])
                                           ],
                                         ),
