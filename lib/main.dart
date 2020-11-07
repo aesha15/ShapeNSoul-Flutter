@@ -4,7 +4,6 @@ import 'package:fluttersns/home_screen/appointment/new_appoint.dart';
 import 'package:fluttersns/home_screen/chat.dart';
 import 'package:fluttersns/home_screen/diet/add_recipe.dart';
 import 'package:fluttersns/splash_screen.dart';
-import 'home_screen/test.dart';
 import 'login_screen/login_screen.dart';
 import 'otp_screen/otp_screen.dart';
 import 'home_screen/home_screen.dart';

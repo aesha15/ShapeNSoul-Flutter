@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttersns/splash_screen.dart';
+// import 'package:fluttersns/splash_screen.dart';
 import 'recipe.dart';
 // import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -18,7 +18,7 @@ class Diet extends StatelessWidget {
         FirebaseFirestore.instance.collection('Users');
 
     return FutureBuilder<DocumentSnapshot>(
-      future: appointment.doc('+918169287917').get(),
+      future: appointment.doc('+918976305456').get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
