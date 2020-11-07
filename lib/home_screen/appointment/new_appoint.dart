@@ -29,6 +29,7 @@ class _DateTimePickerState extends State<Appointment> {
   String currentText = "";
   var selected;
   var selectedTherapy;
+  Timestamp date;
 
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
@@ -135,13 +136,13 @@ class _DateTimePickerState extends State<Appointment> {
       return users.get().then((querySnapshot) {
         querySnapshot.docs.forEach((document) {
           batch.update(users.doc(userphone), {
-            'appointment.date': _dateController.text,
+            'appointment.date': date,
             'appointment.time': _timeController.text,
             'appointment.therapy name': selectedTherapy,
           });
 
           batch.update(appt.doc(userphone), {
-            '$apptName.date': _dateController.text,
+            '$apptName.date': date,
             '$apptName.time': _timeController.text,
             '$apptName.therapy name': selectedTherapy,
             '$apptName.client name': selected,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 String current = auth.currentUser.phoneNumber;
@@ -14,7 +15,7 @@ class ClientAppoint extends StatelessWidget {
         FirebaseFirestore.instance.collection('Appointments');
 
     return FutureBuilder<DocumentSnapshot>(
-      future: appointment.doc('+918169287917').get(),
+      future: appointment.doc('+918976305456').get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -23,6 +24,17 @@ class ClientAppoint extends StatelessWidget {
 
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data = snapshot.data.data();
+          List<dynamic> test = [];
+          data.forEach((key, value) {
+            test.add(value);
+          });
+          test.sort((a, b) {
+            return a['date'].toDate().compareTo(b['date'].toDate());
+          });
+          print(test);
+          test.forEach((element) {
+            print(element['therapy name']);
+          });
           return Padding(
             padding: const EdgeInsets.all(12.0),
             child: Container(
@@ -39,8 +51,8 @@ class ClientAppoint extends StatelessWidget {
                           color: Colors.teal[900]),
                     ),
                   ),
-                  for (var value in data.keys.toList()..sort())
-                    if (data[value]['status'])
+                  for (var value in test)
+                    if (value['status'])
                       Column(children: [
                         Padding(
                             padding: const EdgeInsets.only(bottom: 20),
@@ -65,7 +77,8 @@ class ClientAppoint extends StatelessWidget {
                                               ),
                                             ),
                                             Text(
-                                              data[value]['date'],
+                                              DateFormat.yMMMd().format(
+                                                  value['date'].toDate()),
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
@@ -82,7 +95,7 @@ class ClientAppoint extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   left: 40),
                                               child: Text(
-                                                data[value]['time'],
+                                                value['time'],
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.w600,
@@ -98,7 +111,7 @@ class ClientAppoint extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   left: 40),
                                               child: Text(
-                                                data[value]['therapy name'],
+                                                value['therapy name'],
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     fontWeight: FontWeight.w600,
@@ -124,7 +137,7 @@ class ClientAppoint extends StatelessWidget {
                           color: Colors.blueGrey[600]),
                     ),
                     children: [
-                      for (var value in data.values)
+                      for (var value in test)
                         if (!value['status'])
                           Column(children: [
                             Padding(
@@ -150,7 +163,8 @@ class ClientAppoint extends StatelessWidget {
                                                   ),
                                                 ),
                                                 Text(
-                                                  value['date'],
+                                                  DateFormat.yMMMd().format(
+                                                      value['date'].toDate()),
                                                   style: TextStyle(
                                                       fontSize: 20,
                                                       fontWeight:
