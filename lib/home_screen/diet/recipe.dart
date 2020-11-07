@@ -1,10 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttersns/splash_screen.dart';
 
-class Recipe extends StatelessWidget {
+class Recipe extends StatefulWidget {
   final String name;
   Recipe({Key key, @required this.name}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() => new _RecipeState();
+}
+
+class _RecipeState extends State<Recipe> {
+  String imageurl =
+      'https://firebasestorage.googleapis.com/v0/b/shapensoul-e1bb8.appspot.com/o/Clove%20tea.jpg?alt=media&token=6fa0801d-4584-434a-842e-68db6d5c5a0e';
+  @override
+  void initState() {
+    getImage(widget.name);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +26,9 @@ class Recipe extends StatelessWidget {
         FirebaseFirestore.instance.collection('Recipe');
 
     return FutureBuilder<DocumentSnapshot>(
-        future: appointment.doc(name).get(),
+        future: appointment.doc(widget.name).get(),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          print(name);
           if (snapshot.hasError) {
             return Text("Something went wrong");
           }
@@ -63,10 +76,10 @@ class Recipe extends StatelessWidget {
                         // shoe flower drink
                         // 'https://smartsexypaleo.com/wp-content/uploads/2020/05/refreshing-hibiscus-iced-ted_67618.jpg',
                         // tulsi mint tea
-                        'https://4.imimg.com/data4/XE/DK/MY-1473185/tulsi-tea-500x500.jpg',
+                        imageurl,
 
                         // turmeric drink
-                        // 'https://www.thespruceeats.com/thmb/-c4RbYEJnYcmV0SyQehEA6Bh37s=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/herbal-tea-with-turmeric-638824318-5abdb804ae9ab8003729e696.jpg',
+                        //'https://www.thespruceeats.com/thmb/-c4RbYEJnYcmV0SyQehEA6Bh37s=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/herbal-tea-with-turmeric-638824318-5abdb804ae9ab8003729e696.jpg',
 
                         color: Color.fromRGBO(0, 0, 0, 0.5),
                         colorBlendMode: BlendMode.darken,
@@ -149,7 +162,16 @@ class Recipe extends StatelessWidget {
               ]),
             );
           }
-          return Text("loading");
+          return SplashScreen();
         });
+  }
+
+  Future<void> getImage(name) async {
+    print(name);
+    final ref = FirebaseStorage.instance.ref().child(name + '.jpg');
+    var url = await ref.getDownloadURL();
+    setState(() {
+      imageurl = url;
+    });
   }
 }

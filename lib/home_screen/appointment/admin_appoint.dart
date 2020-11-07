@@ -2,6 +2,7 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 
 import '../../name2phone.dart';
 
@@ -29,11 +30,13 @@ class AdminAppointfb extends StatelessWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.done) {
-              Map<String, dynamic> data = {};
+              List<dynamic> data = [];
               snapshot.data.docs.forEach((doc) {
-                data.addAll(doc.data());
+                data.addAll(doc.data().values);
               });
-
+              data.sort((a, b) {
+                return a['date'].toDate().compareTo(b['date'].toDate());
+              });
               return Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(children: [
@@ -41,7 +44,7 @@ class AdminAppointfb extends StatelessWidget {
                       height: MediaQuery.of(context).size.height / 1.4,
                       child: ListView(children: [
                         Column(children: [
-                          for (var value in data.values)
+                          for (var value in data)
                             if (value['status'])
                               Column(
                                   crossAxisAlignment:
@@ -115,7 +118,10 @@ class AdminAppointfb extends StatelessWidget {
                                                                       .fromLTRB(
                                                                   1, 1, 25, 5),
                                                           child: Text(
-                                                            value['date'],
+                                                            DateFormat.yMMMd()
+                                                                .format(value[
+                                                                        'date']
+                                                                    .toDate()),
                                                             style: TextStyle(
                                                               color: Colors
                                                                   .green[900],
