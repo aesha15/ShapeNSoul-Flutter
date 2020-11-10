@@ -129,6 +129,7 @@ class _DateTimePickerState extends State<Appointment> {
         FirebaseFirestore.instance.collection('Appointments');
 
     String apptName = _dateController.text + ' ' + _timeController.text;
+    date = Timestamp.fromDate(selectedDate);
 
     Future<void> addAppt() async {
       WriteBatch batch = FirebaseFirestore.instance.batch();

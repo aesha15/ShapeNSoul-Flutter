@@ -31,7 +31,10 @@ class _Profile extends State<Profile> {
       children: [
         textField = SimpleAutoCompleteTextField(
           key: key,
-          decoration: new InputDecoration(labelText: "Client Name"),
+          decoration: new InputDecoration(
+            labelText: "Search Client",
+            prefixIcon: Icon(Icons.search),
+          ),
           controller: TextEditingController(text: ""),
           suggestions: suggestions,
           textChanged: (text) => currentText = text,

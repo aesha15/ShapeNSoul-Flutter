@@ -43,7 +43,7 @@ class ClientAppoint extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(19, 15, 15, 15),
                     child: Text(
-                      ' Upcoming appointment : ',
+                      ' Upcoming appointments : ',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -52,7 +52,7 @@ class ClientAppoint extends StatelessWidget {
                     ),
                   ),
                   for (var value in test)
-                    if (value['status'])
+                    if (!value['date'].toDate().isBefore(DateTime.now()))
                       Column(children: [
                         Padding(
                             padding: const EdgeInsets.only(bottom: 20),
@@ -138,7 +138,7 @@ class ClientAppoint extends StatelessWidget {
                     ),
                     children: [
                       for (var value in test)
-                        if (!value['status'])
+                        if (value['date'].toDate().isBefore(DateTime.now()))
                           Column(children: [
                             Padding(
                                 padding: const EdgeInsets.all(3.0),

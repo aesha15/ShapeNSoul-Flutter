@@ -45,7 +45,9 @@ class AdminAppointfb extends StatelessWidget {
                       child: ListView(children: [
                         Column(children: [
                           for (var value in data)
-                            if (value['status'])
+                            if (!value['date']
+                                .toDate()
+                                .isBefore(DateTime.now()))
                               Column(
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
@@ -172,6 +174,11 @@ class AdminAppointfb extends StatelessWidget {
             }
 
             if (snapshot.connectionState == ConnectionState.done) {
+              List<dynamic> data = [];
+              data.addAll(snapshot.data.data().values);
+              data.sort((a, b) {
+                return a['date'].toDate().compareTo(b['date'].toDate());
+              });
               return Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Column(children: [
@@ -179,8 +186,10 @@ class AdminAppointfb extends StatelessWidget {
                       height: MediaQuery.of(context).size.height / 1.4,
                       child: ListView(children: [
                         Column(children: [
-                          for (var value in snapshot.data.data().values)
-                            if (value['status'])
+                          for (var value in data)
+                            if (!value['date']
+                                .toDate()
+                                .isBefore(DateTime.now()))
                               Column(
                                   crossAxisAlignment:
                                       CrossAxisAlignment.stretch,
@@ -253,7 +262,10 @@ class AdminAppointfb extends StatelessWidget {
                                                                       .fromLTRB(
                                                                   1, 1, 25, 5),
                                                           child: Text(
-                                                            value['date'],
+                                                            DateFormat.yMMMd()
+                                                                .format(value[
+                                                                        'date']
+                                                                    .toDate()),
                                                             style: TextStyle(
                                                               color: Colors
                                                                   .green[900],
@@ -331,7 +343,10 @@ class _AdminAppointState extends State<AdminAppoint> {
   _AdminAppointState() {
     textField = SimpleAutoCompleteTextField(
       key: key,
-      decoration: new InputDecoration(labelText: "Search Client"),
+      decoration: new InputDecoration(
+        labelText: "Search Client",
+        prefixIcon: Icon(Icons.search),
+      ),
       controller: TextEditingController(text: ""),
       suggestions: suggestions,
       textChanged: (text) => currentText = text,
