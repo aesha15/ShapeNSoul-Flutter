@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:fluttersns/splash_screen.dart';
@@ -26,6 +27,7 @@ class DietState extends State<Diet> {
   List<dynamic> _items = [];
   int counter = 0;
   List<dynamic> test = [];
+  List<String> urls = [];
 
   Future<void> _loadItems() async {
     FirebaseFirestore.instance
@@ -34,7 +36,6 @@ class DietState extends State<Diet> {
         .get()
         .then((DocumentSnapshot documentSnapshot) => {
               documentSnapshot.data()['diet'].forEach((key, value) {
-                print(value);
                 test.add(value);
               }),
               please(test),
@@ -46,10 +47,18 @@ class DietState extends State<Diet> {
       // 1) Wait for one second
       await Future.delayed(Duration(milliseconds: 200));
       // 2) Adding data to actual variable that holds the item.
+      getImage(item).then((value) => {urls.add(value)});
       _items.add(item);
       // 3) Telling animated list to start animation
       _listkey.currentState.insertItem(_items.length - 1);
     }
+  }
+
+  Future<String> getImage(name) async {
+    print(name);
+    final ref = FirebaseStorage.instance.ref().child(name + '.jpg');
+    var url = await ref.getDownloadURL();
+    return url;
   }
 
   @override
@@ -59,7 +68,14 @@ class DietState extends State<Diet> {
         initialItemCount: _items.length,
         itemBuilder: (context, index, animate) {
           return SlideTransition(
-            child: Text(_items[index]),
+            child: Column(
+              children: [
+                if (urls.length != index)
+                  Image.network(urls[index])
+                else
+                  Container()
+              ],
+            ),
             position: animate.drive(offset),
           );
         });
