@@ -21,6 +21,11 @@ class DietState extends State<Diet> {
     super.initState();
   }
 
+  // @override
+  // void dispose() {
+  //   super.dispose();
+  // }
+
   Map<String, dynamic> data;
   final GlobalKey<AnimatedListState> _listkey = GlobalKey<AnimatedListState>();
   final Tween<Offset> offset = Tween(begin: Offset(1, 0), end: Offset(0, 0));
@@ -38,11 +43,11 @@ class DietState extends State<Diet> {
               documentSnapshot.data()['diet'].forEach((key, value) {
                 test.add(value);
               }),
-              please(test),
+              addDelay(test),
             });
   }
 
-  please(text) async {
+  addDelay(text) async {
     for (var item in text) {
       // 1) Wait for one second
       await Future.delayed(Duration(milliseconds: 200));
@@ -55,9 +60,17 @@ class DietState extends State<Diet> {
   }
 
   Future<String> getImage(name) async {
-    final ref = FirebaseStorage.instance.ref().child(name + '.jpg');
-    var url = await ref.getDownloadURL();
-    return url;
+    try {
+      final ref = FirebaseStorage.instance.ref().child(name + '.jpg');
+      var url = await ref.getDownloadURL();
+      setState(() {
+        url = url;
+      });
+      return url;
+    } on FirebaseException catch (e) {
+      print(e.message);
+      return 'https://firebasestorage.googleapis.com/v0/b/shapensoul-e1bb8.appspot.com/o/logo.png?alt=media&token=9108beac-e787-4c75-860b-8677d36720c5';
+    }
   }
 
   @override
