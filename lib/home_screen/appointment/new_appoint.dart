@@ -11,10 +11,10 @@ class Appointment extends StatefulWidget {
   final String title;
 
   @override
-  _DateTimePickerState createState() => _DateTimePickerState();
+  _AppointmentState createState() => _AppointmentState();
 }
 
-class _DateTimePickerState extends State<Appointment> {
+class _AppointmentState extends State<Appointment> {
   double _height;
   double _width;
   // String _setTime, _setDate;
@@ -38,7 +38,7 @@ class _DateTimePickerState extends State<Appointment> {
   GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
   GlobalKey<AutoCompleteTextFieldState<String>> therapykey = new GlobalKey();
 
-  _DateTimePickerState() {
+  _AppointmentState() {
     _nameController = SimpleAutoCompleteTextField(
         key: key,
         decoration: new InputDecoration(
