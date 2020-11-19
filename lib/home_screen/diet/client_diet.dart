@@ -55,7 +55,6 @@ class DietState extends State<Diet> {
   }
 
   Future<String> getImage(name) async {
-    print(name);
     final ref = FirebaseStorage.instance.ref().child(name + '.jpg');
     var url = await ref.getDownloadURL();
     return url;
@@ -70,7 +69,7 @@ class DietState extends State<Diet> {
           return SlideTransition(
             child: Column(
               children: [
-                if (urls.length != index)
+                if (urls.asMap().containsKey(index))
                   Image.network(urls[index])
                 else
                   Container()
