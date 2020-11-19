@@ -9,30 +9,56 @@ class ProfileDetails extends StatefulWidget {
   ProfileDetails({Key key, @required this.name}) : super(key: key);
 
   @override
-  _ProfileDetails createState() => _ProfileDetails();
+  _ProfileDetails createState() => new _ProfileDetails();
 }
 
 class _ProfileDetails extends State<ProfileDetails> {
-  TextEditingController _weightController = TextEditingController();
-
+  final _weightController = TextEditingController();
+  final _tongue = TextEditingController();
+  final _bp = TextEditingController();
   @override
   void initState() {
-    _weightController.text = 'Weight';
-
+    getDetails();
     super.initState();
+  }
+
+  getDetails() {
+    var data;
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc('+918169287917')
+        .get()
+        .then((value) => {
+              data = value.data(),
+              _tongue.text = data['diagnosis']['tongue'],
+              _weightController.text = data['personal']['weight'],
+              _bp.text = data['personal']['Bloodpressure']
+            });
+  }
+
+  Future<void> updateUser() {
+    return FirebaseFirestore.instance
+        .collection('Users')
+        .doc('+918169287917')
+        .update({
+          'personal.weight': _weightController.text,
+          'diagnosis.tongue': _tongue.text,
+          'personal.Bloodpressure': _bp.text
+        })
+        .then((value) => print("User Updated"))
+        .catchError((error) => print("Failed to update user: $error"));
   }
 
   @override
   Widget build(BuildContext context) {
     String name = widget.name;
+
     CollectionReference appointment =
         FirebaseFirestore.instance.collection('Users');
-    print(name);
     return FutureBuilder<DocumentSnapshot>(
         future: appointment.doc(name).get(),
         builder:
             (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          print(name);
           if (snapshot.hasError) {
             return Text("Something went wrong");
           }
@@ -76,18 +102,60 @@ class _ProfileDetails extends State<ProfileDetails> {
                 ),
                 Container(
                   padding: EdgeInsets.all(10.0),
-                  child: EditableText(
-                    backgroundCursorColor: Colors.green,
-                    textAlign: TextAlign.start,
-                    focusNode: FocusNode(),
-                    controller: _weightController,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 18.0,
-                    ),
-                    keyboardType: TextInputType.multiline,
-                    cursorColor: Colors.blue,
-                  ),
+                  child: Row(children: [
+                    Text("Tongue"),
+                    EditableText(
+                      backgroundCursorColor: Colors.green,
+                      textAlign: TextAlign.start,
+                      focusNode: FocusNode(),
+                      controller: _tongue,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                      ),
+                      keyboardType: TextInputType.multiline,
+                      cursorColor: Colors.blue,
+                    )
+                  ]),
+                  width: 10,
+                ),
+                Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: Row(children: [
+                    Text("Weight"),
+                    EditableText(
+                      backgroundCursorColor: Colors.green,
+                      textAlign: TextAlign.start,
+                      focusNode: FocusNode(),
+                      controller: _weightController,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                      ),
+                      keyboardType: TextInputType.multiline,
+                      cursorColor: Colors.blue,
+                    )
+                  ]),
+                  width: 10,
+                ),
+                Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: Row(children: [
+                    Text("Bloodpressure"),
+                    EditableText(
+                      backgroundCursorColor: Colors.green,
+                      textAlign: TextAlign.start,
+                      focusNode: FocusNode(),
+                      controller: _bp,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18.0,
+                      ),
+                      keyboardType: TextInputType.multiline,
+                      cursorColor: Colors.blue,
+                    )
+                  ]),
+                  width: 10,
                 ),
                 for (var ing in data['appointment'].keys)
                   Column(children: [
@@ -104,6 +172,9 @@ class _ProfileDetails extends State<ProfileDetails> {
                     Text(data['diet'][method]),
                   ]),
               ]),
+              floatingActionButton: Row(
+                children: [RaisedButton(onPressed: () => updateUser())],
+              ),
             );
           }
           return Text("loading");
