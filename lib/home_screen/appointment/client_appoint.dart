@@ -68,12 +68,6 @@ class ClientAppointState extends State<ClientAppoint> {
     return Scaffold(
       backgroundColor: const Color(0xfff6fef6),
       body: Container(
-        // decoration: new BoxDecoration(
-        //     gradient: new LinearGradient(
-        //   begin: Alignment.topCenter,
-        //   end: Alignment.bottomCenter,
-        //   colors: [Color(0xfff6fef6), Color(0xffDCE9FA)],
-        // )),
         child: ListView(
           children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
