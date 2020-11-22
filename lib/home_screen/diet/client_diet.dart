@@ -102,7 +102,7 @@ class DietState extends State<Diet> {
               children: [
                 if (urls.containsKey(tes.values.toList()[index]))
                   Container(
-                      height: MediaQuery.of(context).size.height / 5.3,
+                      height: MediaQuery.of(context).size.height / 6.3,
                       child: Container(
                         child: Card(
                             shape: RoundedRectangleBorder(
