@@ -48,11 +48,11 @@ class ClientAppointState extends State<ClientAppoint> {
                 return a['date'].toDate().compareTo(b['date'].toDate());
               }),
               setState(() {}),
-              please(test),
+              addDelay(test),
             });
   }
 
-  please(text) async {
+  addDelay(text) async {
     for (var item in text) {
       // 1) Wait for one second
       await Future.delayed(Duration(milliseconds: 200));
