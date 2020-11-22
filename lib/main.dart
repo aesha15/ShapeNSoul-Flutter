@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
-        '/': (BuildContext ctx) => AdminAppoint(),
+        '/': (BuildContext ctx) => SplashScreen(),
+        // '/': (BuildContext ctx) => AdminAppoint(),
         '/otp': (BuildContext ctx) => OtpScreen(),
         '/home': (BuildContext ctx) => Home(),
         '/login': (BuildContext ctx) => LoginScreen(),
