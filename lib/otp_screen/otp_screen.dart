@@ -21,6 +21,8 @@ class _OtpScreenState extends State<OtpScreen> {
   String smsOTP;
   String verificationId;
   String errorMessage = '';
+  var token;
+  bool loading = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   // Timer _timer;
 
@@ -32,6 +34,9 @@ class _OtpScreenState extends State<OtpScreen> {
     if (widget._isInit) {
       widget._contact =
           '${ModalRoute.of(context).settings.arguments as String}';
+      setState(() {
+        phoneNo = widget._contact;
+      });
       generateOtp(widget._contact);
       widget._isInit = false;
     }
@@ -150,9 +155,34 @@ class _OtpScreenState extends State<OtpScreen> {
                           ),
                         ),
                       ),
+                      if (!loading)
+                        GestureDetector(
+                          onTap: () {
+                            resendOTP();
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.all(8),
+                            height: 45,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: const Color(0xff3fc380),
+                              borderRadius: BorderRadius.circular(36),
+                            ),
+                            alignment: Alignment.center,
+                            child: const Text(
+                              'Resend OTP',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16.0,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        )
+                      else
+                        CircularProgressIndicator()
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -166,6 +196,9 @@ class _OtpScreenState extends State<OtpScreen> {
     final PhoneCodeSent smsOTPSent =
         (String verId, [int forceResendingToken]) async {
       verificationId = verId;
+      setState(() {
+        token = forceResendingToken;
+      });
     };
     try {
       await _auth.verifyPhoneNumber(
@@ -203,6 +236,38 @@ class _OtpScreenState extends State<OtpScreen> {
       Navigator.popAndPushNamed(context, '/home');
     } catch (e) {
       handleError(e);
+    }
+  }
+
+  resendOTP() async {
+    try {
+      setState(() {
+        loading = true;
+      });
+      await _auth
+          .verifyPhoneNumber(
+              phoneNumber: phoneNo,
+              codeAutoRetrievalTimeout: (String verId) {
+                verificationId = verId;
+              },
+              forceResendingToken: token,
+              codeSent: (String verificationId, int resendToken) {},
+              timeout: const Duration(seconds: 60),
+              verificationCompleted: (AuthCredential phoneAuthCredential) {},
+              verificationFailed: (FirebaseAuthException exception) {
+                // Navigator.pop(context, exception.message);
+              })
+          .then((value) => {
+                print('hello'),
+                if (!mounted)
+                  {
+                    loading = false,
+                    print('hey'),
+                  }
+              });
+    } catch (e) {
+      handleError(e);
+      // Navigator.pop(context, (e as PlatformException).message);
     }
   }
 

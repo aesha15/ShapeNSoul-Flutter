@@ -41,6 +41,8 @@ dependencies:
   dash_chat: ^1.1.15
   image_picker: ^0.6.7+12
   date_format: ^1.0.9
+  flutter_local_notifications: ^1.4.2
+
   # timeline_tile: ^1.0.0
 
 dev_dependencies:

@@ -167,8 +167,8 @@ class AdminAppointfbState extends State<AdminAppointfb> {
               position: animate.drive(offset),
             );
           });
-      return test;
     }
+    return test;
   }
 }
 
@@ -332,10 +332,15 @@ class _AdminAppointState extends State<AdminAppoint> {
   String currentText = '';
   GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
   SimpleAutoCompleteTextField textField;
+  final GlobalKey<AnimatedListState> _listkey = GlobalKey<AnimatedListState>();
+  List<dynamic> appoint = [];
+  List<dynamic> unSortedAppoint = [];
+  final Tween<Offset> offset = Tween(begin: Offset(1, 0), end: Offset(0, 0));
 
   @override
   void initState() {
     getUsers();
+    allAppoint();
     super.initState();
   }
 
@@ -347,6 +352,65 @@ class _AdminAppointState extends State<AdminAppoint> {
               querySnapshot.docs.forEach((doc) {
                 suggestions.add(doc.data()["name"]);
               }),
+            });
+  }
+
+  allAppoint() {
+    clearLists();
+    FirebaseFirestore.instance
+        .collection('Appointments')
+        .get()
+        .then((QuerySnapshot querySnapshot) => {
+              //test.removeRange(0, test.length - 1),
+              querySnapshot.docs.forEach((value) {
+                value.data().forEach((key, value) {
+                  unSortedAppoint.add(value);
+                });
+              }),
+              unSortedAppoint.sort((a, b) {
+                return a['date'].toDate().compareTo(b['date'].toDate());
+              }),
+              addDelay(unSortedAppoint)
+            });
+  }
+
+  clearLists() {
+    var length = unSortedAppoint.length;
+    if (length > 1) {
+      for (var i = 0; i < length; i++) {
+        _listkey.currentState.removeItem(0, (context, animation) => null);
+        unSortedAppoint.removeAt(0);
+        appoint.removeAt(0);
+      }
+    }
+  }
+
+  addDelay(text) async {
+    for (var item in text) {
+      // 1) Wait for one second
+      await Future.delayed(Duration(milliseconds: 200));
+      // 2) Adding data to actual variable that holds the item.
+      appoint.add(item);
+      // 3) Telling animated list to start animation
+      _listkey.currentState.insertItem(appoint.length - 1);
+    }
+  }
+
+  userAppoint(phone) {
+    clearLists();
+    FirebaseFirestore.instance
+        .collection('Appointments')
+        .doc(phone)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) => {
+              //test.removeRange(0, test.length - 1),
+              documentSnapshot.data().forEach((key, value) {
+                unSortedAppoint.add(value);
+              }),
+              unSortedAppoint.sort((a, b) {
+                return a['date'].toDate().compareTo(b['date'].toDate());
+              }),
+              addDelay(unSortedAppoint)
             });
   }
 
@@ -364,15 +428,9 @@ class _AdminAppointState extends State<AdminAppoint> {
       textSubmitted: (text) => setState(() {
         if (text != "") {
           if (text == 'admin') {
-            setState(() {
-              added = '';
-            });
+            allAppoint();
           } else {
-            name2phone(text).then((value) => {
-                  setState(() {
-                    added = value;
-                  })
-                });
+            name2phone(text).then((value) => {userAppoint(value)});
           }
         }
       }),
@@ -382,15 +440,102 @@ class _AdminAppointState extends State<AdminAppoint> {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
-      body: SingleChildScrollView(
+      body: Flexible(
           child: new Column(children: [
         new ListTile(title: textField),
-        if (added == '')
-          AdminAppointfb(
-            name: added,
-          )
-        else
-          AdminAppointUser(name: added)
+        AnimatedList(
+            shrinkWrap: true,
+            key: _listkey,
+            initialItemCount: appoint.length,
+            itemBuilder: (context, index, animate) {
+              return SlideTransition(
+                child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(9)),
+                    child: ClipPath(
+                      clipper: ShapeBorderClipper(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(9))),
+                      child: Container(
+                        decoration: new BoxDecoration(
+                            border: Border(
+                                right: BorderSide(
+                                    color: Colors.green[300], width: 6)),
+                            gradient: new LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                Color(0xeeffffff),
+                                Color(0xeeEBFCE5),
+                                Color(0xeeE8FBFA)
+                              ],
+                            )),
+                        child: Padding(
+                          padding: const EdgeInsets.all(13.0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          6, 6, 14, 3),
+                                      child: Icon(
+                                        Icons.access_time,
+                                        size: 23,
+                                      ),
+                                    ),
+                                    Text(
+                                      DateFormat.yMMMd().format(
+                                          appoint[index]['date'].toDate()),
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.green[900]),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 3,
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 40),
+                                      child: Text(
+                                        appoint[index]['time'],
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.blueGrey[800]),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 40),
+                                      child: Text(
+                                        appoint[index]['therapy name'],
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.blueGrey[800]),
+                                        // color: Colors.green[900]),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ]),
+                        ),
+                      ),
+                    )),
+
+                // Text(appoint[index]['therapy name']),
+                position: animate.drive(offset),
+              );
+            })
       ])),
       floatingActionButton: new FloatingActionButton(
         child: new Icon(Icons.add),

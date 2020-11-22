@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../splash_screen.dart';
 // import 'package:fluttersns/splash_screen.dart';
 
 class Recipe extends StatefulWidget {
@@ -168,8 +170,7 @@ class _RecipeState extends State<Recipe> {
               ]),
             );
           }
-          return Text("Loading");
-          // return SplashScreen();
+          return SplashScreen();
         });
   }
 
