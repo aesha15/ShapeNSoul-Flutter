@@ -37,7 +37,7 @@ class DietState extends State<Diet> {
   List<dynamic> keys = [];
   List<dynamic> values = [];
   List<dynamic> ord = [];
-  List<String> urls = [];
+  Map<String, String> urls = {};
   Map tes;
   List<Map> aaa = [];
 
@@ -51,14 +51,12 @@ class DietState extends State<Diet> {
                 keys.add(e.key);
                 values.add(e.value);
               }),
-              print(keys),
-              print(values),
+
               tes = Map.fromIterables(keys, values),
               tes.keys.toList().sort((a, b) {
                 return a.compareTo(b);
               }),
               // aaa.add(tes),
-              print(tes),
               addDelay(tes.values.toList()),
             });
   }
@@ -68,7 +66,9 @@ class DietState extends State<Diet> {
       // 1) Wait for one second
       await Future.delayed(Duration(milliseconds: 80));
       // 2) Adding data to actual variable that holds the item.
-      getImage(item).then((value) => {urls.add(value)});
+      getImage(item).then((value) => {
+            urls[item] = value,
+          });
       _items.add(item);
       // 3) Telling animated list to start animation
       _listkey.currentState.insertItem(_items.length - 1);
@@ -100,7 +100,7 @@ class DietState extends State<Diet> {
           return SlideTransition(
             child: Column(
               children: [
-                if (urls.asMap().containsKey(index))
+                if (urls.containsKey(tes.values.toList()[index]))
                   Container(
                       height: MediaQuery.of(context).size.height / 5.3,
                       child: Container(
@@ -123,9 +123,10 @@ class DietState extends State<Diet> {
                                       ClipRRect(
                                         borderRadius: BorderRadius.circular(10),
                                         child: Hero(
-                                            tag: 'recipe${urls[index]}',
+                                            tag:
+                                                'recipe${urls[tes.values.toList()[index]]}',
                                             child: Image.network(
-                                              urls[index],
+                                              urls[tes.values.toList()[index]],
                                               width: double.infinity,
                                               color:
                                                   Color.fromRGBO(0, 0, 0, 0.5),
