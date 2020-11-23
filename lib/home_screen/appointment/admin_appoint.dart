@@ -440,103 +440,107 @@ class _AdminAppointState extends State<AdminAppoint> {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
-      body: Flexible(
+      body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: new Column(children: [
-        new ListTile(title: textField),
-        AnimatedList(
-            shrinkWrap: true,
-            key: _listkey,
-            initialItemCount: appoint.length,
-            itemBuilder: (context, index, animate) {
-              return SlideTransition(
-                child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(9)),
-                    child: ClipPath(
-                      clipper: ShapeBorderClipper(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(9))),
-                      child: Container(
-                        decoration: new BoxDecoration(
-                            border: Border(
-                                right: BorderSide(
-                                    color: Colors.green[300], width: 6)),
-                            gradient: new LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Color(0xeeffffff),
-                                Color(0xeeEBFCE5),
-                                Color(0xeeE8FBFA)
-                              ],
-                            )),
-                        child: Padding(
-                          padding: const EdgeInsets.all(13.0),
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          6, 6, 14, 3),
-                                      child: Icon(
-                                        Icons.access_time,
-                                        size: 23,
-                                      ),
-                                    ),
-                                    Text(
-                                      DateFormat.yMMMd().format(
-                                          appoint[index]['date'].toDate()),
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.green[900]),
-                                    ),
+            new ListTile(title: textField),
+            AnimatedList(
+                shrinkWrap: true,
+                key: _listkey,
+                initialItemCount: appoint.length,
+                itemBuilder: (context, index, animate) {
+                  return SlideTransition(
+                    child: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(9)),
+                        child: ClipPath(
+                          clipper: ShapeBorderClipper(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(9))),
+                          child: Container(
+                            decoration: new BoxDecoration(
+                                border: Border(
+                                    right: BorderSide(
+                                        color: Colors.green[300], width: 6)),
+                                gradient: new LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Color(0xeeffffff),
+                                    Color(0xeeEBFCE5),
+                                    Color(0xeeE8FBFA)
                                   ],
-                                ),
-                                SizedBox(
-                                  height: 3,
-                                ),
-                                Row(
+                                )),
+                            child: Padding(
+                              padding: const EdgeInsets.all(13.0),
+                              child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 40),
-                                      child: Text(
-                                        appoint[index]['time'],
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.blueGrey[800]),
-                                      ),
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              6, 6, 14, 3),
+                                          child: Icon(
+                                            Icons.access_time,
+                                            size: 23,
+                                          ),
+                                        ),
+                                        Text(
+                                          DateFormat.yMMMd().format(
+                                              appoint[index]['date'].toDate()),
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.green[900]),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 40),
-                                      child: Text(
-                                        appoint[index]['therapy name'],
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.blueGrey[800]),
-                                        // color: Colors.green[900]),
-                                      ),
+                                    SizedBox(
+                                      height: 3,
                                     ),
-                                  ],
-                                ),
-                              ]),
-                        ),
-                      ),
-                    )),
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 40),
+                                          child: Text(
+                                            appoint[index]['time'],
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.blueGrey[800]),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 40),
+                                          child: Text(
+                                            appoint[index]['therapy name'],
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.blueGrey[800]),
+                                            // color: Colors.green[900]),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ]),
+                            ),
+                          ),
+                        )),
 
-                // Text(appoint[index]['therapy name']),
-                position: animate.drive(offset),
-              );
-            })
-      ])),
+                    // Text(appoint[index]['therapy name']),
+                    position: animate.drive(offset),
+                  );
+                })
+          ])),
       floatingActionButton: new FloatingActionButton(
         child: new Icon(Icons.add),
         onPressed: () {

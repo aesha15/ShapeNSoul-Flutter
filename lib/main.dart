@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttersns/home_screen/appointment/new_appoint.dart';
 import 'package:fluttersns/home_screen/chat.dart';
 import 'package:fluttersns/home_screen/diet/add_recipe.dart';
-import 'package:fluttersns/splash_screen.dart';
 import 'login_screen/login_screen.dart';
 import 'otp_screen/otp_screen.dart';
 import 'home_screen/home_screen.dart';
 import 'splash_screen.dart';
 // import 'package:fluttersns/home_screen/appointment/client_appoint.dart';
-import 'package:fluttersns/home_screen/appointment/admin_appoint.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -30,7 +28,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
-        '/': (BuildContext ctx) => AdminAppoint(),
+        '/': (BuildContext ctx) => SplashScreen(),
         '/otp': (BuildContext ctx) => OtpScreen(),
         '/home': (BuildContext ctx) => Home(),
         '/login': (BuildContext ctx) => LoginScreen(),
