@@ -147,7 +147,6 @@ class _AppointmentState extends State<Appointment> {
             '$apptName.time': _timeController.text,
             '$apptName.therapy name': selectedTherapy,
             '$apptName.client name': selected,
-            '$apptName.status': true,
           });
         });
 
@@ -248,7 +247,7 @@ class _AppointmentState extends State<Appointment> {
         .get()
         .then((QuerySnapshot querySnapshot) => {
               querySnapshot.docs.forEach((doc) {
-                print(doc.data()["Name"]);
+                //print(doc.data()["Name"]);
                 therapy.add(doc.data()["Name"]);
               }),
             });

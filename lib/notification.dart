@@ -191,7 +191,7 @@ class NotificationPlugin {
       platformChannelSpecifics,
       payload: 'Test Payload',
     );
-    print(scheduleNotificationDateTime.toString());
+    //print(scheduleNotificationDateTime.toString());
   }
 
   Future<void> showNotificationWithAttachment() async {

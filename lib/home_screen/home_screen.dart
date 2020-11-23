@@ -21,7 +21,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   FirebaseAuth auth = FirebaseAuth.instance;
   final List<Widget> _children = [
-    (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
+    (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
         ? AdminAppoint()
         : ClientAppoint(),
     (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
       querySnapshot.data().forEach((key, value) {
         if (!value['date'].toDate().isBefore(DateTime.now())) {
           notificationPlugin.scheduleNotification(
-              value['date'].toDate().subtract(Duration(hours: 1)));
+              value['date'].toDate().toLocal().subtract(Duration(hours: 1)));
         }
       });
     });

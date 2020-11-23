@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
@@ -25,25 +26,41 @@ class _EditAppointmentState extends State<EditAppointment> {
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
   List<String> suggestions = [];
   List<String> therapy = [];
+  String name;
+  String therapyName;
   String therapytext = '';
   String currentText = "";
-  var selected;
-  var selectedTherapy;
+  String selected = "";
+  String selectedTherapy = "";
   Timestamp date;
+  var data;
 
   TextEditingController _dateController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
+  TextEditingController _name = TextEditingController();
+  TextEditingController _therapy = TextEditingController();
   SimpleAutoCompleteTextField _nameController;
   SimpleAutoCompleteTextField _therapyController;
   GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
   GlobalKey<AutoCompleteTextFieldState<String>> therapykey = new GlobalKey();
+
+  @override
+  void initState() {
+    data = jsonDecode(widget.title);
+    _name.text = data['client name'];
+    _therapy.text = data['therapy name'];
+    _dateController.text = data['date'];
+    _timeController.text = data['time'];
+    auto();
+    super.initState();
+  }
 
   _EditAppointmentState() {
     _nameController = SimpleAutoCompleteTextField(
         key: key,
         decoration: new InputDecoration(
             icon: const Icon(Icons.person), labelText: "Name"),
-        controller: TextEditingController(text: ""),
+        controller: _name,
         suggestions: suggestions,
         textChanged: (text) => currentText = text,
         clearOnSubmit: false,
@@ -56,7 +73,7 @@ class _EditAppointmentState extends State<EditAppointment> {
         key: therapykey,
         decoration: new InputDecoration(
             icon: const Icon(Icons.assignment), labelText: "Therapy Name"),
-        controller: TextEditingController(text: ""),
+        controller: _therapy,
         suggestions: therapy,
         textChanged: (text) => therapytext = text,
         clearOnSubmit: false,
@@ -105,19 +122,6 @@ class _EditAppointmentState extends State<EditAppointment> {
   }
 
   @override
-  void initState() {
-    _dateController.text = null;
-    _timeController.text = null;
-    auto();
-    // _dateController.text = DateFormat.yMMMd().format(DateTime.now());
-
-    // _timeController.text = formatDate(
-    //     DateTime(2019, 08, 1, DateTime.now().hour, DateTime.now().minute),
-    //     [hh, ':', nn, " ", am]).toString();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
@@ -133,7 +137,23 @@ class _EditAppointmentState extends State<EditAppointment> {
 
     Future<void> addAppt() async {
       WriteBatch batch = FirebaseFirestore.instance.batch();
+      if (selected == '') {
+        selected = _name.text;
+      }
+      if (selectedTherapy == '') {
+        selectedTherapy = _therapy.text;
+      }
       var userphone = await name2phone(selected);
+      print(data['date'] + ' ' + data['time']);
+      FirebaseFirestore.instance
+          .collection('Appointments')
+          .doc(userphone)
+          .update({
+        data['date'] + ' ' + data['time']: FieldValue.delete()
+      }).catchError((error) {
+        print(error);
+      });
+      //data['date'] + '' + data['time']
       return users.get().then((querySnapshot) {
         querySnapshot.docs.forEach((document) {
           batch.update(users.doc(userphone), {
@@ -147,7 +167,6 @@ class _EditAppointmentState extends State<EditAppointment> {
             '$apptName.time': _timeController.text,
             '$apptName.therapy name': selectedTherapy,
             '$apptName.client name': selected,
-            '$apptName.status': true,
           });
         });
 
@@ -248,7 +267,6 @@ class _EditAppointmentState extends State<EditAppointment> {
         .get()
         .then((QuerySnapshot querySnapshot) => {
               querySnapshot.docs.forEach((doc) {
-                print(doc.data()["Name"]);
                 therapy.add(doc.data()["Name"]);
               }),
             });
