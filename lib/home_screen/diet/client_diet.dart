@@ -50,17 +50,6 @@ class DietState extends State<Diet> {
               documentSnapshot.data()['diet'].entries.forEach((e) {
                 keys.add(e.key);
                 values.add(e.value);
-
-                // tes = Map.fromIterable(e);
-                // print(tes);
-
-                // tes.addEntries(e);
-                // print(tes);
-
-                // aaa..sort();
-                // print(aaa);
-
-                // test.add(e.value);
               }),
 
               tes = Map.fromIterables(keys, values),
@@ -109,17 +98,11 @@ class DietState extends State<Diet> {
         initialItemCount: _items.length,
         itemBuilder: (context, index, animate) {
           return SlideTransition(
-            // child: Container(
-            //   height: MediaQuery.of(context).size.height / 4.8,
-            //   child:
-            // Card(
-            //   shape: RoundedRectangleBorder(
-            //       borderRadius: BorderRadius.circular(10)),
             child: Column(
               children: [
                 if (urls.containsKey(tes.values.toList()[index]))
                   Container(
-                      height: MediaQuery.of(context).size.height / 5.3,
+                      height: MediaQuery.of(context).size.height / 6.3,
                       child: Container(
                         child: Card(
                             shape: RoundedRectangleBorder(
@@ -270,7 +253,6 @@ class DietState extends State<Diet> {
                           'https://firebasestorage.googleapis.com/v0/b/shapensoul-e1bb8.appspot.com/o/logo.png?alt=media&token=9108beac-e787-4c75-860b-8677d36720c5'))
               ],
             ),
-
             position: animate.drive(offset),
           );
         });
