@@ -7,6 +7,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'recipe.dart';
 // import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:collection';
+
 // import 'package:timeline_tile/timeline_tile.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
@@ -33,13 +35,11 @@ class DietState extends State<Diet> {
   final Tween<Offset> offset = Tween(begin: Offset(1, 0), end: Offset(0, 0));
   List<dynamic> _items = [];
   int counter = 0;
-  List<dynamic> test = [];
   List<dynamic> keys = [];
   List<dynamic> values = [];
-  List<dynamic> ord = [];
   Map<String, String> urls = {};
-  Map tes;
-  List<Map> aaa = [];
+  Map map;
+  SplayTreeMap tes;
 
   Future<void> _loadItems() async {
     FirebaseFirestore.instance
@@ -51,12 +51,10 @@ class DietState extends State<Diet> {
                 keys.add(e.key);
                 values.add(e.value);
               }),
-
-              tes = Map.fromIterables(keys, values),
-              tes.keys.toList().sort((a, b) {
-                return a.compareTo(b);
-              }),
-              // aaa.add(tes),
+              map = Map.fromIterables(keys, values),
+              tes = SplayTreeMap<String, dynamic>.from(
+                  map, (a, b) => a.compareTo(b)),
+              print(tes),
               addDelay(tes.values.toList()),
             });
   }
@@ -143,14 +141,28 @@ class DietState extends State<Diet> {
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
                                                         10, 1, 10, 1),
+
                                                 child: Text(
-                                                  tes.keys.toList()[index],
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 23,
-                                                      color: Colors.white),
-                                                ),
+                                                    tes.keys.toList()[index],
+                                                    style: TextStyle(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontSize: 23,
+                                                        color: Colors.white)),
+                                                // child: Text(() {
+                                                //   if (tes.keys
+                                                //       .toList()[index]
+                                                //       ) {
+                                                //     return tes.keys
+                                                //             .toList()[index] +
+                                                //         'AM';
+                                                //   }
+                                                // }(),
+                                                //     style: TextStyle(
+                                                //         fontWeight:
+                                                //             FontWeight.w500,
+                                                //         fontSize: 23,
+                                                //         color: Colors.white)),
                                               ),
                                               VerticalDivider(
                                                 width: 35,

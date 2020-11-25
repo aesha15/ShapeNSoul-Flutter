@@ -164,7 +164,6 @@ class ClientAppointState extends State<ClientAppoint> {
                                                   fontSize: 18,
                                                   fontWeight: FontWeight.w600,
                                                   color: Colors.blueGrey[800]),
-                                              // color: Colors.green[900]),
                                             ),
                                           ),
                                         ],
@@ -173,8 +172,6 @@ class ClientAppointState extends State<ClientAppoint> {
                               ),
                             ),
                           )),
-
-                      // Text(_items[index]['therapy name']),
                       position: animate.drive(offset),
                     );
                   }),
