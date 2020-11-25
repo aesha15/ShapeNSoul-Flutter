@@ -8,6 +8,8 @@ Future<String> name2phone(name) async {
       .get()
       .then((DocumentSnapshot documentSnapshot) {
     phone = documentSnapshot['phone'];
+  }).catchError((error) {
+    print(error.message);
   });
   return phone;
 }

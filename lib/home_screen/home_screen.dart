@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttersns/home_screen/appointment/client_appoint.dart';
 import 'package:fluttersns/home_screen/appointment/admin_appoint.dart';
 // import 'package:fluttersns/home_screen/chat.dart';
 import 'package:fluttersns/home_screen/diet/client_diet.dart';
 import 'package:fluttersns/home_screen/diet/admin_diet.dart';
-
+import '../notification.dart';
 import 'package:fluttersns/home_screen/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,7 +21,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   FirebaseAuth auth = FirebaseAuth.instance;
   final List<Widget> _children = [
-    (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
+    (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
         ? AdminAppoint()
         : ClientAppoint(),
     (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
@@ -28,6 +29,23 @@ class _HomeState extends State<Home> {
         : Diet(),
     Profile(),
   ];
+
+  @override
+  initState() {
+    FirebaseFirestore.instance
+        .collection('Appointments')
+        .doc('+918976305456')
+        .snapshots()
+        .listen((DocumentSnapshot querySnapshot) {
+      querySnapshot.data().forEach((key, value) {
+        if (!value['date'].toDate().isBefore(DateTime.now())) {
+          notificationPlugin.scheduleNotification(
+              value['date'].toDate().toLocal().subtract(Duration(hours: 1)));
+        }
+      });
+    });
+    super.initState();
+  }
 
   signOut() async {
     await auth.signOut();

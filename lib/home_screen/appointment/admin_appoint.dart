@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -54,7 +56,8 @@ class _AdminAppointState extends State<AdminAppoint> {
               querySnapshot.docs.forEach((value) {
                 value.data().forEach((key, value) {
                   if (!value['date'].toDate().isBefore(DateTime.now()))
-                    unSortedAppoint.add(value);
+                    print(value);
+                  unSortedAppoint.add(value);
                 });
               }),
               unSortedAppoint.sort((a, b) {
@@ -80,7 +83,7 @@ class _AdminAppointState extends State<AdminAppoint> {
       // 1) Wait for one second
       await Future.delayed(Duration(milliseconds: 100));
       // 2) Adding data to actual variable that holds the item.
-
+      item['date'] = DateFormat.yMMMd().format(item['date'].toDate());
       appoint.add(item);
       // 3) Telling animated list to start animation
       _listkey.currentState.insertItem(appoint.length - 1);
@@ -102,7 +105,6 @@ class _AdminAppointState extends State<AdminAppoint> {
               unSortedAppoint.sort((a, b) {
                 return a['date'].toDate().compareTo(b['date'].toDate());
               }),
-              print(unSortedAppoint),
               addDelay(unSortedAppoint)
             });
   }
@@ -167,7 +169,7 @@ class _AdminAppointState extends State<AdminAppoint> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => EditAppointment(
-                                        title: appoint[index].toString())));
+                                        title: jsonEncode(appoint[index]))));
                           },
                           child: ClipPath(
                             clipper: ShapeBorderClipper(
@@ -244,9 +246,7 @@ class _AdminAppointState extends State<AdminAppoint> {
                                                     padding: const EdgeInsets
                                                         .fromLTRB(1, 1, 25, 5),
                                                     child: Text(
-                                                      DateFormat.yMMMd().format(
-                                                          appoint[index]['date']
-                                                              .toDate()),
+                                                      appoint[index]['date'],
                                                       style: TextStyle(
                                                         color:
                                                             Colors.green[900],
