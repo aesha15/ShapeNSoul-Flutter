@@ -18,6 +18,12 @@ class _ProfileDetails extends State<ProfileDetails> {
   final _weightController = TextEditingController();
   final _tongue = TextEditingController();
   final _bp = TextEditingController();
+  var tongue = FocusNode();
+  var wt = FocusNode();
+  var bp = FocusNode();
+  // FocusNode tongue;
+  // FocusNode wt;
+  // FocusNode bp;
   @override
   void initState() {
     getDetails();
@@ -68,247 +74,288 @@ class _ProfileDetails extends State<ProfileDetails> {
           if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> data = snapshot.data.data();
             return Scaffold(
-                body: CustomScrollView(
-              slivers: <Widget>[
-                SliverAppBar(
-                  flexibleSpace: FlexibleSpaceBar(
-                    titlePadding: EdgeInsets.all(25),
-                    title: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          child: Text(data['name'],
-                              style: TextStyle(
-                                color: Colors.green[800],
-                                fontSize: 30,
-                              )),
-                        ),
-                        Flexible(
-                          child: Text(
-                            data['personal']['phone'],
-                            style: TextStyle(
-                                // color: Colors.green[800],
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400),
+                body: GestureDetector(
+              onTap: () {
+                FocusScopeNode currentFocus = FocusScope.of(context);
+
+                if (!currentFocus.hasPrimaryFocus) {
+                  currentFocus.unfocus();
+                }
+              },
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  SliverAppBar(
+                    flexibleSpace: FlexibleSpaceBar(
+                      titlePadding: EdgeInsets.all(25),
+                      title: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Flexible(
+                            child: Text(data['name'],
+                                style: TextStyle(
+                                  color: Colors.green[800],
+                                  fontSize: 30,
+                                )),
                           ),
-                        ),
-                      ],
-                    ),
-                    background: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xffffffff),
-                            Color(0xccEBFCE5),
-                          ],
-                        ),
+                          Flexible(
+                            child: Text(
+                              data['personal']['phone'],
+                              style: TextStyle(
+                                  // color: Colors.green[800],
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ),
-                  floating: true,
-                  elevation: 9,
-                  expandedHeight: 200,
-                  actions: <Widget>[
-                    PopupMenuButton(
-                      elevation: 3,
-                      itemBuilder: (context) => [
-                        PopupMenuItem(
-                            value: 1, child: Text('View Previous Appointments'))
-                      ],
-                      offset: Offset(0, 45),
-                      onSelected: (value) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PrevAppoint(name: data['name']),
-                            ));
-                      },
-                    )
-                  ],
-                ),
-                SliverList(
-                  delegate: SliverChildListDelegate(
-                    [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 26, 0, 1),
-                        child: Text(
-                          'Personal Details',
-                          style: TextStyle(
-                              fontSize: 23,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.green[900]),
-                        ),
-                      ),
-                      Container(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(23, 16, 10, 16),
-                          child: Column(
-                            children: [
-                              Row(children: [
-                                Text("Tongue : ",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.w500)),
-                                Expanded(
-                                  child: Card(
-                                    color: Color(0xffFBFDFB),
-                                    elevation: 0.2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: EditableText(
-                                        backgroundCursorColor: Colors.green,
-                                        textAlign: TextAlign.start,
-                                        focusNode: FocusNode(),
-                                        controller: _tongue,
-                                        style: TextStyle(
-                                            color: Colors.blueGrey[600],
-                                            fontSize: 19.0,
-                                            fontWeight: FontWeight.w500),
-                                        keyboardType: TextInputType.multiline,
-                                        cursorColor: Colors.blue,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ]),
-                              Row(children: [
-                                Text("Weight : ",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.w500)),
-                                Expanded(
-                                  child: Card(
-                                    color: Color(0xffFBFDFB),
-                                    elevation: 0.2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: EditableText(
-                                        backgroundCursorColor: Colors.green,
-                                        textAlign: TextAlign.start,
-                                        focusNode: FocusNode(),
-                                        controller: _weightController,
-                                        style: TextStyle(
-                                            color: Colors.blueGrey[600],
-                                            fontSize: 19.0,
-                                            fontWeight: FontWeight.w500),
-                                        keyboardType: TextInputType.multiline,
-                                        cursorColor: Colors.blue,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ]),
-                              Row(children: [
-                                Text("Blood Pressure : ",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.w500)),
-                                Expanded(
-                                  child: Card(
-                                    color: Color(0xffFBFDFB),
-                                    elevation: 0.2,
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: EditableText(
-                                        backgroundCursorColor: Colors.green,
-                                        textAlign: TextAlign.start,
-                                        focusNode: FocusNode(),
-                                        controller: _bp,
-                                        style: TextStyle(
-                                            color: Colors.blueGrey[600],
-                                            fontSize: 19.0,
-                                            fontWeight: FontWeight.w500),
-                                        keyboardType: TextInputType.multiline,
-                                        cursorColor: Colors.blue,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ]),
+                      background: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color(0xffffffff),
+                              Color(0xccEBFCE5),
                             ],
                           ),
                         ),
                       ),
-                      Divider(),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 8, 0, 8),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                'Diet',
-                                style: TextStyle(
-                                    fontSize: 23,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.green[900]),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: new IconButton(
-                                  icon: Icon(Icons.add),
-                                  color: Colors.green[900],
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => AddDiet(),
-                                        ));
-                                  }),
-                            )
-                          ],
-                        ),
-                      ),
-                      for (var method in data['diet'].keys.toList()..sort())
-                        Column(
-                          children: [
-                            Card(
-                              color: Color(0xffFBFDFB),
-                              elevation: 0.2,
-                              child: Padding(
-                                padding: const EdgeInsets.all(18.0),
-                                child: IntrinsicHeight(
-                                  child: Row(children: [
-                                    Text(
-                                      method,
-                                      style: TextStyle(
-                                          color: Colors.blueGrey[800],
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    VerticalDivider(
-                                      width: 35,
-                                      thickness: 0.4,
-                                      color: Colors.blueGrey[100],
-                                    ),
-                                    Expanded(
-                                        child: Text(
-                                      data['diet'][method],
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500),
-                                    )),
-                                    Icon(
-                                      Icons.edit,
-                                      color: Colors.grey,
-                                    )
-                                  ]),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
+                    ),
+                    floating: true,
+                    elevation: 9,
+                    expandedHeight: 200,
+                    actions: <Widget>[
+                      PopupMenuButton(
+                        elevation: 3,
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                              value: 1,
+                              child: Text('View Previous Appointments'))
+                        ],
+                        offset: Offset(0, 45),
+                        onSelected: (value) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    PrevAppoint(name: data['name']),
+                              ));
+                        },
+                      )
                     ],
                   ),
-                )
-              ],
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 26, 0, 1),
+                          child: Text(
+                            'Personal Details',
+                            style: TextStyle(
+                                fontSize: 23,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.green[900]),
+                          ),
+                        ),
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(23, 16, 10, 16),
+                            child: Column(
+                              children: [
+                                Row(children: [
+                                  Text("Tongue : ",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w500)),
+                                  Expanded(
+                                    child: Card(
+                                      color: Color(0xffFBFDFB),
+                                      elevation: 0.2,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Expanded(
+                                          child: EditableText(
+                                            backgroundCursorColor: Colors.green,
+                                            textAlign: TextAlign.start,
+                                            focusNode: tongue,
+                                            controller: _tongue,
+                                            style: TextStyle(
+                                                color: Colors.blueGrey[600],
+                                                fontSize: 19.0,
+                                                fontWeight: FontWeight.w500),
+                                            keyboardType:
+                                                TextInputType.multiline,
+                                            cursorColor: Colors.blue,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ]),
+                                Row(children: [
+                                  Text("Weight : ",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w500)),
+                                  Expanded(
+                                    child: Card(
+                                      color: Color(0xffFBFDFB),
+                                      elevation: 0.2,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: EditableText(
+                                          backgroundCursorColor: Colors.green,
+                                          textAlign: TextAlign.start,
+                                          focusNode: wt,
+                                          controller: _weightController,
+                                          style: TextStyle(
+                                              color: Colors.blueGrey[600],
+                                              fontSize: 19.0,
+                                              fontWeight: FontWeight.w500),
+                                          keyboardType: TextInputType.multiline,
+                                          cursorColor: Colors.blue,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ]),
+                                Row(children: [
+                                  Text("Blood Pressure : ",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 19,
+                                          fontWeight: FontWeight.w500)),
+                                  Expanded(
+                                    child: Card(
+                                      color: Color(0xffFBFDFB),
+                                      elevation: 0.2,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: EditableText(
+                                          backgroundCursorColor: Colors.green,
+                                          textAlign: TextAlign.start,
+                                          focusNode: bp,
+                                          controller: _bp,
+                                          style: TextStyle(
+                                              color: Colors.blueGrey[600],
+                                              fontSize: 19.0,
+                                              fontWeight: FontWeight.w500),
+                                          keyboardType: TextInputType.multiline,
+                                          cursorColor: Colors.blue,
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ]),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 12, 12, 0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      FlatButton(
+                                          onPressed: () {
+                                            FocusScope.of(context).unfocus();
+                                            updateUser();
+                                          },
+                                          child: Text(
+                                            "Save Changes",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                shadows: <Shadow>[
+                                                  Shadow(
+                                                      offset: Offset(0.5, 0.5),
+                                                      blurRadius: 2.0,
+                                                      color:
+                                                          Colors.blueGrey[100]),
+                                                ],
+                                                color: Colors.blue,
+                                                fontWeight: FontWeight.bold),
+                                          )),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Divider(),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(15, 8, 0, 8),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  'Diet',
+                                  style: TextStyle(
+                                      fontSize: 23,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.green[900]),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: new IconButton(
+                                    icon: Icon(Icons.add),
+                                    color: Colors.green[900],
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => AddDiet(),
+                                          ));
+                                    }),
+                              )
+                            ],
+                          ),
+                        ),
+                        for (var method in data['diet'].keys.toList()..sort())
+                          Column(
+                            children: [
+                              Card(
+                                color: Color(0xffFBFDFB),
+                                elevation: 0.2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(18.0),
+                                  child: IntrinsicHeight(
+                                    child: Row(children: [
+                                      Text(
+                                        method,
+                                        style: TextStyle(
+                                            color: Colors.blueGrey[800],
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      VerticalDivider(
+                                        width: 35,
+                                        thickness: 0.4,
+                                        color: Colors.blueGrey[100],
+                                      ),
+                                      Expanded(
+                                          child: Text(
+                                        data['diet'][method],
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      )),
+                                      Icon(
+                                        Icons.edit,
+                                        color: Colors.grey,
+                                      )
+                                    ]),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             )
                 // body: ListView(children: [
 
