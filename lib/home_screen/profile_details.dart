@@ -7,6 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttersns/home_screen/appointment/previous_appoint.dart';
 import 'package:fluttersns/name2phone.dart';
+import '../splash_screen.dart';
+import 'diet/add_recipe.dart';
 import 'diet/edit_diet.dart';
 import 'package:intl/intl.dart';
 
@@ -317,8 +319,12 @@ class _ProfileDetails extends State<ProfileDetails> {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => AddDiet(),
-                                          ));
+                                              builder: (context) => AddDiet(
+                                                      title: jsonEncode({
+                                                    'phone': phone,
+                                                    'time': '',
+                                                    'recipe': ''
+                                                  }))));
                                     }),
                               )
                             ],
@@ -403,7 +409,7 @@ class _ProfileDetails extends State<ProfileDetails> {
                 // ),
                 );
           }
-          return Text("loading");
+          return SplashScreen();
         });
   }
 }

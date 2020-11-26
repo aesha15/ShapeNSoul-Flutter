@@ -12,7 +12,7 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 2), () {
       User result = FirebaseAuth.instance.currentUser;
       if (result != null) {
         Navigator.pushReplacementNamed(context, '/home');

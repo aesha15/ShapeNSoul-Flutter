@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import '../../name2phone.dart';
-import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddDiet extends StatefulWidget {
@@ -33,6 +31,7 @@ class _AddDietState extends State<AddDiet> {
   var selected;
   String selectedTherapy = '';
   Timestamp date;
+  Map<String, dynamic> diet = {};
 
   TextEditingController _timeController = TextEditingController();
   TextEditingController _recipe = TextEditingController();
@@ -101,21 +100,19 @@ class _AddDietState extends State<AddDiet> {
       if (selectedTherapy == '') {
         selectedTherapy = recipe;
       }
-      print(time);
+      if (time != '') {
+        diet.remove(time);
+      }
+      diet[_timeController.text] = selectedTherapy;
       FirebaseFirestore.instance
           .collection('Users')
-          .doc(phone + '/diet/' + time)
-          .delete();
-
-      // FirebaseFirestore.instance
-      //     .collection('Users')
-      //     .doc(phone + '/diet')
-      //     .set({_timeController.text: selectedTherapy});
+          .doc(phone)
+          .update({'diet': diet});
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Diet'),
+        title: Text('Edit Diet'),
       ),
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
@@ -156,11 +153,12 @@ class _AddDietState extends State<AddDiet> {
                     height: _height / 3,
                   ),
                   RaisedButton(
-                    onPressed: () => {editDiet(), Navigator.pop(context)},
-                    color: Color(0xff3fc380),
-                    textColor: Colors.white,
-                    child: Text('Edit'),
-                  ),
+                      onPressed: () => {editDiet(), Navigator.pop(context)},
+                      color: Color(0xff3fc380),
+                      textColor: Colors.white,
+                      child: Column(children: [
+                        if (time == '') Text('Add') else Text('Edit'),
+                      ])),
                 ],
               ),
             ],
@@ -178,6 +176,15 @@ class _AddDietState extends State<AddDiet> {
               querySnapshot.docs.forEach((doc) {
                 therapy.add(doc.data()["Name"]);
               }),
+            });
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(phone)
+        .get()
+        .then((DocumentSnapshot querySnapshot) => {
+              setState(() {
+                diet = querySnapshot.data()['diet'];
+              })
             });
   }
 }

@@ -175,11 +175,19 @@ class _RecipeState extends State<Recipe> {
   }
 
   Future<void> getImage(name) async {
-    print(name);
-    final ref = FirebaseStorage.instance.ref().child(name + '.jpg');
-    var url = await ref.getDownloadURL();
-    setState(() {
-      imageurl = url;
-    });
+    try {
+      final ref = FirebaseStorage.instance.ref().child(name + '.jpg');
+      await ref
+          .getDownloadURL()
+          .then((value) => setState(() {
+                imageurl = value;
+              }))
+          .catchError((error) {
+        print(error);
+      });
+    } on FirebaseException catch (e) {
+      print(e.message);
+      return 'https://firebasestorage.googleapis.com/v0/b/shapensoul-e1bb8.appspot.com/o/logo.png?alt=media&token=9108beac-e787-4c75-860b-8677d36720c5';
+    }
   }
 }
