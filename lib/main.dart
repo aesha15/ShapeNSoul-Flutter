@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttersns/home_screen/appointment/new_appoint.dart';
 // import 'package:fluttersns/home_screen/chat.dart';
 import 'package:fluttersns/home_screen/diet/add_recipe.dart';
+import 'package:fluttersns/Imagedownload.dart';
 import 'login_screen/login_screen.dart';
 import 'otp_screen/otp_screen.dart';
 import 'home_screen/home_screen.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
-        '/': (BuildContext ctx) => SplashScreen(),
+        '/': (BuildContext ctx) => Images(),
         '/otp': (BuildContext ctx) => OtpScreen(),
         '/home': (BuildContext ctx) => Home(),
         '/login': (BuildContext ctx) => LoginScreen(),

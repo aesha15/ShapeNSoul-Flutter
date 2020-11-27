@@ -27,7 +27,8 @@ class _HomeState extends State<Home> {
     (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
         ? AdminDiet()
         : Diet(),
-    Profile(),
+    if (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
+      Profile()
   ];
 
   @override
@@ -93,8 +94,9 @@ class _HomeState extends State<Home> {
             icon: new Icon(Icons.description),
             title: Text('Diet'),
           ),
-          new BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline), title: Text('Profile'))
+          if (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
+            new BottomNavigationBarItem(
+                icon: Icon(Icons.person_outline), title: Text('Profile'))
         ],
       ),
     );

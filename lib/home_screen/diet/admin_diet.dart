@@ -37,16 +37,20 @@ class _AdminDiet extends State<AdminDiet> {
             body +
             "</html>";
 
-    Directory appDocDir = await getApplicationDocumentsDirectory();
-    var targetPath = appDocDir.path;
-    var targetFileName = "Diet";
-    var generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
-        html, targetPath, targetFileName);
-    var generatedPdfFilePath = generatedPdfFile.path;
-    Share.shareFiles([generatedPdfFilePath], text: 'Your PDF!');
-    setState(() {
-      added.clear();
-    });
+    try {
+      Directory appDocDir = await getApplicationDocumentsDirectory();
+      var targetPath = appDocDir.path;
+      var targetFileName = "Diet";
+      var generatedPdfFile = await FlutterHtmlToPdf.convertFromHtmlContent(
+          html, targetPath, targetFileName);
+      var generatedPdfFilePath = generatedPdfFile.path;
+      Share.shareFiles([generatedPdfFilePath], text: 'Your PDF!');
+      setState(() {
+        added.clear();
+      });
+    } on Exception catch (e) {
+      print(e);
+    }
   }
 
   create() async {
