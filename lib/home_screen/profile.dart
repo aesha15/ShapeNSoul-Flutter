@@ -60,14 +60,15 @@ class _Profile extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color(0xfff6fef6),
         body: Column(
-      children: [
-        new ListTile(title: textField),
-        ProfileStateless(
-          name: submit,
-        )
-      ],
-    ));
+          children: [
+            new ListTile(title: textField),
+            ProfileStateless(
+              name: submit,
+            )
+          ],
+        ));
   }
 
   Future<void> getProfile() async {

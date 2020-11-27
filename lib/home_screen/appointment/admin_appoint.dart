@@ -148,6 +148,7 @@ class _AdminAppointState extends State<AdminAppoint> {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
+      backgroundColor: Color(0xfff6fef6),
       body: Container(
         child: ListView(
           children: [

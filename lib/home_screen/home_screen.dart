@@ -55,14 +55,21 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('Shape N Soul'),
+          title: Text('Shape N Soul',
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.w700,
+              )),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: <Color>[Color(0xff84EBAB), Color(0xff3fc380)])),
+          ),
           automaticallyImplyLeading: false,
+          // backgroundColor: Color(0xfff6fef6),
           actions: <Widget>[
-            IconButton(
-                icon: new Icon(Icons.forum),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/chat');
-                }),
             IconButton(
               icon: new Icon(Icons.exit_to_app),
               onPressed: () {
@@ -72,6 +79,9 @@ class _HomeState extends State<Home> {
           ]),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 5,
+        backgroundColor: Color(0xfff6fef6),
+        // selectedItemColor: Colors.white,
         onTap: onTabTapped,
         currentIndex: _currentIndex,
         items: [

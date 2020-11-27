@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:fluttersns/appts/test1.dart';
 import 'package:fluttersns/home_screen/appointment/new_appoint.dart';
-import 'package:fluttersns/home_screen/chat.dart';
+// import 'package:fluttersns/home_screen/chat.dart';
 import 'package:fluttersns/home_screen/diet/add_recipe.dart';
 import 'login_screen/login_screen.dart';
 import 'otp_screen/otp_screen.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter OTP Authentication',
       theme: ThemeData(
-        primaryColor: const Color(0xff3fc380),
+        primaryColor: Color(0xff3fc380),
       ),
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
         '/otp': (BuildContext ctx) => OtpScreen(),
         '/home': (BuildContext ctx) => Home(),
         '/login': (BuildContext ctx) => LoginScreen(),
-        '/chat': (BuildContext ctx) => Chat(),
         // '/client_appt': (BuildContext ctx) => ClientAppoint(),
         '/appointment': (BuildContext ctx) => Appointment(),
         '/add_recipe': (BuildContext ctx) => AddRecipe(),

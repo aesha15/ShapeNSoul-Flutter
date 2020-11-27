@@ -66,7 +66,7 @@ class ClientAppointState extends State<ClientAppoint> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xfff6fef6),
+      backgroundColor: Color(0xfff6fef6),
       body: Container(
         child: ListView(
           children: [
