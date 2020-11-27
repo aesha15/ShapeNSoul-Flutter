@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../splash_screen.dart';
 // import 'package:fluttersns/splash_screen.dart';
@@ -16,6 +19,7 @@ class Recipe extends StatefulWidget {
 class _RecipeState extends State<Recipe> {
   String imageurl =
       'https://firebasestorage.googleapis.com/v0/b/shapensoul-e1bb8.appspot.com/o/Clove%20tea.jpg?alt=media&token=6fa0801d-4584-434a-842e-68db6d5c5a0e';
+  Directory appDocDir;
   @override
   void initState() {
     getImage(widget.name);
@@ -65,29 +69,8 @@ class _RecipeState extends State<Recipe> {
                       ),
                       background: Hero(
                         tag: 'recipe$imageurl',
-                        child: Image.network(
-                          // clove tea
-                          // 'https://assets-news-bcdn-ll.dailyhunt.in/cmd/resize/400x400_60/fetchdata12/images/71/ac/27/71ac27c0daeabd9c9af9680d6a04319b.jpg',
-                          // cumin drink
-                          // 'https://www.24mantra.com/wp-content/uploads/2020/07/a708191ec813df32ce5bc6b3b-5f040f267982e.jpg',
-                          // giloy kadha
-                          // 'https://navbharattimes.indiatimes.com/photo/msid-76461396,imgsize-36152/pic.jpg',
-                          // ginger drink
-                          // 'https://img1.thelist.com/img/gallery/when-you-drink-ginger-tea-every-day-this-is-what-happens-to-your-body/intro-1585239422.jpg',
-                          // ragi laddoo
-                          // 'https://hyderabadiruchulu.com/wp-content/uploads/2018/08/ragi-laddu.jpg',
-                          // sesame date ladoo
-                          // 'https://st1.thehealthsite.com/wp-content/uploads/2017/10/Dates-Ladoo-655x353.jpg',
-                          // sesame ladoo
-                          // 'https://www.myweekendkitchen.in/wp-content/uploads/2019/02/til_ke_laddu_sesame_balls-500x375.jpg',
-                          // shoe flower drink
-                          // 'https://smartsexypaleo.com/wp-content/uploads/2020/05/refreshing-hibiscus-iced-ted_67618.jpg',
-                          // tulsi mint tea
-                          imageurl,
-
-                          // turmeric drink
-                          //'https://www.thespruceeats.com/thmb/-c4RbYEJnYcmV0SyQehEA6Bh37s=/960x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/herbal-tea-with-turmeric-638824318-5abdb804ae9ab8003729e696.jpg',
-
+                        child: Image.file(
+                          new File('${appDocDir.path}/${data['Name']}.jpg'),
                           color: Color.fromRGBO(0, 0, 0, 0.5),
                           colorBlendMode: BlendMode.darken,
                           fit: BoxFit.cover,
@@ -175,19 +158,6 @@ class _RecipeState extends State<Recipe> {
   }
 
   Future<void> getImage(name) async {
-    try {
-      final ref = FirebaseStorage.instance.ref().child(name + '.jpg');
-      await ref
-          .getDownloadURL()
-          .then((value) => setState(() {
-                imageurl = value;
-              }))
-          .catchError((error) {
-        print(error);
-      });
-    } on FirebaseException catch (e) {
-      print(e.message);
-      return 'https://firebasestorage.googleapis.com/v0/b/shapensoul-e1bb8.appspot.com/o/logo.png?alt=media&token=9108beac-e787-4c75-860b-8677d36720c5';
-    }
+    appDocDir = await getApplicationDocumentsDirectory();
   }
 }

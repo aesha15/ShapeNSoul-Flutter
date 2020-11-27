@@ -55,8 +55,7 @@ class _AdminAppointState extends State<AdminAppoint> {
               querySnapshot.docs.forEach((value) {
                 value.data().forEach((key, value) {
                   if (!value['date'].toDate().isBefore(DateTime.now()))
-                    print(value);
-                  unSortedAppoint.add(value);
+                    unSortedAppoint.add(value);
                 });
               }),
               unSortedAppoint.sort((a, b) {

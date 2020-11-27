@@ -1,3 +1,5 @@
+// import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttersns/home_screen/appointment/client_appoint.dart';
@@ -5,6 +7,8 @@ import 'package:fluttersns/home_screen/appointment/admin_appoint.dart';
 // import 'package:fluttersns/home_screen/chat.dart';
 import 'package:fluttersns/home_screen/diet/client_diet.dart';
 import 'package:fluttersns/home_screen/diet/admin_diet.dart';
+
+// import 'package:path_provider/path_provider.dart';
 import '../notification.dart';
 import 'package:fluttersns/home_screen/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,6 +24,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   int _currentIndex = 0;
   FirebaseAuth auth = FirebaseAuth.instance;
+  String phone = '';
   final List<Widget> _children = [
     (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
         ? AdminAppoint()
@@ -33,18 +38,7 @@ class _HomeState extends State<Home> {
 
   @override
   initState() {
-    FirebaseFirestore.instance
-        .collection('Appointments')
-        .doc('+918976305456')
-        .snapshots()
-        .listen((DocumentSnapshot querySnapshot) {
-      querySnapshot.data().forEach((key, value) {
-        if (!value['date'].toDate().isBefore(DateTime.now())) {
-          notificationPlugin.scheduleNotification(
-              value['date'].toDate().toLocal().subtract(Duration(hours: 1)));
-        }
-      });
-    });
+    initialise();
     super.initState();
   }
 
@@ -148,6 +142,22 @@ class _HomeState extends State<Home> {
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
+    });
+  }
+
+  void initialise() {
+    phone = auth.currentUser.phoneNumber;
+    FirebaseFirestore.instance
+        .collection('Appointments')
+        .doc(phone)
+        .snapshots()
+        .listen((DocumentSnapshot querySnapshot) {
+      querySnapshot.data().forEach((key, value) {
+        if (!value['date'].toDate().isBefore(DateTime.now())) {
+          notificationPlugin.scheduleNotification(
+              value['date'].toDate().toLocal().subtract(Duration(hours: 1)));
+        }
+      });
     });
   }
 }
