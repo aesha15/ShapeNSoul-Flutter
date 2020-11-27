@@ -45,7 +45,6 @@ class _ProfileDetails extends State<ProfileDetails> {
 
   getDetails() {
     var data;
-    print(phone);
     FirebaseFirestore.instance
         .collection('Users')
         .doc(phone)
