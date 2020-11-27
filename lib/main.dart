@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
-        '/': (BuildContext ctx) => Images(),
+        '/': (BuildContext ctx) => SplashScreen(),
         '/otp': (BuildContext ctx) => OtpScreen(),
         '/home': (BuildContext ctx) => Home(),
         '/login': (BuildContext ctx) => LoginScreen(),

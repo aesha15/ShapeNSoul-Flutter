@@ -52,7 +52,6 @@ class _AdminAppointState extends State<AdminAppoint> {
         .collection('Appointments')
         .get()
         .then((QuerySnapshot querySnapshot) => {
-              //test.removeRange(0, test.length - 1),
               querySnapshot.docs.forEach((value) {
                 value.data().forEach((key, value) {
                   if (!value['date'].toDate().isBefore(DateTime.now()))

@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttersns/home_screen/appointment/previous_appoint.dart';
 import 'package:fluttersns/name2phone.dart';
 import '../splash_screen.dart';
-import 'diet/add_recipe.dart';
 import 'diet/edit_diet.dart';
 import 'package:intl/intl.dart';
 
@@ -28,9 +27,7 @@ class _ProfileDetails extends State<ProfileDetails> {
   var wt = FocusNode();
   var bp = FocusNode();
   String phone;
-  // FocusNode tongue;
-  // FocusNode wt;
-  // FocusNode bp;
+
   @override
   void initState() {
     name2phone(widget.name).then((value) => {
@@ -69,6 +66,15 @@ class _ProfileDetails extends State<ProfileDetails> {
         })
         .then((value) => print("User Updated"))
         .catchError((error) => print("Failed to update user: $error"));
+  }
+
+  toTime(t) {
+    final now = new DateTime.now();
+    t = TimeOfDay(
+        hour: int.parse(t.split(":")[0]), minute: int.parse(t.split(":")[1]));
+    var d = DateTime(now.year, now.month, now.day, t.hour, t.minute);
+    String formattedTime = DateFormat('h:mm a').format(d);
+    return formattedTime;
   }
 
   @override
@@ -341,7 +347,7 @@ class _ProfileDetails extends State<ProfileDetails> {
                                   child: IntrinsicHeight(
                                     child: Row(children: [
                                       Text(
-                                        method,
+                                        toTime(method),
                                         style: TextStyle(
                                             color: Colors.blueGrey[800],
                                             fontSize: 18,

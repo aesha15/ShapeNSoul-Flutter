@@ -1,15 +1,11 @@
-//import 'dart:io';
-
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:fluttersns/splash_screen.dart';
 import 'recipe.dart';
 // import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:collection';
-
-// import 'package:timeline_tile/timeline_tile.dart';
+import 'package:intl/intl.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
 String current = auth.currentUser.phoneNumber;
@@ -25,21 +21,18 @@ class DietState extends State<Diet> {
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  // }
-
   Map<String, dynamic> data;
   final GlobalKey<AnimatedListState> _listkey = GlobalKey<AnimatedListState>();
   final Tween<Offset> offset = Tween(begin: Offset(1, 0), end: Offset(0, 0));
   List<dynamic> _items = [];
   int counter = 0;
   List<dynamic> keys = [];
+  List<dynamic> newkeys = [];
   List<dynamic> values = [];
   Map<String, String> urls = {};
   Map map;
   SplayTreeMap tes;
+  var t;
 
   Future<void> _loadItems() async {
     FirebaseFirestore.instance
@@ -51,12 +44,30 @@ class DietState extends State<Diet> {
                 keys.add(e.key);
                 values.add(e.value);
               }),
-              map = Map.fromIterables(keys, values),
+              toTime(keys),
+              map = Map.fromIterables(newkeys, values),
               tes = SplayTreeMap<String, dynamic>.from(
-                  map, (a, b) => a.compareTo(b)),
+                  map,
+                  (a, b) => DateFormat('h:mm a')
+                      .parse(a)
+                      .compareTo(DateFormat('h:mm a').parse(b))),
               print(tes),
               addDelay(tes.values.toList()),
             });
+  }
+
+  toTime(keys) {
+    final now = new DateTime.now();
+
+    for (var x in keys) {
+      t = TimeOfDay(
+          hour: int.parse(x.split(":")[0]), minute: int.parse(x.split(":")[1]));
+
+      var d = DateTime(now.year, now.month, now.day, t.hour, t.minute);
+      String formattedTime = DateFormat('h:mm a').format(d);
+
+      newkeys.add(formattedTime);
+    }
   }
 
   addDelay(text) async {
@@ -146,28 +157,15 @@ class DietState extends State<Diet> {
                                                   padding:
                                                       const EdgeInsets.fromLTRB(
                                                           10, 1, 10, 1),
-
                                                   child: Text(
-                                                      tes.keys.toList()[index],
+                                                      tes.keys
+                                                          .toList()[index]
+                                                          .toString(),
                                                       style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.w500,
                                                           fontSize: 23,
                                                           color: Colors.white)),
-                                                  // child: Text(() {
-                                                  //   if (tes.keys
-                                                  //       .toList()[index]
-                                                  //       ) {
-                                                  //     return tes.keys
-                                                  //             .toList()[index] +
-                                                  //         'AM';
-                                                  //   }
-                                                  // }(),
-                                                  //     style: TextStyle(
-                                                  //         fontWeight:
-                                                  //             FontWeight.w500,
-                                                  //         fontSize: 23,
-                                                  //         color: Colors.white)),
                                                 ),
                                                 VerticalDivider(
                                                   width: 35,
