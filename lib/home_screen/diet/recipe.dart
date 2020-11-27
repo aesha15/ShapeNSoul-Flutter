@@ -68,7 +68,7 @@ class _RecipeState extends State<Recipe> {
                         ),
                       ),
                       background: Hero(
-                        tag: 'recipe$imageurl',
+                        tag: 'recipe${data['Name']}.jpg',
                         child: Image.file(
                           new File('${appDocDir.path}/${data['Name']}.jpg'),
                           color: Color.fromRGBO(0, 0, 0, 0.5),

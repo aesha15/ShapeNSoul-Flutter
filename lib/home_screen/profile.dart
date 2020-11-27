@@ -133,13 +133,6 @@ class ProfileStateless extends StatelessWidget {
                                   fontSize: 21,
                                   fontWeight: FontWeight.w500),
                             ),
-                            // subtitle: Text(
-                            //   name['phone'],
-                            //   style: TextStyle(
-                            //       // color: Colors.green[900],
-                            //       fontSize: 14,
-                            //       fontWeight: FontWeight.w500),
-                            // ),
                             onTap: () {
                               var phone;
                               name2phone(name['name']).then((value) => {
@@ -187,13 +180,6 @@ class ProfileStateless extends StatelessWidget {
                         fontSize: 21,
                         fontWeight: FontWeight.w500),
                   ),
-                  // subtitle: Text(
-                  //   name['phone'],
-                  //   style: TextStyle(
-                  //       // color: Colors.green[900],
-                  //       fontSize: 14,
-                  //       fontWeight: FontWeight.w500),
-                  // ),
                   onTap: () {
                     var phone;
                     name2phone(name).then((value) => {

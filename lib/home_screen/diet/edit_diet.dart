@@ -4,6 +4,7 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fluttersns/home_screen/profile_details.dart';
 
 class AddDiet extends StatefulWidget {
   AddDiet({Key key, this.title}) : super(key: key);
@@ -70,7 +71,7 @@ class _AddDietState extends State<AddDiet> {
         _timeController.text = _time;
         _timeController.text = formatDate(
             DateTime(2019, 08, 1, selectedTime.hour, selectedTime.minute),
-            [hh, ':', nn, " ", am]).toString();
+            [HH, ':', nn]).toString();
       });
   }
 
@@ -153,7 +154,16 @@ class _AddDietState extends State<AddDiet> {
                     height: _height / 3,
                   ),
                   RaisedButton(
-                      onPressed: () => {editDiet(), Navigator.pop(context)},
+                      onPressed: () => {
+                            editDiet(),
+                            Navigator.of(context).pop(),
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      ProfileDetails(name: phone)),
+                            )
+                          },
                       color: Color(0xff3fc380),
                       textColor: Colors.white,
                       child: Column(children: [

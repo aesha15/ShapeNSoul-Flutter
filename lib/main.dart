@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttersns/home_screen/appointment/new_appoint.dart';
 // import 'package:fluttersns/home_screen/chat.dart';
 import 'package:fluttersns/home_screen/diet/add_recipe.dart';
+import 'package:fluttersns/home_screen/profile.dart';
+import 'package:fluttersns/home_screen/profile_details.dart';
 // import 'package:fluttersns/Imagedownload.dart';
 import 'login_screen/login_screen.dart';
 import 'otp_screen/otp_screen.dart';
@@ -36,6 +38,7 @@ class MyApp extends StatelessWidget {
         // '/client_appt': (BuildContext ctx) => ClientAppoint(),
         '/appointment': (BuildContext ctx) => Appointment(),
         '/add_recipe': (BuildContext ctx) => AddRecipe(),
+        '/profile': (BuildContext ctx) => Profile(),
       },
     );
   }

@@ -142,6 +142,7 @@ class _ProfileDetails extends State<ProfileDetails> {
                       ),
                     ),
                     floating: true,
+                    pinned: false,
                     elevation: 9,
                     expandedHeight: 200,
                     actions: <Widget>[
@@ -303,7 +304,7 @@ class _ProfileDetails extends State<ProfileDetails> {
                         ),
                         Divider(),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 8, 0, 8),
+                          padding: const EdgeInsets.fromLTRB(18, 3, 0, 3),
                           child: Row(
                             children: [
                               Expanded(
@@ -344,43 +345,51 @@ class _ProfileDetails extends State<ProfileDetails> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(18.0),
                                   child: IntrinsicHeight(
-                                    child: Row(children: [
-                                      Text(
-                                        toTime(method),
-                                        style: TextStyle(
-                                            color: Colors.blueGrey[800],
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                      VerticalDivider(
-                                        width: 35,
-                                        thickness: 0.4,
-                                        color: Colors.blueGrey[100],
-                                      ),
-                                      Expanded(
-                                          child: Text(
-                                        data['diet'][method],
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500),
-                                      )),
-                                      IconButton(
-                                        color: Colors.grey,
-                                        onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) => AddDiet(
-                                                          title: jsonEncode({
-                                                        'phone': phone,
-                                                        'time': method,
-                                                        'recipe': data['diet']
-                                                            [method]
-                                                      }))));
-                                        },
-                                        icon: Icon(Icons.edit),
-                                      )
-                                    ]),
+                                    child: Flexible(
+                                      flex: 1,
+                                      child: Row(children: [
+                                        Text(
+                                          toTime(method),
+                                          style: TextStyle(
+                                              color: Colors.blueGrey[800],
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        VerticalDivider(
+                                          width: 35,
+                                          thickness: 0.4,
+                                          color: Colors.blueGrey[100],
+                                        ),
+                                        Flexible(
+                                          flex: 3,
+                                          child: Expanded(
+                                            child: Text(
+                                              data['diet'][method],
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          color: Colors.grey,
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        AddDiet(
+                                                            title: jsonEncode({
+                                                          'phone': phone,
+                                                          'time': method,
+                                                          'recipe': data['diet']
+                                                              [method]
+                                                        }))));
+                                          },
+                                          icon: Icon(Icons.edit),
+                                        )
+                                      ]),
+                                    ),
                                   ),
                                 ),
                               )

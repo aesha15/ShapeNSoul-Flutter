@@ -34,7 +34,6 @@ class DietState extends State<Diet> {
   List<dynamic> keys = [];
   List<dynamic> newkeys = [];
   List<dynamic> values = [];
-  Map<String, String> urls = {};
   Map map;
   SplayTreeMap tes;
   var t;
@@ -62,7 +61,7 @@ class DietState extends State<Diet> {
               print(tes),
               addDelay(tes.values.toList()),
             });
-    image = new File('${appDocDir.path}');
+    // image = new File('${appDocDir.path}');
   }
 
   toTime(keys) {
@@ -92,20 +91,21 @@ class DietState extends State<Diet> {
   }
 
   Future<void> downloadFileExample(image) async {
-    if (!(File('${appDocDir.path}/' + image.toString() + '.jpg')
-            .existsSync()) &&
-        File('${appDocDir.path}/' + image.toString() + '.jpg') == null) {
-      File downloadToFile =
-          File('${appDocDir.path}/' + image.toString() + '.jpg');
-      try {
-        await firebase_storage.FirebaseStorage.instance
-            .ref(image.toString() + '.jpg')
-            .writeToFile(downloadToFile);
-        print('${appDocDir.path}/' + image.toString() + '.jpg');
-      } on FirebaseException catch (e) {
-        print(e);
-      }
+    // if (!(File('${appDocDir.path}/' + image.toString() + '.jpg')
+    //         .existsSync()) &&
+    //     File('${appDocDir.path}/' + image.toString() + '.jpg') == null) {
+    File downloadToFile =
+        File('${appDocDir.path}/' + image.toString() + '.jpg');
+    try {
+      await firebase_storage.FirebaseStorage.instance
+          .ref(image.toString() + '.jpg')
+          .writeToFile(downloadToFile);
+      print('${appDocDir.path}/' + image.toString() + '.jpg');
+      setState(() {});
+    } on FirebaseException catch (e) {
+      print(e);
     }
+    // }
   }
 
   Future<String> getImage(name) async {
@@ -130,9 +130,8 @@ class DietState extends State<Diet> {
           return SlideTransition(
             child: Column(
               children: [
-                //if (urls.containsKey(tes.values.toList()[index]))
                 Container(
-                    height: MediaQuery.of(context).size.height / 6.3,
+                    height: MediaQuery.of(context).size.height / 6,
                     child: Container(
                       child: Card(
                           shape: RoundedRectangleBorder(
@@ -154,8 +153,8 @@ class DietState extends State<Diet> {
                                       borderRadius: BorderRadius.circular(10),
                                       child: Hero(
                                           tag:
-                                              'recipe${urls[tes.values.toList()[index]]}',
-                                          child: Column(children: [
+                                              'recipe${tes.values.toList()[index]}',
+                                          child: Wrap(children: [
                                             if (File('${appDocDir.path}/${tes.values.toList()[index]}.jpg')
                                                     .existsSync() &&
                                                 File('${appDocDir.path}/${tes.values.toList()[index]}.jpg') !=

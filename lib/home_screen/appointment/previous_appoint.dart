@@ -62,130 +62,140 @@ class PrevAppointState extends State<PrevAppoint> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: ListView(
-          children: [
-            AnimatedList(
-                shrinkWrap: true,
-                physics: BouncingScrollPhysics(),
-                key: _listkey,
-                initialItemCount: appoint.length,
-                itemBuilder: (context, index, animate) {
-                  return SlideTransition(
-                    child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(9)),
-                        child: InkWell(
-                          splashColor: Colors.green.withAlpha(30),
-                          child: ClipPath(
-                            clipper: ShapeBorderClipper(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(9))),
-                            child: Container(
-                                decoration: new BoxDecoration(
-                                    border: Border(
-                                        right: BorderSide(
-                                            color: Colors.green[300],
-                                            width: 6)),
-                                    gradient: new LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Color(0xeeffffff),
-                                        Color(0xeeEBFCE5),
-                                        Color(0xeeE8FBFA)
-                                      ],
-                                    )),
-                                child: Padding(
-                                    padding: const EdgeInsets.all(13.0),
-                                    child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Row(children: [
-                                            Icon(
-                                              Icons.access_time,
-                                              size: 23,
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(15, 1, 1, 5),
-                                                    child: Text(
-                                                      appoint[index]
-                                                          ['client name'],
-                                                      style: TextStyle(
-                                                        color:
-                                                            Colors.green[900],
-                                                        fontSize: 18,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(15, 1, 1, 5),
-                                                    child: Text(
-                                                      appoint[index]
-                                                          ['therapy name'],
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+      appBar: AppBar(
+        title: Text('Previous Appointments'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          child: ListView(
+            children: [
+              AnimatedList(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  key: _listkey,
+                  initialItemCount: appoint.length,
+                  itemBuilder: (context, index, animate) {
+                    return SlideTransition(
+                      child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(9)),
+                          child: InkWell(
+                            splashColor: Colors.green.withAlpha(30),
+                            child: ClipPath(
+                              clipper: ShapeBorderClipper(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(9))),
+                              child: Container(
+                                  decoration: new BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              color: Colors.green[300],
+                                              width: 6)),
+                                      gradient: new LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Color(0xeeffffff),
+                                          Color(0xeeEBFCE5),
+                                          Color(0xeeE8FBFA)
+                                        ],
+                                      )),
+                                  child: Padding(
+                                      padding: const EdgeInsets.all(13.0),
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            Row(children: [
+                                              Icon(
+                                                Icons.access_time,
+                                                size: 23,
                                               ),
-                                            ),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.end,
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(1, 1, 25, 5),
-                                                    child: Text(
-                                                      appoint[index]['date'],
-                                                      style: TextStyle(
-                                                        color:
-                                                            Colors.green[900],
-                                                        fontSize: 17,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          15, 1, 1, 5),
+                                                      child: Text(
+                                                        appoint[index]
+                                                            ['client name'],
+                                                        style: TextStyle(
+                                                          color:
+                                                              Colors.green[900],
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(1, 1, 25, 5),
-                                                    child: Text(
-                                                      appoint[index]['time'],
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.w600,
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          15, 1, 1, 5),
+                                                      child: Text(
+                                                        appoint[index]
+                                                            ['therapy name'],
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                          ]),
-                                        ]))),
-                          ),
-                        )),
-                    // Text(appoint[index]['therapy name']),
-                    position: animate.drive(offset),
-                  );
-                }),
-          ],
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          1, 1, 25, 5),
+                                                      child: Text(
+                                                        appoint[index]['date'],
+                                                        style: TextStyle(
+                                                          color:
+                                                              Colors.green[900],
+                                                          fontSize: 17,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .fromLTRB(
+                                                          1, 1, 25, 5),
+                                                      child: Text(
+                                                        appoint[index]['time'],
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ]),
+                                          ]))),
+                            ),
+                          )),
+                      // Text(appoint[index]['therapy name']),
+                      position: animate.drive(offset),
+                    );
+                  }),
+            ],
+          ),
         ),
       ),
     );
