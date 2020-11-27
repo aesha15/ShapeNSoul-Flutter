@@ -345,54 +345,48 @@ class _ProfileDetails extends State<ProfileDetails> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(18.0),
                                   child: IntrinsicHeight(
-                                    child: Flexible(
-                                      flex: 1,
-                                      child: Row(children: [
-                                        Text(
-                                          toTime(method),
-                                          style: TextStyle(
-                                              color: Colors.blueGrey[800],
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500),
-                                        ),
-                                        VerticalDivider(
-                                          width: 35,
-                                          thickness: 0.4,
-                                          color: Colors.blueGrey[100],
-                                        ),
-                                        Flexible(
-                                          flex: 3,
-                                          child: Expanded(
-                                            child: Text(
-                                              data['diet'][method],
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                          ),
-                                        ),
-                                        IconButton(
-                                          color: Colors.grey,
-                                          onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        AddDiet(
-                                                            title: jsonEncode({
-                                                          'phone': phone,
-                                                          'time': method,
-                                                          'recipe': data['diet']
-                                                              [method]
-                                                        }))));
-                                          },
-                                          icon: Icon(Icons.edit),
-                                        )
-                                      ]),
-                                    ),
+                                    child: Row(children: [
+                                      Text(
+                                        toTime(method),
+                                        style: TextStyle(
+                                            color: Colors.blueGrey[800],
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      VerticalDivider(
+                                        width: 35,
+                                        thickness: 0.4,
+                                        color: Colors.blueGrey[100],
+                                      ),
+                                      Text(
+                                        data['diet'][method],
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Expanded(
+                                        child: Container(),
+                                      ),
+                                      IconButton(
+                                        color: Colors.grey,
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) => AddDiet(
+                                                          title: jsonEncode({
+                                                        'phone': phone,
+                                                        'time': method,
+                                                        'recipe': data['diet']
+                                                            [method]
+                                                      }))));
+                                        },
+                                        icon: Icon(Icons.edit),
+                                      ),
+                                    ]),
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                       ],
@@ -400,28 +394,7 @@ class _ProfileDetails extends State<ProfileDetails> {
                   )
                 ],
               ),
-            )
-                // body: ListView(children: [
-
-                //   for (var ing in data['appointment'].keys)
-                //     Column(children: [
-                //       Text(ing + ":"),
-                //       if (ing == 'date')
-                //         Text(DateFormat.yMMMd()
-                //             .format(data['appointment'][ing].toDate()))
-                //       else
-                //         Text(data['appointment'][ing])
-                //     ]),
-                //   for (var method in data['diet'].keys)
-                //     Column(children: [
-                //       Text(method),
-                //       Text(data['diet'][method]),
-                //     ]),
-                // ]),
-                // floatingActionButton: Row(
-                //   children: [RaisedButton(onPressed: () => updateUser())],
-                // ),
-                );
+            ));
           }
           return SplashScreen();
         });
