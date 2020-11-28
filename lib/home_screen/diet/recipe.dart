@@ -29,130 +29,141 @@ class _RecipeState extends State<Recipe> {
     CollectionReference appointment =
         FirebaseFirestore.instance.collection('Recipe');
 
-    return FutureBuilder<DocumentSnapshot>(
-        future: appointment.doc(widget.name).get(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text("Something went wrong");
-          }
+    return Container(
+        child: FutureBuilder<DocumentSnapshot>(
+            future: appointment.doc(widget.name).get(),
+            builder: (BuildContext context,
+                AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text("Something went wrong");
+              }
 
-          if (snapshot.connectionState == ConnectionState.done) {
-            Map<String, dynamic> data = snapshot.data.data();
+              if (snapshot.connectionState == ConnectionState.done) {
+                Map<String, dynamic> data = snapshot.data.data();
 
-            return Scaffold(
-              body: CustomScrollView(slivers: [
-                SliverAppBar(
-                  expandedHeight: 250.0,
-                  floating: true,
-                  pinned: true,
-                  snap: false,
-                  iconTheme: IconThemeData(
-                    color: Colors.white, //change your color here
-                  ),
-                  flexibleSpace: FlexibleSpaceBar(
-                      centerTitle: true,
-                      title: Padding(
-                        padding: const EdgeInsets.all(3.0),
-                        child: Hero(
-                          tag: 'recipe_name${data['Name']}',
-                          child: Text(
-                            data['Name'],
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 23,
-                                fontWeight: FontWeight.bold),
+                return Scaffold(
+                    body: Container(
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/images/background.jpg'),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center)),
+                  child: CustomScrollView(slivers: [
+                    SliverAppBar(
+                      expandedHeight: 250.0,
+                      floating: true,
+                      pinned: true,
+                      snap: false,
+                      iconTheme: IconThemeData(
+                        color: Colors.white, //change your color here
+                      ),
+                      flexibleSpace: FlexibleSpaceBar(
+                          centerTitle: true,
+                          title: Padding(
+                            padding: const EdgeInsets.all(3.0),
+                            child: Hero(
+                              tag: 'recipe_name${data['Name']}',
+                              child: Text(
+                                data['Name'],
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 23,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
                           ),
+                          background: Hero(
+                            tag: 'recipe${data['Name']}.jpg',
+                            child: Image.file(
+                              new File('${appDocDir.path}/${data['Name']}.jpg'),
+                              color: Color.fromRGBO(0, 0, 0, 0.5),
+                              colorBlendMode: BlendMode.darken,
+                              fit: BoxFit.cover,
+                            ),
+                          )),
+                    ),
+                    SliverToBoxAdapter(
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(25.0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Ingredients : ",
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green[900]),
+                                  ),
+                                ),
+                                for (var ing
+                                    in data['Ingredients'].keys.toList()
+                                      ..sort())
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(18, 5, 5, 5),
+                                    child: Row(children: [
+                                      Text('•  '),
+                                      Flexible(
+                                        child: Text(
+                                          ing + "  :  ",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                      Text(
+                                        data['Ingredients'][ing],
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w400),
+                                      )
+                                    ]),
+                                  ),
+                                Divider(
+                                  height: 30,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Method : ",
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green[900]),
+                                  ),
+                                ),
+                                for (var method in data['Method'].split('.'))
+                                  if (method != '')
+                                    Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            8.0, 8.0, 20.0, 8.0),
+                                        child: Row(
+                                          children: [
+                                            new Text('-   '),
+                                            Flexible(
+                                              child: new Text(
+                                                method,
+                                                style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              ),
+                                            )
+                                          ],
+                                        )),
+                              ]),
                         ),
                       ),
-                      background: Hero(
-                        tag: 'recipe${data['Name']}.jpg',
-                        child: Image.file(
-                          new File('${appDocDir.path}/${data['Name']}.jpg'),
-                          color: Color.fromRGBO(0, 0, 0, 0.5),
-                          colorBlendMode: BlendMode.darken,
-                          fit: BoxFit.cover,
-                        ),
-                      )),
-                ),
-                SliverToBoxAdapter(
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(25.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Ingredients : ",
-                                style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.green[900]),
-                              ),
-                            ),
-                            for (var ing
-                                in data['Ingredients'].keys.toList()..sort())
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(18, 5, 5, 5),
-                                child: Row(children: [
-                                  Text('•  '),
-                                  Flexible(
-                                    child: Text(
-                                      ing + "  :  ",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                  ),
-                                  Text(
-                                    data['Ingredients'][ing],
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400),
-                                  )
-                                ]),
-                              ),
-                            Divider(
-                              height: 30,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Method : ",
-                                style: TextStyle(
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.green[900]),
-                              ),
-                            ),
-                            for (var method in data['Method'].split('.'))
-                              if (method != '')
-                                Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      children: [
-                                        new Text('-   '),
-                                        Flexible(
-                                          child: new Text(
-                                            method,
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.w400),
-                                          ),
-                                        )
-                                      ],
-                                    )),
-                          ]),
                     ),
-                  ),
-                ),
-              ]),
-            );
-          }
-          return SplashScreen();
-        });
+                  ]),
+                ));
+              }
+              return Container();
+            }));
   }
 
   Future<void> getImage(name) async {

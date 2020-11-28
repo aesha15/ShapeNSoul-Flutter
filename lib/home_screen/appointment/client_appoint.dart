@@ -25,6 +25,7 @@ class ClientAppointState extends State<ClientAppoint> {
   int counter = 0;
   List<dynamic> test = [];
   List<dynamic> prev = [];
+  bool visibility = false;
 
   Future<void> _loadItems() async {
     FirebaseFirestore.instance
@@ -34,10 +35,8 @@ class ClientAppointState extends State<ClientAppoint> {
         .then((DocumentSnapshot documentSnapshot) => {
               documentSnapshot.data().forEach((key, value) {
                 if (!value['date'].toDate().isBefore(DateTime.now())) {
-                  // print(value);
                   test.add(value);
                 } else {
-                  // print(value);
                   prev.add(value);
                 }
               }),
@@ -61,6 +60,9 @@ class ClientAppointState extends State<ClientAppoint> {
       // 3) Telling animated list to start animation
       _listkey.currentState.insertItem(_items.length - 1);
     }
+    setState(() {
+      visibility = true;
+    });
   }
 
   @override
@@ -71,17 +73,20 @@ class ClientAppointState extends State<ClientAppoint> {
         child: ListView(
           children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Text(
-                  ' Upcoming appointments : ',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.teal[900]),
-                ),
-              ),
+              AnimatedOpacity(
+                  opacity: visibility ? 1.0 : 0.0,
+                  duration: Duration(milliseconds: 500),
+                  child: Container(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Text(
+                      ' Upcoming appointments : ',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.teal[900]),
+                    ),
+                  )),
               AnimatedList(
                   shrinkWrap: true,
                   key: _listkey,
@@ -178,112 +183,121 @@ class ClientAppointState extends State<ClientAppoint> {
               SizedBox(
                 height: 19,
               ),
-              ExpansionTile(
-                title: Text(
-                  ' Previous appointments ',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      fontStyle: FontStyle.italic,
-                      color: Colors.blueGrey[600]),
-                ),
-                children: [
-                  for (var value in prev)
-                    if (value['date'].toDate().isBefore(DateTime.now()))
-                      Column(children: [
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(9)),
-                          child: ClipPath(
-                            clipper: ShapeBorderClipper(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(9))),
-                            child: Container(
-                              decoration: new BoxDecoration(
-                                  border: Border(
-                                      right: BorderSide(
-                                          color: Colors.blueGrey[300],
-                                          width: 6)),
-                                  gradient: new LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      Color(0xccffffff),
-                                      Color(0xccEBFCE5),
-                                      Color(0xccE8FBFA)
-                                    ],
-                                  )),
-                              child: Padding(
-                                padding: const EdgeInsets.all(13.0),
+              AnimatedOpacity(
+                  opacity: visibility ? 1.0 : 0.0,
+                  duration: Duration(milliseconds: 500),
+                  child: ExpansionTile(
+                    title: Text(
+                      ' Previous appointments ',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          fontStyle: FontStyle.italic,
+                          color: Colors.blueGrey[600]),
+                    ),
+                    children: [
+                      for (var value in prev)
+                        if (value['date'].toDate().isBefore(DateTime.now()))
+                          Column(children: [
+                            Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(9)),
+                              child: ClipPath(
+                                clipper: ShapeBorderClipper(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(9))),
                                 child: Container(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Row(
+                                  decoration: new BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              color: Colors.blueGrey[300],
+                                              width: 6)),
+                                      gradient: new LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          Color(0xccffffff),
+                                          Color(0xccEBFCE5),
+                                          Color(0xccE8FBFA)
+                                        ],
+                                      )),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(13.0),
+                                    child: Container(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
                                         children: [
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                6, 6, 14, 3),
-                                            child: Icon(
-                                              Icons.access_time,
-                                              size: 23,
-                                            ),
+                                          Row(
+                                            children: [
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        6, 6, 14, 3),
+                                                child: Icon(
+                                                  Icons.access_time,
+                                                  size: 23,
+                                                ),
+                                              ),
+                                              Text(
+                                                DateFormat.yMMMd().format(
+                                                    value['date'].toDate()),
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.green[900]),
+                                              ),
+                                            ],
                                           ),
-                                          Text(
-                                            DateFormat.yMMMd()
-                                                .format(value['date'].toDate()),
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.green[900]),
+                                          SizedBox(
+                                            height: 3,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 40),
+                                                child: Text(
+                                                  value['time'],
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color:
+                                                          Colors.blueGrey[800]),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 40),
+                                                child: Text(
+                                                  value['therapy name'],
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      color:
+                                                          Colors.blueGrey[800]),
+                                                  // color: Colors.green[900]),
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                      SizedBox(
-                                        height: 3,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 40),
-                                            child: Text(
-                                              value['time'],
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.blueGrey[800]),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 40),
-                                            child: Text(
-                                              value['therapy name'],
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.blueGrey[800]),
-                                              // color: Colors.green[900]),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                        )
-                      ]),
-                ],
-              ),
+                            )
+                          ]),
+                    ],
+                  )),
             ])
           ],
         ),

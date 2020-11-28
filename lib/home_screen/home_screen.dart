@@ -21,7 +21,7 @@ class Home extends StatefulWidget {
   }
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   int _currentIndex = 0;
   FirebaseAuth auth = FirebaseAuth.instance;
   String phone = '';
