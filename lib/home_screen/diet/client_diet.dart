@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_chat/dash_chat.dart';
-//import 'dart:io';
+
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
-// import 'package:fluttersns/splash_screen.dart';
+
 import 'recipe.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'dart:collection';
@@ -39,6 +39,8 @@ class DietState extends State<Diet> {
   var t;
   Directory appDocDir;
   File image;
+  List<bool> flag = List.filled(10, false);
+  int count = 0;
 
   Future<void> _loadItems() async {
     appDocDir = await getApplicationDocumentsDirectory();
@@ -100,24 +102,14 @@ class DietState extends State<Diet> {
       await firebase_storage.FirebaseStorage.instance
           .ref(image.toString() + '.jpg')
           .writeToFile(downloadToFile);
-      print('${appDocDir.path}/' + image.toString() + '.jpg');
-      setState(() {});
+      setState(() {
+        flag[count] = true;
+        count = count + 1;
+      });
     } on FirebaseException catch (e) {
       print(e);
     }
     // }
-  }
-
-  Future<String> getImage(name) async {
-    try {
-      final ref =
-          FirebaseStorage.instance.ref().child(name.toString() + '.jpg');
-      var url = await ref.getDownloadURL();
-      return url;
-    } on FirebaseException catch (e) {
-      print(e.message);
-      return 'https://firebasestorage.googleapis.com/v0/b/shapensoul-e1bb8.appspot.com/o/logo.png?alt=media&token=9108beac-e787-4c75-860b-8677d36720c5';
-    }
   }
 
   @override
@@ -155,13 +147,20 @@ class DietState extends State<Diet> {
                                           tag:
                                               'recipe${tes.values.toList()[index]}',
                                           child: Wrap(children: [
-                                            if (File('${appDocDir.path}/${tes.values.toList()[index]}.jpg')
-                                                    .existsSync() &&
-                                                File('${appDocDir.path}/${tes.values.toList()[index]}.jpg') !=
-                                                    null)
+                                            if (flag[index])
                                               Image.file(
                                                 File(
                                                     '${appDocDir.path}/${tes.values.toList()[index]}.jpg'),
+                                                width: double.infinity,
+                                                color: Color.fromRGBO(
+                                                    0, 0, 0, 0.5),
+                                                fit: BoxFit.cover,
+                                                colorBlendMode:
+                                                    BlendMode.darken,
+                                              )
+                                            else
+                                              Image.asset(
+                                                'assets/images/logo.png',
                                                 width: double.infinity,
                                                 color: Color.fromRGBO(
                                                     0, 0, 0, 0.5),

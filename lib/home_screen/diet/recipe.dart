@@ -17,8 +17,6 @@ class Recipe extends StatefulWidget {
 }
 
 class _RecipeState extends State<Recipe> {
-  String imageurl =
-      'https://firebasestorage.googleapis.com/v0/b/shapensoul-e1bb8.appspot.com/o/Clove%20tea.jpg?alt=media&token=6fa0801d-4584-434a-842e-68db6d5c5a0e';
   Directory appDocDir;
   @override
   void initState() {

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,7 +12,17 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _contactEditingController = TextEditingController();
-  // var _dialCode = '';
+  List<String> numbers = [];
+  @override
+  void initState() {
+    FirebaseFirestore.instance
+        .collection('Users')
+        .get()
+        .then((value) => value.docs.forEach((value) {
+              numbers.add(value['personal']['phone']);
+            }));
+    super.initState();
+  }
 
   //Login click with contact number validation
   Future<void> clickOnLogin(BuildContext context) async {
@@ -20,12 +31,16 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       String pnumber =
           "+91 " + _contactEditingController.text.toString().trim();
-
-      final responseMessage = await Navigator.pushNamed(context, '/otp',
-          // arguments:'$_dialCode${_contactEditingController.text.toString().trim()}');
-          arguments: pnumber);
-      if (responseMessage != null) {
-        showErrorDialog(context, responseMessage as String);
+      if (numbers.contains('+91' + _contactEditingController.text)) {
+        final responseMessage = await Navigator.pushNamed(context, '/otp',
+            // arguments:'$_dialCode${_contactEditingController.text.toString().trim()}');
+            arguments: pnumber);
+        if (responseMessage != null) {
+          showErrorDialog(context, responseMessage as String);
+        }
+      } else {
+        showErrorDialog(
+            context, 'Please visit our Clinic to activate your app');
       }
     }
   }

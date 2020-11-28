@@ -27,6 +27,7 @@ class _ProfileDetails extends State<ProfileDetails> {
   var wt = FocusNode();
   var bp = FocusNode();
   String phone;
+  Map<String, dynamic> diet;
 
   @override
   void initState() {
@@ -50,7 +51,8 @@ class _ProfileDetails extends State<ProfileDetails> {
               data = value.data(),
               _tongue.text = data['diagnosis']['tongue'],
               _weightController.text = data['personal']['weight'],
-              _bp.text = data['personal']['Bloodpressure']
+              _bp.text = data['personal']['Bloodpressure'],
+              diet = value.data()['diet']
             });
   }
 
@@ -383,6 +385,13 @@ class _ProfileDetails extends State<ProfileDetails> {
                                         },
                                         icon: Icon(Icons.edit),
                                       ),
+                                      IconButton(
+                                        color: Colors.grey,
+                                        onPressed: () {
+                                          showAlertDialog(context, method);
+                                        },
+                                        icon: Icon(Icons.delete),
+                                      ),
                                     ]),
                                   ),
                                 ),
@@ -398,5 +407,57 @@ class _ProfileDetails extends State<ProfileDetails> {
           }
           return SplashScreen();
         });
+  }
+
+  void showAlertDialog(BuildContext context, String message) {
+    // set up the AlertDialog
+    Widget cancelButton = FlatButton(
+      child: Text(
+        "No",
+        style: TextStyle(fontSize: 20),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+        child: Text(
+          "Yes",
+          style: TextStyle(fontSize: 18),
+        ),
+        onPressed: () {
+          delete(message);
+          setState(() {});
+          Navigator.of(context).pop();
+        });
+
+    AlertDialog alert = AlertDialog(
+        title: const Text(
+          "LOGOUT",
+          style: TextStyle(fontSize: 21),
+        ),
+        content: Text(
+          'Are you sure ?',
+          style: TextStyle(fontSize: 18),
+        ),
+        actions: [
+          cancelButton,
+          continueButton,
+        ]);
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  void delete(time) {
+    diet.remove(time);
+    FirebaseFirestore.instance
+        .collection('Users')
+        .doc(phone)
+        .update({'diet': diet});
   }
 }
