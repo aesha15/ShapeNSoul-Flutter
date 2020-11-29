@@ -6,6 +6,8 @@ import '../../name2phone.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../profile.dart';
+
 class Appointment extends StatefulWidget {
   Appointment({Key key, this.title}) : super(key: key);
   final String title;
@@ -134,26 +136,29 @@ class _AppointmentState extends State<Appointment> {
     date = Timestamp.fromDate(selectedDate);
 
     Future<void> addAppt() async {
-      WriteBatch batch = FirebaseFirestore.instance.batch();
       var userphone = await name2phone(selected);
-      return users.get().then((querySnapshot) {
-        querySnapshot.docs.forEach((document) {
-          batch.update(users.doc(userphone), {
-            'appointment.date': date,
-            'appointment.time': _timeController.text,
-            'appointment.therapy name': selectedTherapy,
-          });
+      // return users.get().then((querySnapshot) {
+      //   querySnapshot.docs.forEach((document) {
+      //     batch.set(users.doc(userphone), {
+      //       'appointment.date': date,
+      //       'appointment.time': _timeController.text,
+      //       'appointment.therapy name': selectedTherapy,
+      //     });
 
-          batch.update(appt.doc(userphone), {
-            '$apptName.date': date,
-            '$apptName.time': _timeController.text,
-            '$apptName.therapy name': selectedTherapy,
-            '$apptName.client name': selected,
-          });
-        });
-
-        return batch.commit();
-      });
+      //     batch.set(appt.doc(userphone), {
+      //       '$apptName.date': date,
+      //       '$apptName.time': _timeController.text,
+      //       '$apptName.therapy name': selectedTherapy,
+      //       '$apptName.client name': selected,
+      //     });
+      FirebaseFirestore.instance.collection('Appointments').doc(userphone).set({
+        apptName: {
+          'date': date,
+          'time': _timeController.text,
+          'therapy name': selectedTherapy,
+          'client name': selected
+        }
+      }, SetOptions(merge: true));
     }
 
     return Scaffold(
@@ -243,6 +248,7 @@ class _AppointmentState extends State<Appointment> {
               querySnapshot.docs.forEach((doc) {
                 suggestions.add(doc.data()["name"]);
               }),
+              print(suggestions)
             });
     FirebaseFirestore.instance
         .collection('Therapy')

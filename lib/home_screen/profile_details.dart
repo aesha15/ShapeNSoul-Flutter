@@ -6,8 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttersns/home_screen/appointment/previous_appoint.dart';
-import 'package:fluttersns/name2phone.dart';
-import '../splash_screen.dart';
+// import 'package:fluttersns/name2phone.dart';
 import 'diet/edit_diet.dart';
 import 'package:intl/intl.dart';
 
@@ -31,21 +30,16 @@ class _ProfileDetails extends State<ProfileDetails> {
 
   @override
   void initState() {
-    name2phone(widget.name).then((value) => {
-          setState(() {
-            phone = '+918976305456';
-          }),
-          getDetails()
-        });
-
+    getDetails();
     super.initState();
   }
 
   getDetails() {
+    phone = widget.name;
     var data;
     FirebaseFirestore.instance
         .collection('Users')
-        .doc(phone)
+        .doc(widget.name)
         .get()
         .then((value) => {
               data = value.data(),
@@ -405,7 +399,7 @@ class _ProfileDetails extends State<ProfileDetails> {
               ),
             ));
           }
-          return SplashScreen();
+          return Container();
         });
   }
 
@@ -433,7 +427,7 @@ class _ProfileDetails extends State<ProfileDetails> {
 
     AlertDialog alert = AlertDialog(
         title: const Text(
-          "DELETE",
+          "Delete",
           style: TextStyle(fontSize: 21),
         ),
         content: Text(

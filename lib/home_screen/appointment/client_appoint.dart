@@ -28,16 +28,19 @@ class ClientAppointState extends State<ClientAppoint> {
   bool visibility = false;
 
   Future<void> _loadItems() async {
+    String phone = auth.currentUser.phoneNumber;
     FirebaseFirestore.instance
         .collection('Appointments')
-        .doc('+918976305456')
+        .doc(phone)
         .get()
         .then((DocumentSnapshot documentSnapshot) => {
               documentSnapshot.data().forEach((key, value) {
-                if (!value['date'].toDate().isBefore(DateTime.now())) {
-                  test.add(value);
-                } else {
-                  prev.add(value);
+                if (value != null) {
+                  if (!value['date'].toDate().isBefore(DateTime.now())) {
+                    test.add(value);
+                  } else {
+                    prev.add(value);
+                  }
                 }
               }),
               test.sort((a, b) {
