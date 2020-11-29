@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttersns/home_screen/appointment/admin_appoint.dart';
+import 'package:fluttersns/home_screen/appointment/new_appoint.dart';
+import 'package:fluttersns/home_screen/home_screen.dart';
 import '../../name2phone.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,7 +25,9 @@ class _EditAppointmentState extends State<EditAppointment> {
 
   String _hour, _minute, _time;
   String dateTime;
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now().weekday == 7
+      ? DateTime.now().add(Duration(days: 1))
+      : DateTime.now();
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
   List<String> suggestions = [];
   List<String> therapy = [];
@@ -87,16 +92,16 @@ class _EditAppointmentState extends State<EditAppointment> {
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate.weekday == 7
+      initialDate: selectedDate,
+      firstDate: selectedDate.weekday == 7
           ? DateTime.now().add(Duration(days: 1))
-          : DateTime.now(),
-      firstDate: DateTime.now().subtract(Duration(days: 0)),
+          : DateTime.now().subtract(Duration(days: 0)),
       lastDate: DateTime(2101),
       helpText: 'SELECT APPOINTMENT DATE',
       confirmText: 'OK',
       selectableDayPredicate: (DateTime val) => val.weekday == 7 ? false : true,
     );
-    if (picked != null)
+    if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
         _dateController.text = DateFormat.yMMMd().format(selectedDate);
@@ -239,7 +244,11 @@ class _EditAppointmentState extends State<EditAppointment> {
                     height: _height / 3,
                   ),
                   RaisedButton(
-                    onPressed: () => {addAppt(), Navigator.pop(context)},
+                    onPressed: () => {
+                      addAppt(),
+                      Navigator.pop(context),
+                      Navigator.pushReplacementNamed(context, '/')
+                    },
                     color: Color(0xff3fc380),
                     textColor: Colors.white,
                     child: Text('Save Changes'),

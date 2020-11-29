@@ -345,7 +345,7 @@ class _ProfileDetails extends State<ProfileDetails> {
                                 color: Color(0xffFBFDFB),
                                 elevation: 0.2,
                                 child: Padding(
-                                  padding: const EdgeInsets.all(18.0),
+                                  padding: const EdgeInsets.all(10.0),
                                   child: IntrinsicHeight(
                                     child: Row(children: [
                                       Text(
@@ -414,7 +414,7 @@ class _ProfileDetails extends State<ProfileDetails> {
     Widget cancelButton = FlatButton(
       child: Text(
         "No",
-        style: TextStyle(fontSize: 20),
+        style: TextStyle(fontSize: 18),
       ),
       onPressed: () {
         Navigator.of(context).pop();
@@ -433,7 +433,7 @@ class _ProfileDetails extends State<ProfileDetails> {
 
     AlertDialog alert = AlertDialog(
         title: const Text(
-          "LOGOUT",
+          "DELETE",
           style: TextStyle(fontSize: 21),
         ),
         content: Text(

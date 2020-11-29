@@ -1,14 +1,10 @@
-// import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttersns/home_screen/appointment/client_appoint.dart';
 import 'package:fluttersns/home_screen/appointment/admin_appoint.dart';
-// import 'package:fluttersns/home_screen/chat.dart';
 import 'package:fluttersns/home_screen/diet/client_diet.dart';
 import 'package:fluttersns/home_screen/diet/admin_diet.dart';
 
-// import 'package:path_provider/path_provider.dart';
 import '../notification.dart';
 import 'package:fluttersns/home_screen/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,7 +25,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
         ? AdminAppoint()
         : ClientAppoint(),
-    (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
+    (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
         ? AdminDiet()
         : Diet(),
     if (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
@@ -114,7 +110,8 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         ),
         onPressed: () {
           signOut();
-          Navigator.pushReplacementNamed(context, "/login");
+          Navigator.pushNamedAndRemoveUntil(
+              context, "/login", ModalRoute.withName('/login'));
         });
 
     AlertDialog alert = AlertDialog(

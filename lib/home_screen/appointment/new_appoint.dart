@@ -21,7 +21,9 @@ class _AppointmentState extends State<Appointment> {
 
   String _hour, _minute, _time;
   String dateTime;
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now().weekday == 7
+      ? DateTime.now().add(Duration(days: 1))
+      : DateTime.now();
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
   List<String> suggestions = [];
   List<String> therapy = [];
@@ -70,16 +72,16 @@ class _AppointmentState extends State<Appointment> {
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate.weekday == 7
+      initialDate: selectedDate,
+      firstDate: selectedDate.weekday == 7
           ? DateTime.now().add(Duration(days: 1))
-          : DateTime.now(),
-      firstDate: DateTime.now().subtract(Duration(days: 0)),
+          : DateTime.now().subtract(Duration(days: 0)),
       lastDate: DateTime(2101),
       helpText: 'SELECT APPOINTMENT DATE',
       confirmText: 'OK',
       selectableDayPredicate: (DateTime val) => val.weekday == 7 ? false : true,
     );
-    if (picked != null)
+    if (picked != null && picked != selectedDate)
       setState(() {
         selectedDate = picked;
         _dateController.text = DateFormat.yMMMd().format(selectedDate);

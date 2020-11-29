@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_chat/dash_chat.dart';
 
@@ -124,7 +122,7 @@ class DietState extends State<Diet> {
               child: Column(
                 children: [
                   Container(
-                      height: MediaQuery.of(context).size.height / 6,
+                      height: MediaQuery.of(context).size.height / 7.5,
                       child: Container(
                         child: Card(
                             shape: RoundedRectangleBorder(
