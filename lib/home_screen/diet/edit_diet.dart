@@ -79,6 +79,7 @@ class _AddDietState extends State<AddDiet> {
   void initState() {
     var data = jsonDecode(widget.title);
     phone = data['phone'];
+    print(phone);
     time = data['time'];
     recipe = data['recipe'];
     _recipe.text = recipe;
@@ -187,6 +188,7 @@ class _AddDietState extends State<AddDiet> {
                 therapy.add(doc.data()["Name"]);
               }),
             });
+    print(phone + 'something');
     FirebaseFirestore.instance
         .collection('Users')
         .doc(phone)

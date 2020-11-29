@@ -31,21 +31,16 @@ class _ProfileDetails extends State<ProfileDetails> {
 
   @override
   void initState() {
-    name2phone(widget.name).then((value) => {
-          setState(() {
-            phone = '+918976305456';
-          }),
-          getDetails()
-        });
-
+    getDetails();
     super.initState();
   }
 
   getDetails() {
+    phone = widget.name;
     var data;
     FirebaseFirestore.instance
         .collection('Users')
-        .doc(phone)
+        .doc(widget.name)
         .get()
         .then((value) => {
               data = value.data(),
@@ -405,7 +400,7 @@ class _ProfileDetails extends State<ProfileDetails> {
               ),
             ));
           }
-          return SplashScreen();
+          return Container();
         });
   }
 
@@ -433,7 +428,7 @@ class _ProfileDetails extends State<ProfileDetails> {
 
     AlertDialog alert = AlertDialog(
         title: const Text(
-          "LOGOUT",
+          "Delete",
           style: TextStyle(fontSize: 21),
         ),
         content: Text(

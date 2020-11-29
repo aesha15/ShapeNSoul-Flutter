@@ -48,21 +48,24 @@ class DietState extends State<Diet> {
     appDocDir = await getApplicationDocumentsDirectory();
     FirebaseFirestore.instance
         .collection('Users')
-        .doc('+918976305456')
+        .doc('+919987929313')
         .get()
         .then((DocumentSnapshot documentSnapshot) => {
-              documentSnapshot.data()['diet'].entries.forEach((e) {
-                keys.add(e.key);
-                values.add(e.value);
-              }),
-              toTime(keys),
-              map = Map.fromIterables(newkeys, values),
-              tes = SplayTreeMap<String, dynamic>.from(
-                  map,
-                  (a, b) => DateFormat('h:mm a')
-                      .parse(a)
-                      .compareTo(DateFormat('h:mm a').parse(b))),
-              addDelay(tes.values.toList()),
+              if (documentSnapshot.data()['diet'] != null)
+                {
+                  documentSnapshot.data()['diet'].entries.forEach((e) {
+                    keys.add(e.key);
+                    values.add(e.value);
+                  }),
+                  toTime(keys),
+                  map = Map.fromIterables(newkeys, values),
+                  tes = SplayTreeMap<String, dynamic>.from(
+                      map,
+                      (a, b) => DateFormat('h:mm a')
+                          .parse(a)
+                          .compareTo(DateFormat('h:mm a').parse(b))),
+                  addDelay(tes.values.toList()),
+                }
             });
     // image = new File('${appDocDir.path}');
   }
