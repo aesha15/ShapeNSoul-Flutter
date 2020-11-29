@@ -79,7 +79,7 @@ class _AdminAppointState extends State<AdminAppoint> {
   addDelay(text) async {
     for (var item in text) {
       // 1) Wait for one second
-      await Future.delayed(Duration(milliseconds: 100));
+      await Future.delayed(Duration(milliseconds: 80));
       // 2) Adding data to actual variable that holds the item.
       item['date'] = DateFormat.yMMMd().format(item['date'].toDate());
       appoint.add(item);

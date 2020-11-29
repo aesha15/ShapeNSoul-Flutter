@@ -46,7 +46,7 @@ class DietState extends State<Diet> {
     appDocDir = await getApplicationDocumentsDirectory();
     FirebaseFirestore.instance
         .collection('Users')
-        .doc('+919987929313')
+        .doc(current)
         .get()
         .then((DocumentSnapshot documentSnapshot) => {
               if (documentSnapshot.data()['diet'] != null)
@@ -85,7 +85,7 @@ class DietState extends State<Diet> {
   addDelay(text) async {
     for (var item in text) {
       // 1) Wait for one second
-      await Future.delayed(Duration(milliseconds: 80));
+      await Future.delayed(Duration(milliseconds: 60));
       // 2) Adding data to actual variable that holds the item.
       downloadFileExample(item);
       _items.add(item);
@@ -115,6 +115,22 @@ class DietState extends State<Diet> {
 
   @override
   Widget build(BuildContext context) {
+    // if (_items.isEmpty)
+    //   return Padding(
+    //     padding: const EdgeInsets.all(8.0),
+    //     child: Container(
+    //       alignment: Alignment.center,
+    //       child: Text(
+    //         "No diet allotted.",
+    //         style: TextStyle(
+    //           color: Colors.grey,
+    //           fontSize: 20,
+    //           fontWeight: FontWeight.w500,
+    //         ),
+    //       ),
+    //     ),
+    //   );
+    // else
     return Container(
       child: AnimatedList(
           shrinkWrap: true,
@@ -125,7 +141,7 @@ class DietState extends State<Diet> {
               child: Column(
                 children: [
                   Container(
-                      height: MediaQuery.of(context).size.height / 7.5,
+                      height: MediaQuery.of(context).size.height / 7,
                       child: Container(
                         child: Card(
                             shape: RoundedRectangleBorder(
@@ -174,47 +190,43 @@ class DietState extends State<Diet> {
                                                 )
                                             ])),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: IntrinsicHeight(
-                                          child: Row(
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        10, 1, 10, 1),
-                                                child: Text(
-                                                    tes.keys
-                                                        .toList()[index]
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        fontSize: 23,
-                                                        color: Colors.white)),
-                                              ),
-                                              VerticalDivider(
-                                                width: 35,
-                                                thickness: 0.9,
-                                                color: Colors.white60,
-                                              ),
-                                              Expanded(
-                                                  child: Hero(
-                                                tag:
-                                                    'recipe_name${tes.values.toList()[index]}',
-                                                child: Text(
-                                                  tes.values.toList()[index],
+                                      IntrinsicHeight(
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      10, 1, 10, 1),
+                                              child: Text(
+                                                  tes.keys
+                                                      .toList()[index]
+                                                      .toString(),
                                                   style: TextStyle(
-                                                      decoration:
-                                                          TextDecoration.none,
-                                                      fontSize: 30,
                                                       fontWeight:
-                                                          FontWeight.w700,
-                                                      color: Colors.white),
-                                                ),
-                                              )),
-                                            ],
-                                          ),
+                                                          FontWeight.w500,
+                                                      fontSize: 23,
+                                                      color: Colors.white)),
+                                            ),
+                                            VerticalDivider(
+                                              width: 35,
+                                              thickness: 0.9,
+                                              color: Colors.white60,
+                                            ),
+                                            Expanded(
+                                                child: Hero(
+                                              tag:
+                                                  'recipe_name${tes.values.toList()[index]}',
+                                              child: Text(
+                                                tes.values.toList()[index],
+                                                style: TextStyle(
+                                                    decoration:
+                                                        TextDecoration.none,
+                                                    fontSize: 30,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: Colors.white),
+                                              ),
+                                            )),
+                                          ],
                                         ),
                                       )
                                     ]))),

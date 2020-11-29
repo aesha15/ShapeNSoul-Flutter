@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../splash_screen.dart';
+// import '../../splash_screen.dart';
 // import 'package:fluttersns/splash_screen.dart';
 
 class Recipe extends StatefulWidget {
@@ -26,12 +26,12 @@ class _RecipeState extends State<Recipe> {
 
   @override
   Widget build(BuildContext context) {
-    CollectionReference appointment =
+    CollectionReference recipe =
         FirebaseFirestore.instance.collection('Recipe');
 
     return Container(
         child: FutureBuilder<DocumentSnapshot>(
-            future: appointment.doc(widget.name).get(),
+            future: recipe.doc(widget.name).get(),
             builder: (BuildContext context,
                 AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.hasError) {

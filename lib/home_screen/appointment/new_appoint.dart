@@ -226,7 +226,11 @@ class _AppointmentState extends State<Appointment> {
                     height: _height / 3,
                   ),
                   RaisedButton(
-                    onPressed: () => {addAppt(), Navigator.pop(context)},
+                    onPressed: () => {
+                      addAppt(),
+                      Navigator.pop(context),
+                      Navigator.pushReplacementNamed(context, '/')
+                    },
                     color: Color(0xff3fc380),
                     textColor: Colors.white,
                     child: Text('Book Appointment'),

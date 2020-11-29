@@ -191,20 +191,26 @@ class _ProfileDetails extends State<ProfileDetails> {
                                       elevation: 0.2,
                                       child: Padding(
                                         padding: const EdgeInsets.all(16.0),
-                                        child: Expanded(
-                                          child: EditableText(
-                                            backgroundCursorColor: Colors.green,
-                                            textAlign: TextAlign.start,
-                                            focusNode: tongue,
-                                            controller: _tongue,
-                                            style: TextStyle(
-                                                color: Colors.blueGrey[600],
-                                                fontSize: 19.0,
-                                                fontWeight: FontWeight.w500),
-                                            keyboardType:
-                                                TextInputType.multiline,
-                                            cursorColor: Colors.blue,
-                                          ),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              child: EditableText(
+                                                backgroundCursorColor:
+                                                    Colors.green,
+                                                textAlign: TextAlign.start,
+                                                focusNode: tongue,
+                                                controller: _tongue,
+                                                style: TextStyle(
+                                                    color: Colors.blueGrey[600],
+                                                    fontSize: 19.0,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                                keyboardType:
+                                                    TextInputType.multiline,
+                                                cursorColor: Colors.blue,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ),

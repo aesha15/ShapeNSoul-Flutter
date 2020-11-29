@@ -49,7 +49,7 @@ class ClientAppointState extends State<ClientAppoint> {
               prev.sort((b, a) {
                 return a['date'].toDate().compareTo(b['date'].toDate());
               }),
-              print(test),
+              print("A"),
               setState(() {}),
               addDelay(test),
             });
@@ -58,7 +58,7 @@ class ClientAppointState extends State<ClientAppoint> {
   addDelay(text) async {
     for (var item in text) {
       // 1) Wait for one second
-      await Future.delayed(Duration(milliseconds: 100));
+      await Future.delayed(Duration(milliseconds: 80));
       // 2) Adding data to actual variable that holds the item.
       _items.add(item);
       // 3) Telling animated list to start animation
@@ -67,6 +67,104 @@ class ClientAppointState extends State<ClientAppoint> {
     setState(() {
       visibility = true;
     });
+  }
+
+  Widget upcoming() {
+    if (test.isEmpty)
+      return Container(
+        child: Text("No upcoming appointments"),
+      );
+    else
+      return AnimatedList(
+          shrinkWrap: true,
+          key: _listkey,
+          initialItemCount: _items.length,
+          itemBuilder: (context, index, animate) {
+            return SlideTransition(
+              child: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(9)),
+                  child: ClipPath(
+                    clipper: ShapeBorderClipper(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(9))),
+                    child: Container(
+                      decoration: new BoxDecoration(
+                          border: Border(
+                              right: BorderSide(
+                                  color: Colors.green[300], width: 6)),
+                          gradient: new LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Color(0xeeffffff),
+                              Color(0xeeEBFCE5),
+                              Color(0xeeE8FBFA)
+                            ],
+                          )),
+                      child: Padding(
+                        padding: const EdgeInsets.all(13.0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(6, 6, 14, 3),
+                                    child: Icon(
+                                      Icons.access_time,
+                                      size: 23,
+                                    ),
+                                  ),
+                                  Text(
+                                    DateFormat.yMMMd()
+                                        .format(_items[index]['date'].toDate()),
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.green[900]),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 3,
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 40),
+                                    child: Text(
+                                      _items[index]['time'],
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.blueGrey[800]),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 40),
+                                    child: Text(
+                                      _items[index]['therapy name'],
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                          color: Colors.blueGrey[800]),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ]),
+                      ),
+                    ),
+                  )),
+              position: animate.drive(offset),
+            );
+          });
   }
 
   @override
@@ -91,118 +189,7 @@ class ClientAppointState extends State<ClientAppoint> {
                           color: Colors.teal[900]),
                     ),
                   )),
-              // if (test.isEmpty)
-              //   AnimatedOpacity(
-              //     opacity: visibility ? 1.0 : 0.0,
-              //     duration: Duration(milliseconds: 500),
-              //     child: Padding(
-              //       padding: const EdgeInsets.fromLTRB(40, 4, 10, 3),
-              //       child: Container(
-              //         child: Text(
-              //           "No upcoming appointments.",
-              //           style: TextStyle(
-              //             color: Colors.grey,
-              //             fontSize: 15,
-              //             fontWeight: FontWeight.w500,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   )
-              // else
-              AnimatedList(
-                  shrinkWrap: true,
-                  key: _listkey,
-                  initialItemCount: _items.length,
-                  itemBuilder: (context, index, animate) {
-                    return SlideTransition(
-                      child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(9)),
-                          child: ClipPath(
-                            clipper: ShapeBorderClipper(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(9))),
-                            child: Container(
-                              decoration: new BoxDecoration(
-                                  border: Border(
-                                      right: BorderSide(
-                                          color: Colors.green[300], width: 6)),
-                                  gradient: new LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      Color(0xeeffffff),
-                                      Color(0xeeEBFCE5),
-                                      Color(0xeeE8FBFA)
-                                    ],
-                                  )),
-                              child: Padding(
-                                padding: const EdgeInsets.all(13.0),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                6, 6, 14, 3),
-                                            child: Icon(
-                                              Icons.access_time,
-                                              size: 23,
-                                            ),
-                                          ),
-                                          Text(
-                                            DateFormat.yMMMd().format(
-                                                _items[index]['date'].toDate()),
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.green[900]),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 3,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 40),
-                                            child: Text(
-                                              _items[index]['time'],
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.blueGrey[800]),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 40),
-                                            child: Text(
-                                              _items[index]['therapy name'],
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.blueGrey[800]),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ]),
-                              ),
-                            ),
-                          )),
-                      position: animate.drive(offset),
-                    );
-                  }),
+              upcoming(),
               SizedBox(
                 height: 19,
               ),
