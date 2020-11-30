@@ -147,23 +147,26 @@ class _AdminDiet extends State<AdminDiet> {
 
     return new Scaffold(
       resizeToAvoidBottomPadding: false,
-      body: Container(
-          child: Column(children: [
-        body,
-        Expanded(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(58.0),
-              child: RaisedButton(
-                  onPressed: create,
-                  color: const Color(0xff3fc380),
-                  textColor: Colors.white,
-                  child: new Text("Create PDF")),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 80),
+        child: Container(
+            child: Column(children: [
+          body,
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.all(58.0),
+                child: RaisedButton(
+                    onPressed: create,
+                    color: const Color(0xff3fc380),
+                    textColor: Colors.white,
+                    child: new Text("Create PDF")),
+              ),
             ),
           ),
-        ),
-      ])),
+        ])),
+      ),
       floatingActionButton: new FloatingActionButton(
         child: new Icon(Icons.add),
         onPressed: () {

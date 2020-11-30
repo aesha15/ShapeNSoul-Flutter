@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttersns/name2phone.dart';
-
+import 'package:fluttersns/home_screen/appointment/client_appoint.dart';
 import 'profile_details.dart';
 
 FirebaseAuth auth = FirebaseAuth.instance;
@@ -19,6 +19,10 @@ class _Profile extends State<Profile> {
   void initState() {
     getProfile();
     super.initState();
+  }
+
+  signOut() async {
+    await auth.signOut();
   }
 
   List<String> suggestions = [];
@@ -61,13 +65,57 @@ class _Profile extends State<Profile> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Color(0xfff6fef6),
-        body: Column(
-          children: [
-            new ListTile(title: textField),
-            ProfileStateless(
-              name: submit,
-            )
-          ],
+        body: SafeArea(
+          child: Column(
+            children: [
+              ClipPath(
+                clipper: HeaderClip(),
+                child: Container(
+                    decoration: BoxDecoration(color: Colors.green[400]),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  icon: new Icon(
+                                    Icons.exit_to_app,
+                                    color: Color(0xfff6fef6),
+                                  ),
+                                  onPressed: () {
+                                    showAlertDialog(context, 'Are you sure?');
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(40, 10, 0, 45),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.5,
+                              child: Text(
+                                "Client Profile ",
+                                style: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xfff6fef6)),
+                              ),
+                            ),
+                          ),
+                        ])),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(13),
+                child: ListTile(title: textField),
+              ),
+              ProfileStateless(
+                name: submit,
+              )
+            ],
+          ),
         ));
   }
 
@@ -80,6 +128,50 @@ class _Profile extends State<Profile> {
                 suggestions.add(doc.data()["name"]);
               }),
             });
+  }
+
+  void showAlertDialog(BuildContext context, String message) {
+    // set up the AlertDialog
+    Widget cancelButton = FlatButton(
+      child: Text(
+        "No",
+        style: TextStyle(fontSize: 20),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+        child: Text(
+          "Yes",
+          style: TextStyle(fontSize: 18),
+        ),
+        onPressed: () {
+          signOut();
+          Navigator.pushNamedAndRemoveUntil(
+              context, "/login", ModalRoute.withName('/login'));
+        });
+
+    AlertDialog alert = AlertDialog(
+        title: const Text(
+          "LOGOUT",
+          style: TextStyle(fontSize: 21),
+        ),
+        content: Text(
+          '\n$message',
+          style: TextStyle(fontSize: 18),
+        ),
+        actions: [
+          cancelButton,
+          continueButton,
+        ]);
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
 

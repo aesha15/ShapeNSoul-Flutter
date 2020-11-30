@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttersns/home_screen/appointment/previous_appoint.dart';
 // import 'package:fluttersns/name2phone.dart';
-import 'diet/edit_diet.dart';
+import '../diet/edit_diet.dart';
 import 'package:intl/intl.dart';
 
 class ProfileDetails extends StatefulWidget {
