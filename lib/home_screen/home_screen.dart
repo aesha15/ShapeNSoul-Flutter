@@ -22,13 +22,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   FirebaseAuth auth = FirebaseAuth.instance;
   String phone = '';
   final List<Widget> _children = [
-    (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
+    (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
         ? AdminAppoint()
         : ClientAppoint(),
-    (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
+    (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
         ? AdminDiet()
         : Diet(),
-    if (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
+    if (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
       Profile()
   ];
 
@@ -84,7 +84,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             icon: new Icon(Icons.description),
             title: Text('Diet'),
           ),
-          if (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
+          if (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
             new BottomNavigationBarItem(
                 icon: Icon(Icons.person_outline), title: Text('Profile'))
         ],
@@ -148,11 +148,12 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         .collection('Appointments')
         .doc(phone)
         .snapshots()
-        .listen((DocumentSnapshot querySnapshot) {
+        .listen((DocumentSnapshot querySnapshot) async {
+      await notificationPlugin.cancelAllNotification();
       querySnapshot.data().forEach((key, value) {
         if (!value['date'].toDate().isBefore(DateTime.now())) {
-          notificationPlugin.scheduleNotification(
-              value['date'].toDate().toLocal().subtract(Duration(hours: 1)));
+          var date = value['date'].toDate().toString().split('.')[0];
+          notificationPlugin.scheduleNotification(date, value['therapy name']);
         }
       });
     });

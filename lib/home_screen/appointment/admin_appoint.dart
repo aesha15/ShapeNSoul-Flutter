@@ -84,7 +84,11 @@ class _AdminAppointState extends State<AdminAppoint> {
       item['date'] = DateFormat.yMMMd().format(item['date'].toDate());
       appoint.add(item);
       // 3) Telling animated list to start animation
-      _listkey.currentState.insertItem(appoint.length - 1);
+      try {
+        _listkey.currentState.insertItem(appoint.length - 1);
+      } on NoSuchMethodError catch (e) {
+        print(e);
+      }
     }
   }
 

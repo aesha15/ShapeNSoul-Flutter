@@ -20,7 +20,7 @@ class ClientAppointState extends State<ClientAppoint> {
 
   Map<String, dynamic> data;
   final GlobalKey<AnimatedListState> _listkey = GlobalKey<AnimatedListState>();
-  final Tween<Offset> offset = Tween(begin: Offset(1, 0), end: Offset(0, 0));
+  final Tween<Offset> offset = Tween(begin: Offset(0, 1), end: Offset(0, 0));
   List<dynamic> _items = [];
   int counter = 0;
   List<dynamic> test = [];
@@ -58,11 +58,15 @@ class ClientAppointState extends State<ClientAppoint> {
   addDelay(text) async {
     for (var item in text) {
       // 1) Wait for one second
-      await Future.delayed(Duration(milliseconds: 100));
+      //await Future.delayed(Duration(milliseconds: 100));
       // 2) Adding data to actual variable that holds the item.
       _items.add(item);
       // 3) Telling animated list to start animation
-      _listkey.currentState.insertItem(_items.length - 1);
+      try {
+        _listkey.currentState.insertItem(_items.length - 1);
+      } on NoSuchMethodError catch (e) {
+        print(e);
+      }
     }
     setState(() {
       visibility = true;
@@ -79,7 +83,7 @@ class ClientAppointState extends State<ClientAppoint> {
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               AnimatedOpacity(
                   opacity: visibility ? 1.0 : 0.0,
-                  duration: Duration(milliseconds: 500),
+                  duration: Duration(milliseconds: 200),
                   child: Container(
                     padding: const EdgeInsets.all(18.0),
                     child: Text(

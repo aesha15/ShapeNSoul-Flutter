@@ -160,11 +160,12 @@ class NotificationPlugin {
     );
   }
 
-  Future<void> scheduleNotification(scheduleNotificationDateTime) async {
+  Future<void> scheduleNotification(
+      scheduleNotificationDateTime, therapy) async {
     var androidChannelSpecifics = AndroidNotificationDetails(
-      'CHANNEL_ID 1',
-      'CHANNEL_NAME 1',
-      "CHANNEL_DESCRIPTION 1",
+      therapy,
+      therapy,
+      therapy,
       icon: 'app_icon',
       largeIcon: DrawableResourceAndroidBitmap('app_icon'),
       enableLights: true,
@@ -175,7 +176,6 @@ class NotificationPlugin {
       importance: Importance.Max,
       priority: Priority.High,
       playSound: true,
-      timeoutAfter: 5000,
       styleInformation: DefaultStyleInformation(true, true),
     );
     var iosChannelSpecifics = IOSNotificationDetails();
@@ -186,12 +186,12 @@ class NotificationPlugin {
     await flutterLocalNotificationsPlugin.schedule(
       0,
       'Shape N Soul',
-      'Notification after 5 sec',
-      scheduleNotificationDateTime,
+      'Reminder for ${therapy} in an hour',
+      DateTime.parse(scheduleNotificationDateTime),
       platformChannelSpecifics,
       payload: 'Test Payload',
     );
-    //print(scheduleNotificationDateTime.toString());
+    print(await getPendingNotificationCount());
   }
 
   Future<void> showNotificationWithAttachment() async {
