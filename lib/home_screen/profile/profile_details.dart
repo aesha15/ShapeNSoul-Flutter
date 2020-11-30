@@ -333,7 +333,8 @@ class _ProfileDetails extends State<ProfileDetails> {
                                                     'time': '',
                                                     'recipe': ''
                                                   }))));
-                                    }),
+                                    },
+                                    tooltip: "Add Diet"),
                               )
                             ],
                           ),

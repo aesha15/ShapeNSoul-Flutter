@@ -88,6 +88,7 @@ class _Profile extends State<Profile> {
                                   onPressed: () {
                                     showAlertDialog(context, 'Are you sure?');
                                   },
+                                  tooltip: "Logout",
                                 ),
                               ],
                             ),

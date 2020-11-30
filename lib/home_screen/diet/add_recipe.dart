@@ -52,6 +52,7 @@ class _AddRecipeState extends State<AddRecipe> {
                         onPressed: () {
                           showAlertDialog(context, 'Are you sure?');
                         },
+                        tooltip: "Logout",
                       ),
                     ]),
                 body: ListView(

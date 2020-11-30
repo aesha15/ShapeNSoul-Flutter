@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttersns/home_screen/home_screen.dart';
 import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 //import '../home_screen/appointment/client_appoint.dart';
 
@@ -29,12 +30,12 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   void initState() {
     _controller = AnimationController(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     );
     _offsetAnimation = Tween<Offset>(
       begin: Offset.zero,
-      end: const Offset(0, -0.08),
+      end: const Offset(0, -0.25),
     ).animate(CurvedAnimation(
       parent: _controller,
       curve: Curves.easeIn,
@@ -119,8 +120,8 @@ class _LoginScreenState extends State<LoginScreen>
       final UserCredential user = await _auth.signInWithCredential(credential);
       final User currentUser = _auth.currentUser;
       assert(user.user.uid == currentUser.uid);
-      //Navigator.of(context).pop();
-      Navigator.popAndPushNamed(context, '/home');
+      Navigator.of(context).pop();
+      Navigator.of(context).push(_createRoute());
     } catch (e) {
       handleError(e);
     }
@@ -215,6 +216,25 @@ class _LoginScreenState extends State<LoginScreen>
     );
   }
 
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => Home(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(0.0, 1.0);
+        var end = Offset.zero;
+        var curve = Curves.easeIn;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -236,11 +256,17 @@ class _LoginScreenState extends State<LoginScreen>
                               children: [
                                 Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                                      const EdgeInsets.fromLTRB(38, 20, 20, 0),
+                                  child: Center(
+                                    child: Image.asset(
+                                        'assets/images/Frame.png',
+                                        height: 200,
+                                        width: 200),
+                                  ),
                                 ),
                                 Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(75, 100, 0, 42),
+                                      const EdgeInsets.fromLTRB(80, 20, 0, 42),
                                   child: Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.8,
@@ -255,12 +281,8 @@ class _LoginScreenState extends State<LoginScreen>
                                 ),
                               ]),
                           width: screenWidth,
-                          height: screenHeight * 0.25,
+                          height: screenHeight * 0.39,
                         ),
-                      ),
-                      Center(
-                        child: Image.asset('assets/images/Frame.png',
-                            height: 200, width: 200),
                       ),
                       Padding(
                           padding: EdgeInsets.fromLTRB(8, 100, 8, 0),
@@ -401,7 +423,7 @@ class _LoginScreenState extends State<LoginScreen>
                                       ),
                                       width: screenWidth * 0.8),
                                   SizedBox(
-                                    height: 25,
+                                    height: 50,
                                   ),
                                   Container(
                                       margin: EdgeInsets.symmetric(
@@ -466,6 +488,9 @@ class _LoginScreenState extends State<LoginScreen>
                                                 ),
                                               ],
                                             )),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
                                         GestureDetector(
                                           onTap: () {
                                             clickOnLogin();

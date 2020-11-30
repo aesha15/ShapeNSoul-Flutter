@@ -132,6 +132,7 @@ class _AdminAppointState extends State<AdminAppoint> {
               });
             }),
           },
+          tooltip: 'Search Clients',
           icon: Icon(Icons.clear),
         ),
       ),
@@ -189,6 +190,7 @@ class _AdminAppointState extends State<AdminAppoint> {
                                   onPressed: () {
                                     showAlertDialog(context, 'Are you sure?');
                                   },
+                                  tooltip: 'Logout',
                                 ),
                               ],
                             ),

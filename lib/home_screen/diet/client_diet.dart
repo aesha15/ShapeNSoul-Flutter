@@ -4,6 +4,7 @@ import 'package:dash_chat/dash_chat.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 // import 'package:fluttersns/home_screen/appointment/client_appoint.dart';
 import 'recipe.dart';
@@ -155,6 +156,7 @@ class DietState extends State<Diet> {
                     onPressed: () {
                       showAlertDialog(context, 'Are you sure?');
                     },
+                    tooltip: 'Logout',
                   ),
                 ],
               ),
@@ -169,7 +171,7 @@ class DietState extends State<Diet> {
                       child: Column(
                         children: [
                           Container(
-                              height: MediaQuery.of(context).size.height / 7,
+                              height: MediaQuery.of(context).size.height / 5,
                               child: Container(
                                 child: Card(
                                     shape: RoundedRectangleBorder(

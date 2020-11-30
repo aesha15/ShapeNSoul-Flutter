@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -12,6 +13,7 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     Future.delayed(Duration(seconds: 2), () {
       User result = FirebaseAuth.instance.currentUser;
       if (result != null) {

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttersns/home_screen/appointment/client_appoint.dart';
 import 'package:fluttersns/home_screen/appointment/admin_appoint.dart';
 import 'package:fluttersns/home_screen/diet/client_diet.dart';
@@ -25,7 +26,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
         ? AdminAppoint()
         : ClientAppoint(),
-    (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
+    (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
         ? AdminDiet()
         : Diet(),
     if (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
@@ -34,6 +35,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   initState() {
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     initialise();
     super.initState();
   }

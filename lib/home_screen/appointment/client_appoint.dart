@@ -105,6 +105,7 @@ class ClientAppointState extends State<ClientAppoint> {
                                   onPressed: () {
                                     showAlertDialog(context, 'Are you sure?');
                                   },
+                                  tooltip: "Logout",
                                 ),
                               ],
                             ),
