@@ -6,7 +6,7 @@ import 'package:fluttersns/home_screen/diet/add_recipe.dart';
 import 'package:fluttersns/home_screen/profile.dart';
 import 'package:fluttersns/home_screen/profile_details.dart';
 // import 'package:fluttersns/Imagedownload.dart';
-import 'login_screen/login_screen.dart';
+import 'login_screen/test.dart';
 import 'otp_screen/otp_screen.dart';
 import 'home_screen/home_screen.dart';
 import 'splash_screen.dart';

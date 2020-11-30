@@ -22,7 +22,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   FirebaseAuth auth = FirebaseAuth.instance;
   String phone = '';
   final List<Widget> _children = [
-    (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
+    (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
         ? AdminAppoint()
         : ClientAppoint(),
     (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')

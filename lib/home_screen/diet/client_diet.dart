@@ -240,6 +240,7 @@ class DietState extends State<Diet> {
               position: animate.drive(offset),
             );
           }),
+      padding: EdgeInsets.fromLTRB(8.0, 40, 8.0, 0),
     );
   }
 }

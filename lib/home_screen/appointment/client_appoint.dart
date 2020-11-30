@@ -120,13 +120,13 @@ class ClientAppointState extends State<ClientAppoint> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(43, 13, 0, 42),
+                            padding: const EdgeInsets.fromLTRB(80, 13, 0, 42),
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.6,
                               child: Text(
                                 "Your Appointments",
                                 style: TextStyle(
-                                    fontSize: 40,
+                                    fontSize: 38,
                                     fontWeight: FontWeight.w800,
                                     color: Color(0xfff6fef6)),
                               ),
