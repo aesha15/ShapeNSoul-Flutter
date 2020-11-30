@@ -150,51 +150,62 @@ class _AdminAppointState extends State<AdminAppoint> {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
-      backgroundColor: Color(0xfff6fef6),
-      body: Container(
-        child: ListView(
-          children: [
-            new ListTile(title: textField),
-            AnimatedList(
-                shrinkWrap: true,
-                physics: BouncingScrollPhysics(),
-                key: _listkey,
-                initialItemCount: appoint.length,
-                itemBuilder: (context, index, animate) {
-                  return SlideTransition(
-                    child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(9)),
-                        child: InkWell(
-                          splashColor: Colors.green.withAlpha(30),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => EditAppointment(
-                                        title: jsonEncode(appoint[index]))));
-                          },
-                          child: ClipPath(
-                            clipper: ShapeBorderClipper(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(9))),
-                            child: Container(
-                                decoration: new BoxDecoration(
-                                    border: Border(
-                                        right: BorderSide(
-                                            color: Colors.green[300],
-                                            width: 6)),
-                                    gradient: new LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Color(0xeeffffff),
-                                        Color(0xeeEBFCE5),
-                                        Color(0xeeE8FBFA)
-                                      ],
-                                    )),
+      backgroundColor: Colors.white,
+      body: GestureDetector(
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
+
+          if (!currentFocus.hasPrimaryFocus) {
+            textFieldFocusNode.unfocus();
+          }
+        },
+        child: Container(
+          child: ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5, 4, 5, 18),
+                child: new ListTile(title: textField),
+              ),
+              AnimatedList(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  key: _listkey,
+                  initialItemCount: appoint.length,
+                  itemBuilder: (context, index, animate) {
+                    return SlideTransition(
+                      child: Padding(
+                        padding: const EdgeInsets.all(9.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30.0),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.green[100].withOpacity(0.4),
+                                spreadRadius: 2,
+                                blurRadius: 9,
+                                // offset:
+                                //     Offset(0, 4), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(23)),
+                              child: InkWell(
+                                // splashColor: Colors.green.withAlpha(30),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => EditAppointment(
+                                              title:
+                                                  jsonEncode(appoint[index]))));
+                                },
                                 child: Padding(
-                                    padding: const EdgeInsets.all(13.0),
+                                    padding: const EdgeInsets.all(18.0),
                                     child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.stretch,
@@ -218,22 +229,22 @@ class _AdminAppointState extends State<AdminAppoint> {
                                                       style: TextStyle(
                                                         color:
                                                             Colors.green[900],
-                                                        fontSize: 18,
+                                                        fontSize: 21,
                                                         fontWeight:
-                                                            FontWeight.bold,
+                                                            FontWeight.w600,
                                                       ),
                                                     ),
                                                   ),
                                                   Padding(
                                                     padding: const EdgeInsets
-                                                        .fromLTRB(15, 1, 1, 5),
+                                                        .fromLTRB(15, 2, 1, 5),
                                                     child: Text(
                                                       appoint[index]
                                                           ['therapy name'],
                                                       style: TextStyle(
                                                         fontSize: 16,
                                                         fontWeight:
-                                                            FontWeight.w600,
+                                                            FontWeight.w500,
                                                       ),
                                                     ),
                                                   ),
@@ -275,14 +286,16 @@ class _AdminAppointState extends State<AdminAppoint> {
                                               ),
                                             ),
                                           ]),
-                                        ]))),
-                          ),
-                        )),
-                    // Text(appoint[index]['therapy name']),
-                    position: animate.drive(offset),
-                  );
-                }),
-          ],
+                                        ])),
+                              )),
+                        ),
+                      ),
+                      // Text(appoint[index]['therapy name']),
+                      position: animate.drive(offset),
+                    );
+                  }),
+            ],
+          ),
         ),
       ),
       floatingActionButton: new FloatingActionButton(

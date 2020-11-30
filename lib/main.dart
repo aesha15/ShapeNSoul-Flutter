@@ -10,6 +10,7 @@ import 'login_screen/login_screen.dart';
 import 'otp_screen/otp_screen.dart';
 import 'home_screen/home_screen.dart';
 import 'splash_screen.dart';
+import 'rive_test.dart';
 // import 'package:fluttersns/home_screen/appointment/client_appoint.dart';
 import 'package:firebase_core/firebase_core.dart';
 

@@ -73,6 +73,10 @@ class ClientAppointState extends State<ClientAppoint> {
     });
   }
 
+  signOut() async {
+    await auth.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,6 +85,59 @@ class ClientAppointState extends State<ClientAppoint> {
         child: ListView(
           children: [
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              ClipPath(
+                clipper: HeaderClip(),
+                child: Container(
+                    decoration: BoxDecoration(color: Colors.green[400]),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                // Padding(
+                                //   padding: const EdgeInsets.all(5.0),
+                                // child: Text(
+                                //   "Logout",
+                                //   style: TextStyle(
+                                //       fontSize: 18,
+                                //       color: Colors.grey[600],
+                                //       fontWeight: FontWeight.w500),
+                                // ),
+                                // ),
+                                IconButton(
+                                  icon: new Icon(
+                                    Icons.exit_to_app,
+                                    color: Color(0xfff6fef6),
+                                  ),
+                                  onPressed: () {
+                                    showAlertDialog(context, 'Are you sure?');
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(43, 13, 0, 42),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              child: Text(
+                                "Your Appointments",
+                                style: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xfff6fef6)),
+                              ),
+                            ),
+                          ),
+                        ])),
+              ),
+              // Divider(
+              //   indent: 20,
+              //   endIndent: MediaQuery.of(context).size.width * 0.2,
+              // ),
               AnimatedOpacity(
                   opacity: visibility ? 1.0 : 0.0,
                   duration: Duration(milliseconds: 200),
@@ -90,9 +147,9 @@ class ClientAppointState extends State<ClientAppoint> {
                       ' Upcoming appointments : ',
                       style: TextStyle(
                           fontSize: 20,
-                          fontWeight: FontWeight.w600,
                           fontStyle: FontStyle.italic,
-                          color: Colors.teal[900]),
+                          fontWeight: FontWeight.w600,
+                          color: Colors.blueGrey[700]),
                     ),
                   )),
               // if (test.isEmpty)
@@ -120,90 +177,103 @@ class ClientAppointState extends State<ClientAppoint> {
                   initialItemCount: _items.length,
                   itemBuilder: (context, index, animate) {
                     return SlideTransition(
-                      child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(9)),
-                          child: ClipPath(
-                            clipper: ShapeBorderClipper(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(9))),
-                            child: Container(
-                              decoration: new BoxDecoration(
-                                  border: Border(
-                                      right: BorderSide(
-                                          color: Colors.green[300], width: 6)),
-                                  gradient: new LinearGradient(
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                    colors: [
-                                      Color(0xeeffffff),
-                                      Color(0xeeEBFCE5),
-                                      Color(0xeeE8FBFA)
-                                    ],
-                                  )),
-                              child: Padding(
-                                padding: const EdgeInsets.all(13.0),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                6, 6, 14, 3),
-                                            child: Icon(
-                                              Icons.access_time,
-                                              size: 23,
-                                            ),
-                                          ),
-                                          Text(
-                                            DateFormat.yMMMd().format(
-                                                _items[index]['date'].toDate()),
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.green[900]),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 3,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 40),
-                                            child: Text(
-                                              _items[index]['time'],
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.blueGrey[800]),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                const EdgeInsets.only(left: 40),
-                                            child: Text(
-                                              _items[index]['therapy name'],
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w600,
-                                                  color: Colors.blueGrey[800]),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ]),
+                      child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30.0),
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.green[100].withOpacity(0.4),
+                                    spreadRadius: 2,
+                                    blurRadius: 20,
+                                    // offset:
+                                    //     Offset(0, 4), // changes position of shadow
+                                  ),
+                                ],
                               ),
-                            ),
-                          )),
+                              child: Card(
+                                elevation: 3,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(23)),
+                                child: ClipPath(
+                                  clipper: ShapeBorderClipper(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(23))),
+                                  child: Container(
+                                    decoration: new BoxDecoration(
+                                      border: Border(
+                                          right: BorderSide(
+                                              color: Colors.green[300],
+                                              width: 10)),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(17),
+                                      child: Column(children: [
+                                        Row(children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Column(children: [
+                                              Icon(
+                                                Icons.access_time,
+                                                size: 23,
+                                              ),
+                                            ]),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(left: 13),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    DateFormat.yMMMd().format(
+                                                        _items[index]['date']
+                                                            .toDate()),
+                                                    style: TextStyle(
+                                                        fontSize: 21,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            Colors.green[900]),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 4,
+                                                  ),
+                                                  Text(
+                                                    _items[index]['time'],
+                                                    style: TextStyle(
+                                                        fontSize: 17,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Colors
+                                                            .blueGrey[700]),
+                                                  ),
+                                                  SizedBox(
+                                                    height: 7,
+                                                  ),
+                                                  Text(
+                                                    _items[index]
+                                                        ['therapy name'],
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color: Colors
+                                                            .blueGrey[700]),
+                                                  ),
+                                                ]),
+                                          ),
+                                        ]),
+                                      ]),
+                                    ),
+                                  ),
+                                ),
+                              ))),
                       position: animate.drive(offset),
                     );
                   }),
@@ -213,122 +283,199 @@ class ClientAppointState extends State<ClientAppoint> {
               AnimatedOpacity(
                   opacity: visibility ? 1.0 : 0.0,
                   duration: Duration(milliseconds: 500),
-                  child: ExpansionTile(
-                    title: Text(
-                      ' Previous appointments ',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          fontStyle: FontStyle.italic,
-                          color: Colors.blueGrey[600]),
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      dividerColor: Colors.transparent,
+                      accentColor: Colors.grey,
                     ),
-                    children: [
-                      for (var value in prev)
-                        if (value['date'].toDate().isBefore(DateTime.now()))
-                          Column(children: [
-                            Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(9)),
-                              child: ClipPath(
-                                clipper: ShapeBorderClipper(
+                    child: ExpansionTile(
+                      title: Text(
+                        ' Previous appointments ',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                            fontStyle: FontStyle.italic,
+                            color: Colors.blueGrey[500]),
+                      ),
+                      children: [
+                        for (var value in prev)
+                          if (value['date'].toDate().isBefore(DateTime.now()))
+                            Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(30.0),
+                                  ),
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: Colors.green[100].withOpacity(0.4),
+                                  //     spreadRadius: 0.5,
+                                  //     blurRadius: 20,
+                                  //     // offset:
+                                  //     //     Offset(0, 4), // changes position of shadow
+                                  //   ),
+                                  // ],
+                                ),
+                                child: Column(children: [
+                                  Card(
+                                    elevation: 3,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(9))),
-                                child: Container(
-                                  decoration: new BoxDecoration(
-                                      border: Border(
-                                          right: BorderSide(
-                                              color: Colors.blueGrey[300],
-                                              width: 6)),
-                                      gradient: new LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: [
-                                          Color(0xccffffff),
-                                          Color(0xccEBFCE5),
-                                          Color(0xccE8FBFA)
-                                        ],
-                                      )),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(13.0),
-                                    child: Container(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.stretch,
-                                        children: [
-                                          Row(
-                                            children: [
+                                            BorderRadius.circular(23)),
+                                    child: ClipPath(
+                                      clipper: ShapeBorderClipper(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(23))),
+                                      child: Container(
+                                        decoration: new BoxDecoration(
+                                          border: Border(
+                                              right: BorderSide(
+                                                  color: Colors.grey[400],
+                                                  width: 10)),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(17),
+                                          child: Column(children: [
+                                            Row(children: [
                                               Padding(
                                                 padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        6, 6, 14, 3),
-                                                child: Icon(
-                                                  Icons.access_time,
-                                                  size: 23,
-                                                ),
+                                                    const EdgeInsets.all(8.0),
+                                                child: Column(children: [
+                                                  Icon(
+                                                    Icons.access_time,
+                                                    size: 23,
+                                                  ),
+                                                ]),
                                               ),
-                                              Text(
-                                                DateFormat.yMMMd().format(
-                                                    value['date'].toDate()),
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.green[900]),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 3,
-                                          ),
-                                          Row(
-                                            children: [
                                               Padding(
                                                 padding: const EdgeInsets.only(
-                                                    left: 40),
-                                                child: Text(
-                                                  value['time'],
-                                                  style: TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color:
-                                                          Colors.blueGrey[800]),
-                                                ),
+                                                    left: 13),
+                                                child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        DateFormat.yMMMd()
+                                                            .format(
+                                                                value['date']
+                                                                    .toDate()),
+                                                        style: TextStyle(
+                                                            fontSize: 21,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Colors
+                                                                .green[900]),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 3,
+                                                      ),
+                                                      Text(
+                                                        value['time'],
+                                                        style: TextStyle(
+                                                            fontSize: 17,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Colors
+                                                                .blueGrey[700]),
+                                                      ),
+                                                      SizedBox(
+                                                        height: 8,
+                                                      ),
+                                                      Text(
+                                                        value['therapy name'],
+                                                        style: TextStyle(
+                                                            fontSize: 17,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            color: Colors
+                                                                .blueGrey[700]),
+                                                      ),
+                                                    ]),
                                               ),
-                                            ],
-                                          ),
-                                          Row(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 40),
-                                                child: Text(
-                                                  value['therapy name'],
-                                                  style: TextStyle(
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      color:
-                                                          Colors.blueGrey[800]),
-                                                  // color: Colors.green[900]),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                            ]),
+                                          ]),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
+                                ]),
                               ),
-                            )
-                          ]),
-                    ],
+                            ),
+                      ],
+                    ),
                   )),
             ])
           ],
         ),
       ),
     );
+  }
+
+  void showAlertDialog(BuildContext context, String message) {
+    // set up the AlertDialog
+    Widget cancelButton = FlatButton(
+      child: Text(
+        "No",
+        style: TextStyle(fontSize: 20),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+        child: Text(
+          "Yes",
+          style: TextStyle(fontSize: 18),
+        ),
+        onPressed: () {
+          signOut();
+          Navigator.pushNamedAndRemoveUntil(
+              context, "/login", ModalRoute.withName('/login'));
+        });
+
+    AlertDialog alert = AlertDialog(
+        title: const Text(
+          "LOGOUT",
+          style: TextStyle(fontSize: 21),
+        ),
+        content: Text(
+          '\n$message',
+          style: TextStyle(fontSize: 18),
+        ),
+        actions: [
+          cancelButton,
+          continueButton,
+        ]);
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+}
+
+class HeaderClip extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = new Path();
+    path.lineTo(0, size.height - 50);
+    var controllPoint = Offset(50, size.height);
+    var endPoint = Offset(size.width / 2, size.height);
+    path.quadraticBezierTo(
+        controllPoint.dx, controllPoint.dy, endPoint.dx, endPoint.dy);
+
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
   }
 }

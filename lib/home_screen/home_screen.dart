@@ -22,7 +22,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   FirebaseAuth auth = FirebaseAuth.instance;
   String phone = '';
   final List<Widget> _children = [
-    (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
+    (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
         ? AdminAppoint()
         : ClientAppoint(),
     (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
@@ -45,33 +45,34 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text('Shape N Soul',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w700,
-              )),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: <Color>[Color(0xff84EBAB), Color(0xff3fc380)])),
-          ),
-          automaticallyImplyLeading: false,
-          // backgroundColor: Color(0xfff6fef6),
-          actions: <Widget>[
-            IconButton(
-              icon: new Icon(Icons.exit_to_app),
-              onPressed: () {
-                showAlertDialog(context, 'Are you sure?');
-              },
-            ),
-          ]),
+      // appBar: AppBar(
+      //     title: Text('Shape N Soul',
+      //         style: TextStyle(
+      //           fontSize: 25,
+      //           fontWeight: FontWeight.w700,
+      //         )),
+      // backgroundColor: Colors.white,
+      // flexibleSpace: Container(
+      //   decoration: BoxDecoration(
+      //       gradient: LinearGradient(
+      //           begin: Alignment.topLeft,
+      //           end: Alignment.bottomRight,
+      //           colors: <Color>[Color(0xff84EBAB), Color(0xff3fc380)])),
+      // ),
+      // automaticallyImplyLeading: false,
+      // // backgroundColor: Color(0xfff6fef6),
+      // actions: <Widget>[
+      //   IconButton(
+      //     icon: new Icon(Icons.exit_to_app),
+      //     onPressed: () {
+      //       showAlertDialog(context, 'Are you sure?');
+      //     },
+      //   ),
+      // ]),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         elevation: 5,
-        backgroundColor: Color(0xfff6fef6),
+        backgroundColor: Colors.white,
         // selectedItemColor: Colors.white,
         onTap: onTabTapped,
         currentIndex: _currentIndex,
