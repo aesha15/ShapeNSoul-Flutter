@@ -4,7 +4,7 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttersns/home_screen/profile_details.dart';
+import 'package:fluttersns/home_screen/profile/profile_details.dart';
 
 class AddDiet extends StatefulWidget {
   AddDiet({Key key, this.title}) : super(key: key);

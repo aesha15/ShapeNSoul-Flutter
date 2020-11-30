@@ -6,7 +6,7 @@ import '../../name2phone.dart';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../profile.dart';
+import '../profile/profile.dart';
 
 class Appointment extends StatefulWidget {
   Appointment({Key key, this.title}) : super(key: key);

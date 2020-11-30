@@ -97,16 +97,6 @@ class ClientAppointState extends State<ClientAppoint> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                // Padding(
-                                //   padding: const EdgeInsets.all(5.0),
-                                // child: Text(
-                                //   "Logout",
-                                //   style: TextStyle(
-                                //       fontSize: 18,
-                                //       color: Colors.grey[600],
-                                //       fontWeight: FontWeight.w500),
-                                // ),
-                                // ),
                                 IconButton(
                                   icon: new Icon(
                                     Icons.exit_to_app,
@@ -120,7 +110,7 @@ class ClientAppointState extends State<ClientAppoint> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(43, 13, 0, 42),
+                            padding: const EdgeInsets.fromLTRB(43, 0, 0, 45),
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.6,
                               child: Text(

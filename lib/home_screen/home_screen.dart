@@ -6,7 +6,7 @@ import 'package:fluttersns/home_screen/diet/client_diet.dart';
 import 'package:fluttersns/home_screen/diet/admin_diet.dart';
 
 import '../notification.dart';
-import 'package:fluttersns/home_screen/profile.dart';
+import 'package:fluttersns/home_screen/profile/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -25,7 +25,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
         ? AdminAppoint()
         : ClientAppoint(),
-    (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')
+    (FirebaseAuth.instance.currentUser.phoneNumber != '+918976305456')
         ? AdminDiet()
         : Diet(),
     if (FirebaseAuth.instance.currentUser.phoneNumber == '+918976305456')

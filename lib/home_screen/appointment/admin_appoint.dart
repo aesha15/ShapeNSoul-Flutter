@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'client_appoint.dart';
 import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -147,10 +147,14 @@ class _AdminAppointState extends State<AdminAppoint> {
     );
   }
 
+  signOut() async {
+    await auth.signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xfff6fef6),
       body: GestureDetector(
         onTap: () {
           FocusScopeNode currentFocus = FocusScope.of(context);
@@ -162,8 +166,54 @@ class _AdminAppointState extends State<AdminAppoint> {
         child: Container(
           child: ListView(
             children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipPath(
+                    clipper: HeaderClip(),
+                    child: Container(
+                      decoration: BoxDecoration(color: Colors.green[400]),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  icon: new Icon(
+                                    Icons.exit_to_app,
+                                    color: Color(0xfff6fef6),
+                                  ),
+                                  onPressed: () {
+                                    showAlertDialog(context, 'Are you sure?');
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(43, 0, 0, 45),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.6,
+                              child: Text(
+                                "Appointment List",
+                                style: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xfff6fef6)),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(5, 4, 5, 18),
+                padding: const EdgeInsets.fromLTRB(8, 18, 8, 18),
                 child: new ListTile(title: textField),
               ),
               AnimatedList(
@@ -306,5 +356,49 @@ class _AdminAppointState extends State<AdminAppoint> {
         backgroundColor: const Color(0xff3fc380),
       ),
     ));
+  }
+
+  void showAlertDialog(BuildContext context, String message) {
+    // set up the AlertDialog
+    Widget cancelButton = FlatButton(
+      child: Text(
+        "No",
+        style: TextStyle(fontSize: 20),
+      ),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+    Widget continueButton = FlatButton(
+        child: Text(
+          "Yes",
+          style: TextStyle(fontSize: 18),
+        ),
+        onPressed: () {
+          signOut();
+          Navigator.pushNamedAndRemoveUntil(
+              context, "/login", ModalRoute.withName('/login'));
+        });
+
+    AlertDialog alert = AlertDialog(
+        title: const Text(
+          "LOGOUT",
+          style: TextStyle(fontSize: 21),
+        ),
+        content: Text(
+          '\n$message',
+          style: TextStyle(fontSize: 18),
+        ),
+        actions: [
+          cancelButton,
+          continueButton,
+        ]);
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
