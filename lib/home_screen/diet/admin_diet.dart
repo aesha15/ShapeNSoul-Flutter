@@ -159,7 +159,7 @@ class _AdminDiet extends State<AdminDiet> {
                 padding: const EdgeInsets.all(58.0),
                 child: RaisedButton(
                     onPressed: create,
-                    color: const Color(0xff3fc380),
+                    color: Colors.green[400],
                     textColor: Colors.white,
                     child: new Text("Create PDF")),
               ),
@@ -172,7 +172,7 @@ class _AdminDiet extends State<AdminDiet> {
         onPressed: () {
           Navigator.pushNamed(context, '/add_recipe');
         },
-        backgroundColor: const Color(0xff3fc380),
+        backgroundColor: Colors.green[400],
       ),
     );
   }

@@ -187,7 +187,7 @@ class NotificationPlugin {
       0,
       'Shape N Soul',
       'Reminder for ${therapy} in an hour',
-      DateTime.parse(scheduleNotificationDateTime),
+      DateTime.parse(scheduleNotificationDateTime).subtract(Duration(hours: 1)),
       platformChannelSpecifics,
       payload: 'Test Payload',
     );

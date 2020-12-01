@@ -219,16 +219,17 @@ class _LoginScreenState extends State<LoginScreen>
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => Home(),
+      transitionDuration: Duration(seconds: 1),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        var begin = Offset(0.0, 1.0);
+        var begin = Offset(0.0, 0.1);
         var end = Offset.zero;
         var curve = Curves.easeIn;
 
         var tween =
             Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
-        return SlideTransition(
-          position: animation.drive(tween),
+        return FadeTransition(
+          opacity: animation,
           child: child,
         );
       },
@@ -274,7 +275,7 @@ class _LoginScreenState extends State<LoginScreen>
                                       "SHAPE N SOUL",
                                       style: TextStyle(
                                           fontSize: 40,
-                                          fontWeight: FontWeight.w800,
+                                          fontWeight: FontWeight.w400,
                                           color: Colors.white),
                                     ),
                                   ),
@@ -451,7 +452,7 @@ class _LoginScreenState extends State<LoginScreen>
                                             height: 45,
                                             decoration: BoxDecoration(
                                               border: Border.all(
-                                                color: const Color(0xff3fc380),
+                                                color: Colors.green[400],
                                               ),
                                               borderRadius:
                                                   BorderRadius.circular(36),
