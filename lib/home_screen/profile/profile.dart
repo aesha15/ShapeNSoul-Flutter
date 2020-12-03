@@ -71,7 +71,7 @@ class _Profile extends State<Profile> {
               ClipPath(
                 clipper: HeaderClip(),
                 child: Container(
-                    decoration: BoxDecoration(color: Colors.green[400]),
+                    decoration: BoxDecoration(color: Colors.green[300]),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -80,6 +80,12 @@ class _Profile extends State<Profile> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 13),
+                                  child: Image.asset('assets/images/Frame.png',
+                                      width: 50, height: 50),
+                                ),
                                 IconButton(
                                   icon: new Icon(
                                     Icons.exit_to_app,
@@ -188,7 +194,9 @@ class ProfileStateless extends StatelessWidget {
     CollectionReference appointment =
         FirebaseFirestore.instance.collection('Users');
     Widget list = Container(
-      child: Text('loading'),
+      child: CircularProgressIndicator(
+        backgroundColor: Colors.green[300],
+      ),
     );
     if (name == '') {
       list = FutureBuilder<QuerySnapshot>(
@@ -245,7 +253,10 @@ class ProfileStateless extends StatelessWidget {
                 ),
               );
             }
-            return Text("loading");
+            return CircularProgressIndicator(
+              backgroundColor: Color(0xfff6fef6),
+              valueColor: new AlwaysStoppedAnimation<Color>(Colors.green[300]),
+            );
           });
     } else {
       list = Padding(

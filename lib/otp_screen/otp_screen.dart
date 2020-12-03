@@ -142,7 +142,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           height: 45,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: Colors.green[400],
+                            color: Colors.green[300],
                             borderRadius: BorderRadius.circular(36),
                           ),
                           alignment: Alignment.center,
@@ -165,7 +165,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             height: 45,
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: Colors.green[400],
+                              color: Colors.green[300],
                               borderRadius: BorderRadius.circular(36),
                             ),
                             alignment: Alignment.center,

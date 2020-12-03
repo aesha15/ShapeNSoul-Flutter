@@ -88,15 +88,28 @@ class ClientAppointState extends State<ClientAppoint> {
               ClipPath(
                 clipper: HeaderClip(),
                 child: Container(
-                    decoration: BoxDecoration(color: Colors.green[400]),
+                    decoration: BoxDecoration(
+                        color: Colors.green[300],
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey,
+                              offset: Offset(0, 5),
+                              spreadRadius: 5)
+                        ]),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 13),
+                                  child: Image.asset('assets/images/Frame.png',
+                                      width: 50, height: 50),
+                                ),
                                 IconButton(
                                   icon: new Icon(
                                     Icons.exit_to_app,
@@ -112,15 +125,24 @@ class ClientAppointState extends State<ClientAppoint> {
                           ),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(43, 0, 0, 45),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.6,
-                              child: Text(
-                                "Your Appointments",
-                                style: TextStyle(
-                                    fontSize: 38,
-                                    fontWeight: FontWeight.w800,
-                                    color: Color(0xfff6fef6)),
-                              ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Your",
+                                  style: TextStyle(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w800,
+                                      color: Color(0xfff6fef6)),
+                                ),
+                                Text(
+                                  "Appointments",
+                                  style: TextStyle(
+                                      fontSize: 40,
+                                      fontWeight: FontWeight.w800,
+                                      color: Color(0xfff6fef6)),
+                                ),
+                              ],
                             ),
                           ),
                         ])),
@@ -175,18 +197,9 @@ class ClientAppointState extends State<ClientAppoint> {
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(30.0),
                                 ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.green[100].withOpacity(0.4),
-                                    spreadRadius: 2,
-                                    blurRadius: 20,
-                                    // offset:
-                                    //     Offset(0, 4), // changes position of shadow
-                                  ),
-                                ],
                               ),
                               child: Card(
-                                elevation: 3,
+                                elevation: 5,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(23)),
                                 child: ClipPath(
@@ -202,7 +215,7 @@ class ClientAppointState extends State<ClientAppoint> {
                                               width: 10)),
                                     ),
                                     child: Padding(
-                                      padding: const EdgeInsets.all(17),
+                                      padding: const EdgeInsets.all(15),
                                       child: Column(children: [
                                         Row(children: [
                                           Padding(
@@ -298,19 +311,10 @@ class ClientAppointState extends State<ClientAppoint> {
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(30.0),
                                   ),
-                                  // boxShadow: [
-                                  //   BoxShadow(
-                                  //     color: Colors.green[100].withOpacity(0.4),
-                                  //     spreadRadius: 0.5,
-                                  //     blurRadius: 20,
-                                  //     // offset:
-                                  //     //     Offset(0, 4), // changes position of shadow
-                                  //   ),
-                                  // ],
                                 ),
                                 child: Column(children: [
                                   Card(
-                                    elevation: 3,
+                                    elevation: 5,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(23)),
@@ -327,7 +331,7 @@ class ClientAppointState extends State<ClientAppoint> {
                                                   width: 10)),
                                         ),
                                         child: Padding(
-                                          padding: const EdgeInsets.all(17),
+                                          padding: const EdgeInsets.all(15),
                                           child: Column(children: [
                                             Row(children: [
                                               Padding(

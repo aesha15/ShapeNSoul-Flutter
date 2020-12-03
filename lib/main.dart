@@ -27,9 +27,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter OTP Authentication',
-      theme: ThemeData(
-        primaryColor: Color(0xff3fc380),
-      ),
+      theme: ThemeData(primaryColor: Colors.green[300]
+
+          // primaryColor: Colors.green[300],
+          ),
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
         '/': (BuildContext ctx) => SplashScreen(),

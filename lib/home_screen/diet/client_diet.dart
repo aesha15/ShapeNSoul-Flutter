@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_chat/dash_chat.dart';
-
+import 'package:fluttersns/home_screen/appointment/client_appoint.dart';
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -144,139 +144,165 @@ class DietState extends State<Diet> {
       backgroundColor: Color(0xfff6fef6),
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    icon: new Icon(Icons.exit_to_app,
-                        size: 30, color: Colors.green[700]),
-                    onPressed: () {
-                      showAlertDialog(context, 'Are you sure?');
-                    },
-                    tooltip: 'Logout',
-                  ),
-                ],
-              ),
+            ClipPath(
+              clipper: HeaderClip(),
+              child: Container(
+                  decoration: BoxDecoration(color: Colors.green[300]),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 18, bottom: 13),
+                                child: Image.asset('assets/images/Frame.png',
+                                    width: 50, height: 50),
+                              ),
+                              IconButton(
+                                icon: new Icon(
+                                  Icons.exit_to_app,
+                                  color: Color(0xfff6fef6),
+                                ),
+                                onPressed: () {
+                                  showAlertDialog(context, 'Are you sure?');
+                                },
+                                tooltip: 'Logout',
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(43, 0, 0, 45),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Your",
+                                style: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xfff6fef6)),
+                              ),
+                              Text(
+                                "Diet Chart",
+                                style: TextStyle(
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xfff6fef6)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ])),
             ),
-            Container(
-              child: AnimatedList(
-                  shrinkWrap: true,
-                  key: _listkey,
-                  initialItemCount: _items.length,
-                  itemBuilder: (context, index, animate) {
-                    return SlideTransition(
-                      child: Column(
-                        children: [
-                          Container(
-                              height: MediaQuery.of(context).size.height / 5,
-                              child: Container(
-                                child: Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: InkWell(
-                                        splashColor: Colors.green.withAlpha(30),
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => Recipe(
-                                                    name: tes.values
-                                                        .toList()[index]),
-                                              ));
-                                        },
-                                        child: Stack(
-                                            alignment: Alignment.bottomLeft,
-                                            children: [
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
+            Padding(
+              padding: const EdgeInsets.only(top: 13),
+              child: Container(
+                child: AnimatedList(
+                    shrinkWrap: true,
+                    key: _listkey,
+                    initialItemCount: _items.length,
+                    itemBuilder: (context, index, animate) {
+                      return SlideTransition(
+                        child: Column(
+                          children: [
+                            Container(
+                                height: 100,
+                                child: Container(
+                                  child: Card(
+                                      elevation: 4,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: InkWell(
+                                          splashColor:
+                                              Colors.green.withAlpha(30),
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => Recipe(
+                                                      name: tes.values
+                                                          .toList()[index]),
+                                                ));
+                                          },
+                                          child: Row(children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 1, 1, 1),
+                                              child: Text(
+                                                  tes.keys
+                                                      .toList()[index]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontSize: 18,
+                                                      color:
+                                                          Colors.green[800])),
+                                            ),
+                                            VerticalDivider(
+                                              indent: 30,
+                                              endIndent: 30,
+                                              width: 35,
+                                              thickness: 0.9,
+                                              color: Colors.blueGrey[100],
+                                            ),
+                                            Expanded(
                                                 child: Hero(
-                                                    tag:
-                                                        'recipe${tes.values.toList()[index]}',
-                                                    child: Wrap(children: [
-                                                      if (File(
-                                                              '${appDocDir.path}/${tes.values.toList()[index]}.jpg')
-                                                          .existsSync())
-                                                        Image.file(
-                                                          File(
-                                                              '${appDocDir.path}/${tes.values.toList()[index]}.jpg'),
-                                                          width:
-                                                              double.infinity,
-                                                          color: Color.fromRGBO(
-                                                              0, 0, 0, 0.5),
-                                                          fit: BoxFit.cover,
-                                                          colorBlendMode:
-                                                              BlendMode.darken,
-                                                        )
-                                                      else
-                                                        Image.asset(
-                                                          'assets/images/logo.png',
-                                                          width:
-                                                              double.infinity,
-                                                          color: Color.fromRGBO(
-                                                              0, 0, 0, 0.5),
-                                                          fit: BoxFit.cover,
-                                                          colorBlendMode:
-                                                              BlendMode.darken,
-                                                        )
-                                                    ])),
+                                              tag:
+                                                  'recipe_name${tes.values.toList()[index]}',
+                                              child: Text(
+                                                tes.values.toList()[index],
+                                                style: TextStyle(
+                                                    decoration:
+                                                        TextDecoration.none,
+                                                    fontSize: 22,
+                                                    fontWeight: FontWeight.w600,
+                                                    color: Colors.green[600]),
                                               ),
-                                              IntrinsicHeight(
-                                                child: Row(
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets
-                                                              .fromLTRB(
-                                                          10, 1, 10, 1),
-                                                      child: Text(
-                                                          tes.keys
-                                                              .toList()[index]
-                                                              .toString(),
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 23,
-                                                              color: Colors
-                                                                  .white)),
-                                                    ),
-                                                    VerticalDivider(
-                                                      width: 35,
-                                                      thickness: 0.9,
-                                                      color: Colors.white60,
-                                                    ),
-                                                    Expanded(
-                                                        child: Hero(
-                                                      tag:
-                                                          'recipe_name${tes.values.toList()[index]}',
-                                                      child: Text(
-                                                        tes.values
-                                                            .toList()[index],
-                                                        style: TextStyle(
-                                                            decoration:
-                                                                TextDecoration
-                                                                    .none,
-                                                            fontSize: 30,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color:
-                                                                Colors.white),
-                                                      ),
-                                                    )),
-                                                  ],
-                                                ),
-                                              )
-                                            ]))),
-                              ))
-                        ],
-                      ),
-                      position: animate.drive(offset),
-                    );
-                  }),
+                                            )),
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              child: Hero(
+                                                  tag:
+                                                      'recipe${tes.values.toList()[index]}',
+                                                  child: Wrap(children: [
+                                                    if (File(
+                                                            '${appDocDir.path}/${tes.values.toList()[index]}.jpg')
+                                                        .existsSync())
+                                                      Image.file(
+                                                        File(
+                                                            '${appDocDir.path}/${tes.values.toList()[index]}.jpg'),
+                                                        // width: double.infinity,
+                                                        height: 100, width: 100,
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                    else
+                                                      Image.asset(
+                                                        'assets/images/logo.png',
+                                                        // width: double.infinity,
+
+                                                        fit: BoxFit.cover,
+                                                      )
+                                                  ])),
+                                            ),
+                                          ]))),
+                                ))
+                          ],
+                        ),
+                        position: animate.drive(offset),
+                      );
+                    }),
+              ),
             ),
           ],
         ),

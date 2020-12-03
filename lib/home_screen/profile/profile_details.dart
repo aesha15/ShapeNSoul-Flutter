@@ -364,6 +364,7 @@ class _ProfileDetails extends State<ProfileDetails> {
                                       Text(
                                         data['diet'][method],
                                         style: TextStyle(
+                                            color: Colors.green[800],
                                             fontSize: 18,
                                             fontWeight: FontWeight.w500),
                                       ),

@@ -231,7 +231,7 @@ class _AppointmentState extends State<Appointment> {
                       Navigator.pop(context),
                       Navigator.pushReplacementNamed(context, '/')
                     },
-                    color: Color(0xff3fc380),
+                    color: Colors.green[300],
                     textColor: Colors.white,
                     child: Text('Book Appointment'),
                   ),

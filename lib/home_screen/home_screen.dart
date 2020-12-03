@@ -5,7 +5,7 @@ import 'package:fluttersns/home_screen/appointment/client_appoint.dart';
 import 'package:fluttersns/home_screen/appointment/admin_appoint.dart';
 import 'package:fluttersns/home_screen/diet/client_diet.dart';
 import 'package:fluttersns/home_screen/diet/admin_diet.dart';
-
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import '../notification.dart';
 import 'package:fluttersns/home_screen/profile/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,13 +23,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   FirebaseAuth auth = FirebaseAuth.instance;
   String phone = '';
   final List<Widget> _children = [
-    (FirebaseAuth.instance.currentUser.phoneNumber == '+9987929313')
+    (FirebaseAuth.instance.currentUser.phoneNumber == '+91987929313')
         ? AdminAppoint()
         : ClientAppoint(),
-    (FirebaseAuth.instance.currentUser.phoneNumber == '+9987929313')
+    (FirebaseAuth.instance.currentUser.phoneNumber == '+91987929313')
         ? AdminDiet()
         : Diet(),
-    if (FirebaseAuth.instance.currentUser.phoneNumber == '+9987929313')
+    if (FirebaseAuth.instance.currentUser.phoneNumber == '+91987929313')
       Profile()
   ];
 
@@ -59,7 +59,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       //       gradient: LinearGradient(
       //           begin: Alignment.topLeft,
       //           end: Alignment.bottomRight,
-      //           colors: <Color>[Color(0xff84EBAB), Color(0xff3fc380)])),
+      //           colors: <Color>[Color(0xff84EBAB), Colors.green[300]])),
       // ),
       // automaticallyImplyLeading: false,
       // // backgroundColor: Color(0xfff6fef6),
@@ -72,26 +72,41 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       //   ),
       // ]),
       body: _children[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        elevation: 5,
-        backgroundColor: Colors.white,
-        // selectedItemColor: Colors.white,
-        onTap: onTabTapped,
-        currentIndex: _currentIndex,
-        items: [
-          new BottomNavigationBarItem(
-            icon: new Icon(Icons.calendar_today),
-            title: Text('Appointments'),
-          ),
-          new BottomNavigationBarItem(
-            icon: new Icon(Icons.description),
-            title: Text('Diet'),
-          ),
-          if (FirebaseAuth.instance.currentUser.phoneNumber == '+9987929313')
-            new BottomNavigationBarItem(
-                icon: Icon(Icons.person_outline), title: Text('Profile'))
+      bottomNavigationBar: CurvedNavigationBar(
+        backgroundColor: Color(0xfff6fef6),
+        height: 50,
+        color: Colors.green[300],
+        buttonBackgroundColor: Color(0xfff6fef6),
+        animationCurve: Curves.decelerate,
+        items: <Widget>[
+          Icon(Icons.calendar_today),
+          Icon(Icons.description),
+          if (FirebaseAuth.instance.currentUser.phoneNumber == '+91987929313')
+            Icon(Icons.person_outline),
         ],
+        onTap: onTabTapped,
       ),
+      // body: Container(color: Colors.blueAccent),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   elevation: 5,
+      //   backgroundColor: Colors.white,
+      //   // selectedItemColor: Colors.white,
+      //   onTap: onTabTapped,
+      //   currentIndex: _currentIndex,
+      //   items: [
+      //     new BottomNavigationBarItem(
+      //       icon: new Icon(Icons.calendar_today),
+      //       title: Text('Appointments'),
+      //     ),
+      //     new BottomNavigationBarItem(
+      //       icon: new Icon(Icons.description),
+      //       title: Text('Diet'),
+      //     ),
+      //     if (FirebaseAuth.instance.currentUser.phoneNumber == '+9987929313')
+      //       new BottomNavigationBarItem(
+      //           icon: Icon(Icons.person_outline), title: Text('Profile'))
+      //   ],
+      // ),
     );
   }
 

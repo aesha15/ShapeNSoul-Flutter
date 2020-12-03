@@ -41,7 +41,7 @@ class _AddRecipeState extends State<AddRecipe> {
                               end: Alignment.bottomRight,
                               colors: <Color>[
                             Color(0xff84EBAB),
-                            Color(0xff3fc380)
+                            Colors.green[300]
                           ])),
                     ),
                     automaticallyImplyLeading: false,

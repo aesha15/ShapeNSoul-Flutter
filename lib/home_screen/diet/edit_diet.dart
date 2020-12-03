@@ -165,7 +165,7 @@ class _AddDietState extends State<AddDiet> {
                                       ProfileDetails(name: phone)),
                             )
                           },
-                      color: Color(0xff3fc380),
+                      color: Colors.green[300],
                       textColor: Colors.white,
                       child: Column(children: [
                         if (time == '') Text('Add') else Text('Edit'),

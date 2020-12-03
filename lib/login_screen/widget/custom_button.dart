@@ -19,7 +19,7 @@ class CustomButton extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           // color: const Color.fromARGB(255, 253, 188, 51),
-          color: Colors.green[400],
+          color: Colors.green[300],
           borderRadius: BorderRadius.circular(36),
         ),
         alignment: Alignment.center,

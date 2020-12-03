@@ -173,7 +173,7 @@ class _AdminAppointState extends State<AdminAppoint> {
                   ClipPath(
                     clipper: HeaderClip(),
                     child: Container(
-                      decoration: BoxDecoration(color: Colors.green[400]),
+                      decoration: BoxDecoration(color: Colors.green[300]),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -182,6 +182,12 @@ class _AdminAppointState extends State<AdminAppoint> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 18, bottom: 13),
+                                  child: Image.asset('assets/images/Frame.png',
+                                      width: 50, height: 50),
+                                ),
                                 IconButton(
                                   icon: new Icon(
                                     Icons.exit_to_app,
@@ -234,16 +240,16 @@ class _AdminAppointState extends State<AdminAppoint> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.green[100].withOpacity(0.4),
+                                color: Colors.green[100].withOpacity(0.6),
                                 spreadRadius: 2,
-                                blurRadius: 9,
+                                blurRadius: 20,
                                 // offset:
                                 //     Offset(0, 4), // changes position of shadow
                               ),
                             ],
                           ),
                           child: Card(
-                              elevation: 3,
+                              elevation: 5,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(23)),
                               child: InkWell(
@@ -257,7 +263,7 @@ class _AdminAppointState extends State<AdminAppoint> {
                                                   jsonEncode(appoint[index]))));
                                 },
                                 child: Padding(
-                                    padding: const EdgeInsets.all(18.0),
+                                    padding: const EdgeInsets.all(15.0),
                                     child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.stretch,
@@ -355,7 +361,7 @@ class _AdminAppointState extends State<AdminAppoint> {
         onPressed: () {
           Navigator.pushNamed(context, '/appointment');
         },
-        backgroundColor: Colors.green[400],
+        backgroundColor: Colors.green[300],
       ),
     ));
   }
