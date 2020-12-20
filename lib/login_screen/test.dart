@@ -144,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen>
 
   void showAlertDialog(BuildContext context, String message) {
     // set up the AlertDialog
-    final CupertinoAlertDialog alert = CupertinoAlertDialog(
+    final AlertDialog alert = AlertDialog(
       title: const Text('Error'),
       content: Text('\n$message'),
       actions: <Widget>[
@@ -253,262 +253,110 @@ class _LoginScreenState extends State<LoginScreen>
                         child: Container(
                           decoration: BoxDecoration(color: Colors.green[300]),
                           child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(38, 20, 20, 0),
-                                  child: Center(
-                                    child: Image.asset(
-                                        'assets/images/Frame.png',
-                                        height: 200,
-                                        width: 200),
-                                  ),
+                                Center(
+                                  child: Image.asset('assets/images/Frame.png',
+                                      height: 180, width: 180),
                                 ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(80, 20, 0, 42),
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.8,
-                                    child: Text(
-                                      "SHAPE N SOUL",
-                                      style: TextStyle(
-                                          fontSize: 40,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.white),
-                                    ),
+                                Container(
+                                  child: Text(
+                                    "SHAPE N SOUL",
+                                    style: TextStyle(
+                                        fontSize: 40,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.white),
                                   ),
                                 ),
                               ]),
                           width: screenWidth,
-                          height: screenHeight * 0.39,
+                          height: 400,
                         ),
                       ),
-                      Padding(
-                          padding: EdgeInsets.fromLTRB(8, 100, 8, 0),
-                          child: Stack(children: [
-                            AnimatedOpacity(
-                                duration: Duration(milliseconds: 500),
-                                opacity: opacity ? 0.0 : 1.0,
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      'Enter A 6 digit number that was sent to ${_contactEditingController.text}',
-                                      textAlign: TextAlign.center,
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.blueGrey,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    GestureDetector(
-                                      onTap: () {
-                                        _controller.reverse();
-                                        setState(() {
-                                          opacity = true;
-                                        });
-                                        delay(true);
-                                      },
-                                      child: Text('Change Number',
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.green,
-                                              fontWeight: FontWeight.w500)),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          // ignore: prefer_const_literals_to_create_immutables
-                                          boxShadow: [
-                                            const BoxShadow(
-                                              color: Colors.grey,
-                                              offset: Offset(0.0, 1.0), //(x,y)
-                                              blurRadius: 6.0,
-                                            ),
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(16.0)),
-                                      child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.fromLTRB(
-                                                  screenWidth * 0.03,
-                                                  screenHeight * 0.025,
-                                                  0,
-                                                  0),
-                                              child: PinEntryTextField(
-                                                fields: 6,
-                                                onSubmit: (text) {
-                                                  smsOTP = text as String;
-                                                },
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              height: screenHeight * 0.04,
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                verifyOtp();
-                                              },
-                                              child: Container(
-                                                margin: const EdgeInsets.all(8),
-                                                height: 45,
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.green,
-                                                  borderRadius:
-                                                      BorderRadius.circular(36),
-                                                ),
-                                                alignment: Alignment.center,
-                                                child: const Text(
-                                                  'Verify',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16.0,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                              ),
-                                            ),
-                                            //if (!loading)
-                                            GestureDetector(
-                                              onTap: () {
-                                                resendOTP();
-                                              },
-                                              child: Container(
-                                                margin: const EdgeInsets.all(8),
-                                                height: 45,
-                                                width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.green,
-                                                  borderRadius:
-                                                      BorderRadius.circular(36),
-                                                ),
-                                                alignment: Alignment.center,
-                                                child: const Text(
-                                                  'Resend OTP',
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: 16.0,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                              ),
-                                            )
-                                          ]),
-                                      width: screenWidth * 0.9,
-                                      height: screenHeight * 0.31,
-                                      margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                                      padding: EdgeInsets.all(15),
-                                    ),
-                                  ],
-                                )),
-                            if (waitedFlag)
-                              AnimatedOpacity(
-                                opacity: opacity ? 1.0 : 0.0,
-                                duration: Duration(milliseconds: 500),
-                                child: Column(children: [
-                                  Container(
-                                      child: Text(
-                                        'Enter your mobile number to receive a verification code',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.blueGrey,
-                                        ),
-                                      ),
-                                      width: screenWidth * 0.8),
-                                  SizedBox(
-                                    height: 50,
+                      SizedBox(
+                        height: 70,
+                      ),
+                      Stack(children: [
+                        AnimatedOpacity(
+                            duration: Duration(milliseconds: 500),
+                            opacity: opacity ? 0.0 : 1.0,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Enter A 6 digit number that was sent to ${_contactEditingController.text}',
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.blueGrey,
                                   ),
-                                  Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: screenWidth > 600
-                                              ? screenWidth * 0.2
-                                              : 16),
-                                      padding: const EdgeInsets.all(16.0),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          // ignore: prefer_const_literals_to_create_immutables
-                                          boxShadow: [
-                                            const BoxShadow(
-                                              color: Colors.grey,
-                                              offset: Offset(0.0, 1.0), //(x,y)
-                                              blurRadius: 6.0,
-                                            ),
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(16.0)),
-                                      child: Column(children: [
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    _controller.reverse();
+                                    setState(() {
+                                      opacity = true;
+                                    });
+                                    delay(true);
+                                  },
+                                  child: Text('Change Number',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.green,
+                                          fontWeight: FontWeight.w500)),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      // ignore: prefer_const_literals_to_create_immutables
+                                      boxShadow: [
+                                        const BoxShadow(
+                                          color: Colors.grey,
+                                          offset: Offset(0.0, 1.0), //(x,y)
+                                          blurRadius: 6.0,
+                                        ),
+                                      ],
+                                      borderRadius:
+                                          BorderRadius.circular(16.0)),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
                                         Container(
-                                            margin: const EdgeInsets.all(8),
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
-                                            height: 45,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: Colors.green[300],
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(36),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                SizedBox(
-                                                  width: screenWidth * 0.01,
-                                                ),
-                                                Expanded(
-                                                  child: TextField(
-                                                    decoration:
-                                                        const InputDecoration(
-                                                      hintText:
-                                                          'Contact Number',
-                                                      border: InputBorder.none,
-                                                      enabledBorder:
-                                                          InputBorder.none,
-                                                      focusedBorder:
-                                                          InputBorder.none,
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 13.5),
-                                                    ),
-                                                    controller:
-                                                        _contactEditingController,
-                                                    keyboardType:
-                                                        TextInputType.number,
-                                                    inputFormatters: [
-                                                      LengthLimitingTextInputFormatter(
-                                                          10)
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            )),
+                                          margin: EdgeInsets.fromLTRB(
+                                              screenWidth * 0.03,
+                                              screenHeight * 0.025,
+                                              0,
+                                              0),
+                                          child: PinEntryTextField(
+                                            fields: 6,
+                                            onSubmit: (text) {
+                                              smsOTP = text as String;
+                                            },
+                                          ),
+                                        ),
                                         SizedBox(
-                                          height: 10,
+                                          height: screenHeight * 0.04,
                                         ),
                                         GestureDetector(
                                           onTap: () {
-                                            clickOnLogin();
+                                            verifyOtp();
                                           },
                                           child: Container(
                                             margin: const EdgeInsets.all(8),
                                             height: 45,
                                             width: double.infinity,
                                             decoration: BoxDecoration(
-                                              // color: const Color.fromARGB(255, 253, 188, 51),
-                                              color: Colors.green[500],
+                                              color: Colors.green,
                                               borderRadius:
                                                   BorderRadius.circular(36),
                                             ),
                                             alignment: Alignment.center,
                                             child: const Text(
-                                              'Send OTP',
+                                              'Verify',
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16.0,
@@ -516,11 +364,133 @@ class _LoginScreenState extends State<LoginScreen>
                                             ),
                                           ),
                                         ),
+                                        //if (!loading)
+                                        GestureDetector(
+                                          onTap: () {
+                                            resendOTP();
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.all(8),
+                                            height: 45,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color: Colors.green,
+                                              borderRadius:
+                                                  BorderRadius.circular(36),
+                                            ),
+                                            alignment: Alignment.center,
+                                            child: const Text(
+                                              'Resend OTP',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                          ),
+                                        )
                                       ]),
-                                      height: screenHeight * 0.2),
-                                ]),
-                              )
-                          ]))
+                                  width: screenWidth * 0.9,
+                                  height: screenHeight * 0.31,
+                                  margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                                  padding: EdgeInsets.all(15),
+                                ),
+                              ],
+                            )),
+                        if (waitedFlag)
+                          AnimatedOpacity(
+                            opacity: opacity ? 1.0 : 0.0,
+                            duration: Duration(milliseconds: 500),
+                            child: Column(children: [
+                              Container(
+                                  child: Text(
+                                    'Enter your mobile number to receive a verification code',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.blueGrey,
+                                    ),
+                                  ),
+                                  width: screenWidth * 0.8),
+                              SizedBox(
+                                height: 50,
+                              ),
+                              Container(
+                                  margin: EdgeInsets.symmetric(
+                                      horizontal: screenWidth > 600
+                                          ? screenWidth * 0.2
+                                          : 16),
+                                  padding: const EdgeInsets.all(16.0),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      // ignore: prefer_const_literals_to_create_immutables
+                                      boxShadow: [
+                                        const BoxShadow(
+                                          color: Colors.grey,
+                                          offset: Offset(0.0, 1.0), //(x,y)
+                                          blurRadius: 6.0,
+                                        ),
+                                      ],
+                                      borderRadius:
+                                          BorderRadius.circular(16.0)),
+                                  child: Column(children: [
+                                    Container(
+                                      margin: const EdgeInsets.all(8),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      height: 45,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.green[300],
+                                        ),
+                                        borderRadius: BorderRadius.circular(36),
+                                      ),
+                                      child: TextField(
+                                        decoration: const InputDecoration(
+                                          hintText: 'Contact Number',
+                                          border: InputBorder.none,
+                                          enabledBorder: InputBorder.none,
+                                          focusedBorder: InputBorder.none,
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical: 13.5),
+                                        ),
+                                        controller: _contactEditingController,
+                                        keyboardType: TextInputType.number,
+                                        inputFormatters: [
+                                          LengthLimitingTextInputFormatter(10)
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 8,
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        clickOnLogin();
+                                      },
+                                      child: Container(
+                                        margin: const EdgeInsets.all(8),
+                                        height: 45,
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: Colors.green[500],
+                                          borderRadius:
+                                              BorderRadius.circular(36),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: const Text(
+                                          'Send OTP',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                      ),
+                                    ),
+                                  ]),
+                                  height: screenHeight * 0.2),
+                            ]),
+                          )
+                      ])
                     ])))));
   }
 }

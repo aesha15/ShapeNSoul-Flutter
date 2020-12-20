@@ -163,16 +163,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(36),
                         ),
                         child: Row(
-                          // ignore: prefer_const_literals_to_create_immutables
                           children: [
-                            // CountryPicker(
-                            //   callBackFunction: _callBackFunction,
-                            //   headerText: 'Select Country',
-                            //   headerBackgroundColor:
-                            //       Theme.of(context).primaryColor,
-                            //   headerTextColor: Colors.white,
-                            // ),
-
                             SizedBox(
                               width: screenWidth * 0.01,
                             ),

@@ -100,26 +100,31 @@ class ClientAppointState extends State<ClientAppoint> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 20, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 13, 20, 0),
                             child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      left: 18, bottom: 13),
+                                      left: 20, bottom: 15),
                                   child: Image.asset('assets/images/Frame.png',
-                                      width: 50, height: 50),
+                                      width: 50, height: 40),
                                 ),
-                                IconButton(
-                                  icon: new Icon(
-                                    Icons.exit_to_app,
-                                    color: Color(0xfff6fef6),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 20),
+                                  child: IconButton(
+                                    icon: new Icon(
+                                      Icons.exit_to_app,
+                                      color: Color(0xfff6fef6),
+                                      size: 26,
+                                    ),
+                                    onPressed: () {
+                                      showAlertDialog(context, 'Are you sure?');
+                                    },
+                                    tooltip: "Logout",
                                   ),
-                                  onPressed: () {
-                                    showAlertDialog(context, 'Are you sure?');
-                                  },
-                                  tooltip: "Logout",
-                                ),
+                                )
                               ],
                             ),
                           ),

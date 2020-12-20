@@ -29,7 +29,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
     (FirebaseAuth.instance.currentUser.phoneNumber == '+91987929313')
         ? AdminDiet()
         : Diet(),
-    if (FirebaseAuth.instance.currentUser.phoneNumber == '+91987929313')
+    if (FirebaseAuth.instance.currentUser.phoneNumber != '+91987929313')
       Profile()
   ];
 
@@ -47,30 +47,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //     title: Text('Shape N Soul',
-      //         style: TextStyle(
-      //           fontSize: 25,
-      //           fontWeight: FontWeight.w700,
-      //         )),
-      // backgroundColor: Colors.white,
-      // flexibleSpace: Container(
-      //   decoration: BoxDecoration(
-      //       gradient: LinearGradient(
-      //           begin: Alignment.topLeft,
-      //           end: Alignment.bottomRight,
-      //           colors: <Color>[Color(0xff84EBAB), Colors.green[300]])),
-      // ),
-      // automaticallyImplyLeading: false,
-      // // backgroundColor: Color(0xfff6fef6),
-      // actions: <Widget>[
-      //   IconButton(
-      //     icon: new Icon(Icons.exit_to_app),
-      //     onPressed: () {
-      //       showAlertDialog(context, 'Are you sure?');
-      //     },
-      //   ),
-      // ]),
       body: _children[_currentIndex],
       bottomNavigationBar: CurvedNavigationBar(
         backgroundColor: Color(0xfff6fef6),
@@ -81,32 +57,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         items: <Widget>[
           Icon(Icons.calendar_today),
           Icon(Icons.description),
-          if (FirebaseAuth.instance.currentUser.phoneNumber == '+91987929313')
+          if (FirebaseAuth.instance.currentUser.phoneNumber != '+91987929313')
             Icon(Icons.person_outline),
         ],
         onTap: onTabTapped,
       ),
-      // body: Container(color: Colors.blueAccent),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   elevation: 5,
-      //   backgroundColor: Colors.white,
-      //   // selectedItemColor: Colors.white,
-      //   onTap: onTabTapped,
-      //   currentIndex: _currentIndex,
-      //   items: [
-      //     new BottomNavigationBarItem(
-      //       icon: new Icon(Icons.calendar_today),
-      //       title: Text('Appointments'),
-      //     ),
-      //     new BottomNavigationBarItem(
-      //       icon: new Icon(Icons.description),
-      //       title: Text('Diet'),
-      //     ),
-      //     if (FirebaseAuth.instance.currentUser.phoneNumber == '+9987929313')
-      //       new BottomNavigationBarItem(
-      //           icon: Icon(Icons.person_outline), title: Text('Profile'))
-      //   ],
-      // ),
     );
   }
 
