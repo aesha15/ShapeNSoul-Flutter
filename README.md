@@ -1,3 +1,3 @@
-# fluttersns
+# ShapeNSoul-Flutter
 
-A new Flutter project.
+Mobile Application using Flutter and Firestore for a Naturopathy Clinic
